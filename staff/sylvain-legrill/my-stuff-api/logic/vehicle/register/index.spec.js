@@ -33,7 +33,7 @@ describe('logic - register vehicle', () => {
     })
 
     it('should succeed on correct data', () =>
-        logic.vehicle.register(id, make, model, year, type, color, electric, plate)
+        logic.registerVehicle(id, make, model, year, type, color, electric, plate)
             .then(result => {
                 vehicleId = result
                 expect(vehicleId).to.exist
@@ -53,7 +53,7 @@ describe('logic - register vehicle', () => {
 
     it('should fail if the vehicle already exists', () =>
        Vehicle.create({ make, model, year, type, color, electric, plate })
-           .then (() => logic.vehicle.register(id, make, model, year, type, color, electric, plate)
+           .then (() => logic.registerVehicle(id, make, model, year, type, color, electric, plate)
                .catch( error =>{
                    expect(error).to.exist
                    expect(error.message).to.equal(`Vehicle already exists.`)
@@ -66,19 +66,19 @@ describe('logic - register vehicle', () => {
 
     it('should fail on empty make', () => 
         expect(() => 
-               logic.vehicle.register(id, '', model, year, type, color, electric, plate)
+               logic.registerVehicle(id, '', model, year, type, color, electric, plate)
     ).to.throw('make is empty or blank')
     )
 
      it('should fail on undefined make', () => 
         expect(() => 
-               logic.vehicle.register(id, undefined, model, year, type, color, electric, plate)
+               logic.registerVehicle(id, undefined, model, year, type, color, electric, plate)
     ).to.throw(`make with value undefined is not a string`)
     )
 
      it('should fail on wrong data type', () => 
         expect(() => 
-               logic.vehicle.register(id, 123, model, year, type, color, electric, plate)
+               logic.registerVehicle(id, 123, model, year, type, color, electric, plate)
     ).to.throw(`make with value 123 is not a string`)
     )
 

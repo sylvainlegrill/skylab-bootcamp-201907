@@ -37,7 +37,7 @@ describe('logic - unregister card', () => {
     })
 
     it('should succeed on correct data', () =>{        
-        logic.card.unregister(id,cardId)
+        logic.unregisterCard(id,cardId)
         
             .then(card => { 
                   
@@ -51,7 +51,7 @@ describe('logic - unregister card', () => {
 
 
     it('should fail if there is no user', () => {
-            logic.card.unregister("5e624a1e0e56cb055f56d3d0", cardId)
+            logic.unregisterCard("5e624a1e0e56cb055f56d3d0", cardId)
                .catch( error =>{
                 debugger
                    expect(error).to.exist
@@ -63,7 +63,7 @@ describe('logic - unregister card', () => {
 
     it('should fail if there is no card', () =>{
         let x= '5d5d5530531d455f75da9fF9'
-        logic.card.unregister(id, x)
+        logic.unregisterCard(id, x)
                .catch( error =>{
                    expect(error).to.exist
                    expect(error.message).to.equal(`Card with id ${x} does not exist.`)
@@ -72,19 +72,19 @@ describe('logic - unregister card', () => {
 
     it('should fail on empty number', () => {
         expect(() =>
-            logic.card.unregister("", number)
+            logic.unregisterCard("", number)
         ).to.throw('id is empty or blank')
     })
 
     it('should fail on undefined number', () => {
         expect(() =>
-            logic.card.unregister(undefined, number)
+            logic.unregisterCard(undefined, number)
         ).to.throw(`id with value undefined is not a string`)
     })
 
     it('should fail on wrong data type', () => {
         expect(() =>
-            logic.card.unregister(123, number )
+            logic.unregisterCard(123, number )
         ).to.throw(`id with value 123 is not a string`)
     })
 
@@ -97,7 +97,7 @@ describe('logic - unregister card', () => {
 
 // const mongoose = require('mongoose')
 // const { expect } = require('chai')
-// const logic = require('../.')
+// const logic = require('../../')
 // const { User, Card } = require('../../../models')
 
 // describe('logic - unregister card', () => {

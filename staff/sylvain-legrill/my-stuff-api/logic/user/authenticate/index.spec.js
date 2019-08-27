@@ -21,7 +21,7 @@ describe('logic - authenticate user', () => {
     })
 
     it('should succeed on correct data', () =>
-        logic.user.authenticate(email, password)
+        logic.authenticateUser(email, password)
             .then(_id => {
                 expect(_id).to.exist
                 expect(_id).to.be.a('string')
@@ -29,14 +29,14 @@ describe('logic - authenticate user', () => {
             })
     )
     it('should fail on incorrect mail', () => 
-            logic.user.authenticate("pepito@mail.com", password)
+            logic.authenticateUser("pepito@mail.com", password)
                 .catch( error => {
                     expect(error).to.exist
                     expect(error.message).to.equal('Wrong credentials.')
                 })
     )
     it('should fail on wrong password', () => 
-        logic.user.authenticate(email, "123")
+        logic.authenticateUser(email, "123")
             .catch( error => {
                 expect(error).to.exist
                 expect(error.message).to.equal('Wrong credentials.')

@@ -20,7 +20,7 @@ describe('logic - retrieve user', () => {
     })
 
     it('should succeed on correct data', () =>
-        logic.user.retrieve(id)
+        logic.retrieveUser(id)
             .then(user => {
                 expect(user).to.exist
                 expect(user.id).to.equal(id)
@@ -32,7 +32,7 @@ describe('logic - retrieve user', () => {
             })
     )
     it('should throw an error with a wrong id', () =>
-        logic.user.retrieve("5d5fe532b4f3f827e6fc64f8")
+        logic.retrieveUser("5d5fe532b4f3f827e6fc64f8")
             .catch( error =>{
                 expect(error).to.exist
                 expect(error.message).to.equal(`user with id 5d5fe532b4f3f827e6fc64f8 not found`)

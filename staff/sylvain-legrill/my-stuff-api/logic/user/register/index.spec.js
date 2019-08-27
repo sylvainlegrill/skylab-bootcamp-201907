@@ -18,7 +18,7 @@ describe('logic - register user', () => {
     })
 
     it('should succeed on correct data', () =>
-        logic.user.register(name, surname, email, password)
+        logic.registerUser(name, surname, email, password)
             .then(result => {
                 expect(result).not.to.exist
 
@@ -35,7 +35,7 @@ describe('logic - register user', () => {
     it('should fail if the email already exists', () =>
     
         User.create({ name, surname, email, password })
-            .then (() => logic.user.register(name, surname, email, password)
+            .then (() => logic.registerUser(name, surname, email, password)
                 .catch( error =>{
                     expect(error).to.exist
                     expect(error.message).to.equal(`user with email ${email} already exists`)

@@ -35,7 +35,7 @@ describe('logic retrieve vehicle', () => {
     //////////////////
 
         it('should succeed on correct retrieve vehicle', () =>
-            logic.vehicle.retrieve(vehicleId)
+            logic.retrieveVehicle(vehicleId)
                 .then(vehicle => {
                     expect(vehicle).to.exist
                     expect(vehicle.id).to.equal(vehicleId)
@@ -47,8 +47,8 @@ describe('logic retrieve vehicle', () => {
                     expect(vehicle.electric).to.equal(electric)
                     })
         )
-        it('should fail if the id is not a string', () => expect(() => logic.vehicle.retrieve(12345678).to.throw("id with value '12345678' is not a string")))
-        it('should fail if the id is empty or blank', () => expect(() => logic.vehicle.retrieve().to.throw("id is empty or blank")))
+        it('should fail if the id is not a string', () => expect(() => logic.retrieveVehicle(12345678).to.throw("id with value '12345678' is not a string")))
+        it('should fail if the id is empty or blank', () => expect(() => logic.retrieveVehicle().to.throw("id is empty or blank")))
 
 
     after(() => mongoose.disconnect())

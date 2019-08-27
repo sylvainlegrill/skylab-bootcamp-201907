@@ -5,7 +5,7 @@ module.exports = (req, res) => {
     const { params: { cardId } } = req
 
     try {
-        logic.card.unregister(cardId)
+        logic.unregisterCard(cardId)
             .then(() => res.json({ message: 'Card unregistered successfully'}))
             .catch(({ message }) => res.status(404).json({ error: message }))
     } catch({ message }) {
