@@ -4,7 +4,7 @@ const logic = require('../../.')
 const { Property } = require('../../../models')
 const mongoose = require('mongoose')
 
-describe.only('logic - register property', () => {
+describe('logic - register property', () => {
     before(() => mongoose.connect('mongodb://localhost/my-api-test', { useNewUrlParser: true }))
 
     let address, m2, year, cadastre, owner
