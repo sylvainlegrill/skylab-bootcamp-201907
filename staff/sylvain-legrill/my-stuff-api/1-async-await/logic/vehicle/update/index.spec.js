@@ -2,7 +2,7 @@ const { MongoClient, ObjectId } = require('mongodb')
 const { expect } = require('chai')
 const logic = require('../../')
 
-describe('logic update property', () => {
+describe('logic update vehicle', () => {
     let client, users
 
     before(() => {

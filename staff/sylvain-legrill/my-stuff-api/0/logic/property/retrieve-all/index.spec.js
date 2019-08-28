@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { expect } = require('chai')
-const logic = require('../../.')
+const logic = require('../..')
 const { Property, User } = require('../../../models')
 
 describe('logic retrieve all properties', () => {
