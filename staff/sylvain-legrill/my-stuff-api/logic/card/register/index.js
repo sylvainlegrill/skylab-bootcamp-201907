@@ -24,14 +24,13 @@ module.exports = function(id, number, expiry) {
             const card = user.cards.find(card => card.number === number)
             if (card) throw Error('Card already exists')
             _user = user
-            // Call to convertDate (in utils) to format string to date
+
+
             const expiryDate = convertDate(expiry)
-            return Card.create({ number, expiry: expiryDate})
-        })
-        .then(newCard => {
-            cardId = newCard._id
+            const newCard = new Card({ number, expiry: expiryDate })
+            cardId = newCard.id
             _user.cards.push(newCard)
             return _user.save()
         })
-        .then(() => cardId.toString())
+        .then(() => cardId)
 }

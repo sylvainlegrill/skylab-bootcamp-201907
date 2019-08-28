@@ -1,55 +1,53 @@
-const { MongoClient } = require('mongodb')
+const mongoose = require('mongoose')
+const logic = require('../../.')
 const { expect } = require('chai')
-const logic = require('../../')
+const { User, Property } = require('../../../models')
 
-describe('logic', () => {
-    let client, users
+describe('logic retrieve property', () => {
+    
+    before(() => mongoose.connect('mongodb://localhost/my-api-test', { useNewUrlParser: true }))
 
-    before(() => {
+    let address, m2, year, cadastre, propertyId
 
-       client = new MongoClient('mongodb://localhost', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        }) 
+    beforeEach(() => {
 
-        return client.connect()
+        address = `address-${Math.random()}`
+        m2 = Number((Math.random()*1000).toFixed())
+        year = Number((Math.random()*1000).toFixed())
+        cadastre = `cadastre-${Math.random()}`
+
+        return Property.deleteMany()
             .then(() => {
-                const db = client.db('skylab')
+                name = `name-${Math.random()}`
+                surname = `surname-${Math.random()}`
+                email = `email-${Math.random()}@email.com`
+                password = `123-${Math.random()}`
 
-                users = db.collection('users')
-
-                logic.__users__ = users
+                return User.create({ name, surname, email, password })
             })
+            .then(() => { return Property.create({ address, m2, year, cadastre}) })
+            .then(property => { propertyId = property.id})
     })
+    //////////////////
 
-    beforeEach(() => users.deleteMany())
-
-    describe('retrieve user', () => {
-        let userId, name, surname, email, password
-
-        beforeEach(() => {
-            name = `name-${Math.random()}`
-            surname = `surname-${Math.random()}`
-            email = `email-${Math.random()}@domain.com`
-            password = `password-${Math.random()}`
-
-            // Register user first to make sure it exists
-            return users.insertOne({name, surname, email, password})
-                .then(result => userId = result.insertedId.toString())
-        })
-
-        it('should succeed on correct data', () =>
-            logic.retrieveUser(userId)
-                .then(user => {
-                    expect(user).to.exist
-                    expect(user.id).to.equal(userId)
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.email).to.equal(email)
-                    expect(user.password).not.to.exist
-            })
+        it('should succeed on correct retrieve property', () =>
+            logic.retrieveProperty(propertyId)
+                .then(property => {
+                    expect(property).to.exist
+                    expect(property.id).to.equal(propertyId)
+                    expect(property.address).to.equal(address)
+                    expect(property.m2).to.equal(m2)
+                    expect(property.year).to.equal(year)
+                    expect(property.cadastre).to.equal(cadastre)
+                    })
         )
-    })
+        it('should fail if the id is not a string', () => 
+        expect(() => logic.retrieveproperty(12345678).to.throw("id with value '12345678' is not a string"))
+        )
+        it('should fail if the id is empty or blank', () => 
+        expect(() => logic.retrieveproperty().to.throw("id is empty or blank"))
+        )
 
-    after(() => client.close())
+
+    after(() => mongoose.disconnect())
 })

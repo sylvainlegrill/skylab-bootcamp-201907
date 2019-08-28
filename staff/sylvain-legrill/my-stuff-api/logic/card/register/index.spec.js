@@ -3,86 +3,85 @@ const logic = require('../../.')
 const { expect } = require('chai')
 const { User, Card } = require('../../../models')
 
-describe.only('logic - register card', () => {
-
-    before(() => mongoose.connect('mongodb://localhost/my-api-test', { useNewUrlParser: true }))
- 
-    let name,surname,email,password
-    let id,number,expiry, cardId    
- 
+describe('logic - register card', () => {
+    before(() => mongoose.connect('mongodb://localhost/my-api-test', {
+        useNewUrlParser: true
+    }))
+    let number, expiry
     beforeEach(() => {
-              
-                number = `1-${Math.random()}`
-                expiry = `0${Math.floor(Math.random() * 9)}/0${Math.floor(Math.random() * 9)}`
-                  
+        
+        number = `1-${Math.random()}`
+        expiry = `0${Math.floor(Math.random() * 9)}/0${Math.floor(Math.random() * 9)}`
 
         return Card.deleteMany()
-                     // Register user first to make sure it exists
             .then(() => {
                 name = `name-${Math.random()}`
                 surname = `surname-${Math.random()}`
                 email = `email-${Math.random()}@email.com`
                 password = `123-${Math.random()}`
-
-                return User.create({ name, surname, email, password })
+                return User.create({
+                    name,
+                    surname,
+                    email,
+                    password
+                })
             })
-            .then(user => id = user.id.toString()) 
-                        
+            .then(user => id = user._id.toString())
     })
 
-    it('should succeed on correct data', () =>{        
-        logic.registerCard(id,cardId)
+    it('should succeed on correct data', () => {
         
-            .then(card => { 
-                  
-                expect(card).to.exist
-                expect(card.number).to.deep.equal(number)
-                expect(card.expiry).to.equal(expiry)
-            })}
-    
-        
+            logic.registerCard(id, number, expiry)
+                .then(result => {
+                    cardId = result
+                    expect(cardId).to.exist
+            
+                    return Card.findOne({ cardId })
+
+                })
+                .then(card => {
+                    
+                    expect(card).to.exist
+                    expect(card.number).to.equal(number)
+                    expect(card.expiry).to.equal(expiry)
+                })
+        }
+
+
     )
 
-
-    it('should fail if there is no user', () => {
-            logic.registerCard("5e624a1e0e56cb055f56d3d0", cardId)
-               .catch( error =>{
-                debugger
-                   expect(error).to.exist
-                   expect(error.message).to.equal(`User does not exists.`)
-               })
-           
+    it('should fail if the card already exists', () =>
+        Card.create({
+            number,
+            expiry
+        })
+        .then(() => logic.registerCard(id, number, expiry)
+            .catch(error => {
+                expect(error).to.exist
+                expect(error.message).to.equal(`Card already exists.`)
             })
+        )
+    )
 
+    /* Following 3 tests 
+    for every parameter passed to logic */
 
-    it('should fail if there is no card', () =>{
-        let x= '5d5d5530531d455f75da9fF9'
-        logic.registerCard(id, x)
-               .catch( error =>{
-                   expect(error).to.exist
-                   expect(error.message).to.equal(`Card with id ${x} does not exist.`)
-               })
-    }) 
-
-    it('should fail on empty number', () => {
+    it('should fail on empty number', () =>
         expect(() =>
-            logic.registerCard("", number)
-        ).to.throw('id is empty or blank')
-    })
+            logic.registerCard(id, '', expiry)
+        ).to.throw('number is empty or blank')
+    )
 
-    it('should fail on undefined number', () => {
+    it('should fail on undefined number', () =>
         expect(() =>
-            logic.registerCard(undefined, number)
-        ).to.throw(`id with value undefined is not a string`)
-    })
+            logic.registerCard(id, undefined, expiry)
+        ).to.throw(`number with value undefined is not a string`)
+    )
 
-    it('should fail on wrong data type', () => {
+    it('should fail on non valid expiry date format', () =>
         expect(() =>
-            logic.registerCard(123, number )
-        ).to.throw(`id with value 123 is not a string`)
-    })
-
-
-
+            logic.registerCard(id, number, "")
+        ).to.throw(`expiry date with value  is not a valid date`)
+    )
     after(() => mongoose.disconnect())
 })

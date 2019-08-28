@@ -2,7 +2,7 @@ const { MongoClient, ObjectId } = require('mongodb')
 const { expect } = require('chai')
 const logic = require('../../')
 
-describe('logic', () => {
+describe('logic unregister property', () => {
 
     let client, users
 
@@ -49,6 +49,43 @@ describe('logic', () => {
                 })
                 .catch(error => expect(error).not.to.exist)
             })
+
+        it('should fail if there is no owner', () => {
+            logic.unregisterProperty("5e624a1e0e56cb055f56d3d0", id)
+                .catch( error =>{
+                    expect(error).to.exist
+                    expect(error.message).to.equal(`User does not exists.`)
+                })
+            
+            })
+    
+    
+        it('should fail if there is no property', () =>{
+            let x= '5d5d5530531d455f75da9fF9'
+            logic.unregisterProperty(id, x)
+                   .catch( error =>{
+                       expect(error).to.exist
+                       expect(error.message).to.equal(`Property with id ${x} does not exist.`)
+                   })
+        }) 
+    
+        it('should fail on empty number', () => {
+            expect(() =>
+                logic.unregisterProperty("")
+            ).to.throw('id is empty or blank')
+        })
+    
+        it('should fail on undefined number', () => {
+            expect(() =>
+                logic.unregisterProperty(undefined)
+            ).to.throw(`id with value undefined is not a string`)
+        })
+    
+        it('should fail on wrong data type', () => {
+            expect(() =>
+                logic.unregisterProperty(123)
+            ).to.throw(`id with value 123 is not a string`)
+        })
     })
 
     after(() => client.close())

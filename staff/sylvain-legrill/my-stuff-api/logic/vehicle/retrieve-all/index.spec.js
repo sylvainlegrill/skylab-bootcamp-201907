@@ -1,55 +1,75 @@
-const { MongoClient } = require('mongodb')
+const mongoose = require('mongoose')
 const { expect } = require('chai')
-const logic = require('../../')
+const logic = require('../../.')
+const { Vehicle, User } = require('../../../models')
 
-describe('logic', () => {
-    let client, users
+describe('logic retrieve-all vehicle', () => {
+    before(() => mongoose.connect('mongodb://localhost/my-api-test', {
+        useNewUrlParser: true
+    }))
 
-    before(() => {
+    let id, make, model, year, type, color, electric, plate, vehiclesId
+    let name, surname, email, password
+    
+    beforeEach(() => {
+        
+        const typeArray = ['sedan', 'suv', 'van', 'coupe', 'cabrio', 'roadster', 'truck']
+        make = `brand-${Math.random()}`
+        model = `model-${Math.random()}`
+        year = Number((Math.random() * 1000).toFixed())
+        type = `${typeArray[Math.floor(Math.random() * typeArray.length)]}`
+        color = `color-${Math.random()}`
+        electric = Boolean(Math.round(Math.random()))
+        plate = `plate-${Math.floor(Math.random()*(899-100))}`
 
-       client = new MongoClient('mongodb://localhost', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        }) 
+        return Vehicle.deleteMany()
+        .then(() => {
 
-        return client.connect()
-            .then(() => {
-                const db = client.db('skylab')
-
-                users = db.collection('users')
-
-                logic.__users__ = users
-            })
-    })
-
-    beforeEach(() => users.deleteMany())
-
-    describe('retrieve user', () => {
-        let userId, name, surname, email, password
-
-        beforeEach(() => {
             name = `name-${Math.random()}`
             surname = `surname-${Math.random()}`
             email = `email-${Math.random()}@domain.com`
             password = `password-${Math.random()}`
 
-            // Register user first to make sure it exists
-            return users.insertOne({name, surname, email, password})
-                .then(result => userId = result.insertedId.toString())
-        })
-
-        it('should succeed on correct data', () =>
-            logic.retrieveUser(userId)
-                .then(user => {
-                    expect(user).to.exist
-                    expect(user.id).to.equal(userId)
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.email).to.equal(email)
-                    expect(user.password).not.to.exist
+            return User.create({
+                name,
+                surname,
+                email,
+                password
             })
-        )
+
+        })
+        .then(user => {
+            id = user.id
+            return Vehicle.create({ make, model, year, type, color, electric, plate})
+        })
+        .then(() => {
+            return Vehicle.create({ make, model, year, type, color, electric, plate})
+        }) 
+        
+        .then(vehicles => {   
+            vehiclesId = vehicles.id
+        })
     })
 
-    after(() => client.close())
-})
+    it('should succeed on correct retrieve all vehicle', () =>
+        logic.retrieveAllProperties(id)
+        .then(vehicles => {
+            vehicles.forEach(vehicle => {
+            expect(vehicle).to.exist
+            expect(vehicle.id).to.equal(vehicleId)
+            expect(vehicle.make).to.equal(make)
+            expect(vehicle.model).to.equal(model)
+            expect(vehicle.year).to.equal(year)
+            expect(vehicle.type).to.equal(type)
+            expect(vehicle.color).to.equal(color)
+            expect(vehicle.electric).to.equal(electric)})
+        })
+        )
+        it('should fail if the id is not string', () =>
+        expect(()=>logic.retrieveAllProperties(12334455).to.throw(`id with value${'12334455'} is not a string`))            
+        )
+        it('should fail if the id is empty or blank', () => 
+        expect(() => logic.retrieveAllVehicles().to.throw("id is empty or blank")))
+
+        after(() => mongoose.disconnect())
+    })

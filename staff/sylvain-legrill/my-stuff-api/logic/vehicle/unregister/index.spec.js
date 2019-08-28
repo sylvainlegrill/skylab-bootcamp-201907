@@ -3,8 +3,7 @@ const logic = require('../../.')
 const { expect } = require('chai')
 const { User, Vehicle } = require('../../../models')
 
-describe('logic - register vehicle', () => {
-    debugger
+describe('logic - unregister vehicle', () => {
     before(() => mongoose.connect('mongodb://localhost/my-api-test', { useNewUrlParser: true }))
 
     let make, model, year, type, color, electric, plate, id, vehicleId

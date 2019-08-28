@@ -23,7 +23,7 @@ describe('logic', () => {
 
     beforeEach(() => users.deleteMany())
 
-    describe('unregister', () => {
+    describe('unregister Owner', () => {
         let name, surname, email, password, repassword
         beforeEach(() => {
             name = `name-${Math.random()}`
@@ -49,7 +49,33 @@ describe('logic', () => {
                 })
                 .catch(error => expect(error).not.to.exist)
             })
+            it('should fail if there is no owner', () => {
+                logic.unregisterPropertyOwner("5e624a1e0e56cb055f56d3d0", id)
+                    .catch( error =>{
+                        expect(error).to.exist
+                        expect(error.message).to.equal(`User does not exists.`)
+                    })
+                
+                })
+        
+        
+            it('should fail if there is no property', () =>{
+                let x= '5d5d5530531d455f75da9fF9'
+                logic.unregisterPropertyOwner(id, x)
+                       .catch( error =>{
+                           expect(error).to.exist
+                           expect(error.message).to.equal(`Property with id ${x} does not exist.`)
+                       })
+            }) 
+        
+            it('should fail on wrong data type', () => {
+                expect(() =>
+                    logic.unregisterPropertyOwner(123)
+                ).to.throw(`id with value 123 is not a string`)
+            })
     })
+
+    
 
     after(() => client.close())
 

@@ -6,7 +6,7 @@ module.exports = {
     updateUser: require('./user/update'),
     unregisterUser: require('./user/unregister'),
     registerVehicle: require('./vehicle/register'),
-    retrieveAllVehicles: require('./vehicle/retrieve-all'),
+    retrieveAllProperties: require('./vehicle/retrieve-all'),
     retrieveVehicle: require('./vehicle/retrieve'),
     updateVehicle: require('./vehicle/update'),
     unregisterVehicle: require('./vehicle/unregister'),

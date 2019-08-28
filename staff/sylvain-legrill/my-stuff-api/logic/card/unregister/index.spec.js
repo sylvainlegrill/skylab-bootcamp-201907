@@ -53,7 +53,6 @@ describe('logic - unregister card', () => {
     it('should fail if there is no user', () => {
             logic.unregisterCard("5e624a1e0e56cb055f56d3d0", cardId)
                .catch( error =>{
-                debugger
                    expect(error).to.exist
                    expect(error.message).to.equal(`User does not exists.`)
                })
