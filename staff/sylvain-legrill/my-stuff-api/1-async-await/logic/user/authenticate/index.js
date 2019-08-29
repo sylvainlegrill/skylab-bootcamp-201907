@@ -15,10 +15,12 @@ module.exports = function(email, password) {
     validate.email(email, 'username')
     validate.string(password, 'password')
 
-    return User.findOne({ email, password })
-        .then(user => {
-            if (!user) throw Error('Wrong credentials.')
+    return (async () =>{
+        const user = await User.findOne({ email, password })
 
-            return user._id.toString()
-        })
+        if (!user) throw Error('Wrong credentials.')
+
+        return user._id.toString()    
+    })()     
+    
 }

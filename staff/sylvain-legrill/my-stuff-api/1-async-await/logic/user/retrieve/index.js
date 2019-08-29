@@ -15,11 +15,13 @@ const { User } = require('../../../models')
 module.exports = function(id) {
     
     validate.string(id, 'id')
+    
+    return (async() =>{
 
-    return User.findOne({ _id: id }, { _id: 0, password: 0 }).lean()
-        .then(user => {
-            if (!user) throw Error(`user with id ${id} not found`)
+        const user = await User.findOne({ _id: id }, { _id: 0, password: 0 }).lean()
+        
+        if (!user) throw Error(`user with id ${id} not found`)
             user.id = id
             return user
-        })
+        })()
 }

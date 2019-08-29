@@ -1,5 +1,7 @@
 const { expect } = require('chai')
 const logic = require('../../.')
+const authenticateUser = require('.')
+
 const { User } = require('../../../models')
 const mongoose = require('mongoose')
 
@@ -9,38 +11,45 @@ describe('logic - authenticate user', () => {
 
     let name, surname, email, password, id
 
-    beforeEach(() => {
+    beforeEach(async() => {
         name = `name-${Math.random()}`
         surname = `surname-${Math.random()}`
         email = `email-${Math.random()}@domain.com`
         password = `password-${Math.random()}`
 
-        return User.deleteMany()
-            .then(() => User.create({ name, surname, email, password })
-                .then(user => id = user.id))
+        await User.deleteMany()
+        const user =  await User.create({ name, surname, email, password })
+        id = user.id
     })
 
-    it('should succeed on correct data', () =>
-        logic.authenticateUser(email, password)
-            .then(_id => {
+    it('should succeed on correct data', async () =>{
+        const _id = await logic.authenticateUser(email, password)
+           
                 expect(_id).to.exist
                 expect(_id).to.be.a('string')
                 expect(_id).to.equal(id)
-            })
+    })
+    
+    it('should fail on incorrect mail', async () => {
+        try{
+            await logic.authenticateUser("pepito@mail.com", password)
+        }
+        catch({message}){
+            expect(message).to.equal('Wrong credentials.')
+        }
+    }
+            
     )
-    it('should fail on incorrect mail', () => 
-            logic.authenticateUser("pepito@mail.com", password)
-                .catch( error => {
-                    expect(error).to.exist
-                    expect(error.message).to.equal('Wrong credentials.')
-                })
-    )
-    it('should fail on wrong password', () => 
-        logic.authenticateUser(email, "123")
-            .catch( error => {
-                expect(error).to.exist
-                expect(error.message).to.equal('Wrong credentials.')
-            })
+    it('should fail on wrong password', async () => {
+
+        try{
+            await logic.authenticateUser(email, "123")
+        }
+        catch({message}){
+            expect(message).to.equal('Wrong credentials.')
+        }   
+    } 
+
     )
 
     after(() => mongoose.disconnect())

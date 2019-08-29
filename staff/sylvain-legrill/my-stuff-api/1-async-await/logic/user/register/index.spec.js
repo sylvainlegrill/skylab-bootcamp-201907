@@ -17,30 +17,35 @@ describe('logic - register user', () => {
         return User.deleteMany()
     })
 
-    it('should succeed on correct data', () =>
-        logic.registerUser(name, surname, email, password)
-            .then(result => {
-                expect(result).not.to.exist
+    it('should succeed on correct data', async () =>{
+       
+        const result = await logic.registerUser(name, surname, email, password)
+        
+            expect(result).not.to.exist
 
-                return User.findOne({ email })
-            })
-            .then(user => {
-                expect(user).to.exist
-                expect(user.name).to.equal(name)
-                expect(user.surname).to.equal(surname)
-                expect(user.email).to.equal(email)
-                expect(user.password).to.equal(password)
-            })
-    )
-    it('should fail if the email already exists', () =>
+            await User.findOne({ email }) //
+        
+            return (user => { //
+            expect(user).to.exist
+            expect(user.name).to.equal(name)
+            expect(user.surname).to.equal(surname)
+            expect(user.email).to.equal(email)
+            expect(user.password).to.equal(password)
+        })
+    })
+
+    it('should fail if the email already exists', async () => {
+        try{
+           User.create({name, surname, email, password})
+           await logic.registerUser(name, surname, email, password)
+        }
+        catch({message}){
+            expect(message).to.equal(`user with email ${email} already exists`)
+
+        }
+
+    }
     
-        User.create({ name, surname, email, password })
-            .then (() => logic.registerUser(name, surname, email, password)
-                .catch( error =>{
-                    expect(error).to.exist
-                    expect(error.message).to.equal(`user with email ${email} already exists`)
-                })
-            )
     )
     after(() => mongoose.disconnect())
 })

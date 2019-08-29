@@ -8,28 +8,50 @@ describe('logic - unregister user', () => {
 
     let name, surname, email, password, id
 
-    beforeEach(() => {
+    beforeEach( async() => {
         name = `name-${Math.random()}`
         surname = `surname-${Math.random()}`
         email = `email-${Math.random()}@domain.com`
         password = `password-${Math.random()}`
 
-        return User.deleteMany()
-            .then(() => User.create({ name, surname, email, password }))
-            .then(user => id = user.id)
+        await User.deleteMany()
+            const user = await User.create({ name, surname, email, password })
+            id = user.id
+
+            // return User.deleteMany()
+            // .then(() => User.create({ name, surname, email, password }))
+            // .then(user => id = user.id)
     })
 
-    it('should succeed on correct data', () =>
+    it('should succeed on correct data', async () =>{
+
+        const result = await logic.unregisterUser(id, password)
+            expect(result).not.to.exist
+
+            return User.findById(id)
+    }
         logic.unregisterUser(id, password)
             .then(result => {
                 expect(result).not.to.exist
 
-                return User.findById(id)
+                await User.findById(id)
+
+                return (user => {
+                    expect(user).not.to.exist
+                })
             })
-            .then(user => {
-                expect(user).not.to.exist
-            })
-    )
+            
+    
+//     logic.unregisterUser(id, password)
+//     .then(result => {
+//         expect(result).not.to.exist
+
+//         return User.findById(id)
+//     })
+//     .then(user => {
+//         expect(user).not.to.exist
+//     })
+// )
 
     it('should fail on unexisting user', () =>
         logic.unregisterUser('5d5d5530531d455f75da9fF9', password)
