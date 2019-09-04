@@ -16,7 +16,9 @@ Project by:
 Jamba (jamb in Spanish,  from French *jambe* = "leg") in architecture is the side-post  of a door or window opening;
 a door cannot stands on its own , jambs provides support, so do Jamba.
 
-Jamba is a webservice and online marketplace offering to connect directly landlords and tenants to freelance architects for their construction or renovation projects. Don't fear the Architect World anymore.
+
+Jamba is a webservice and online marketplace offering to connect directly landlords and tenants to freelance architects for their construction or renovation projects. Don't fear the architecture world anymore.
+
 
 ## Functional documentation
 
@@ -40,7 +42,9 @@ Architects, on their side, have the possibility to:
 
 ### Flows
 
+
 ![image](./img/flows.png)
+
 
 ## Trello 
 
