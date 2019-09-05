@@ -16,5 +16,5 @@ module.exports = new Schema({
         required: true
     },
     user: { type: ObjectId, ref: 'User' },
-    architect: {type: ObjectId, ref: 'Architect' },
+    architect: {type: ObjectId, ref: 'Architect' }
 })

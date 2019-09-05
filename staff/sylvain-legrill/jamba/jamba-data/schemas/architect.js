@@ -21,7 +21,7 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    phone: {
+    architectPhone: {
         type: Number,
         required: true
     },
