@@ -50,7 +50,7 @@ Architects, on their side, have the possibility to:
 
 ### Data models
 
-![image](./img/data-model.png)
+![image](./img/data-model-jamba.png)
 
 
 ## Trello 
