@@ -20,6 +20,47 @@ module.exports = new Schema({
     password: {
         type: String,
         required: true
+    },
+    phone: {
+        type: Number,
+        required: true
+    },
+    city: {
+        type: String,
+        required: false
+    },
+
+    license: {
+        type: String,
+        required: false
+    },
+    specialty: {
+        type: String,
+        required: false 
+    }, 
+    profileImg: {
+        type: String,
+        required: false
+    },
+    portfolioUrl:{
+        type: String,
+        required: false 
+    },
+    projectImg:{
+        type: String,
+        required: false 
+    },
+    description:{
+        type: String,
+        required: false 
+    },
+
+    userRole: {
+        type: String,
+        required: true,
+        enum: ['customer', 'architect','contractor'],
+        default: 'customer'
+
     }
     
 })
