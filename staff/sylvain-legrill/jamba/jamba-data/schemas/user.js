@@ -23,7 +23,8 @@ module.exports = new Schema({
     },
     phone: {
         type: String,
-        required: false
+        required: true
+
     },
     city: {
         type: String,
@@ -55,7 +56,7 @@ module.exports = new Schema({
         required: false 
     },
 
-    userRole: {
+    role: {
         type: String,
         required: true,
         enum: ['customer', 'architect','contractor'],
