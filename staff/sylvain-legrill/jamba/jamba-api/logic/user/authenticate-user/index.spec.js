@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const authenticateUser = require('.')
-const { database, models: { User } } = require('jamba-data')
+const { database, models: { User } } = require('my-stuff-data')
 
 const { env: { DB_URL_TEST }} = process
 
