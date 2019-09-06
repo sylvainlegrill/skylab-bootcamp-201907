@@ -11,10 +11,6 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    userPhone: {
-        type: Number,
-        required: true
-    },
     user: { type: ObjectId, ref: 'User' },
-    architect: {type: ObjectId, ref: 'Architect' }
+    architect: {type: ObjectId, ref: 'User' }
 })
