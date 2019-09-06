@@ -24,6 +24,7 @@ module.exports = new Schema({
     phone: {
         type: String,
         required: true
+
     },
     city: {
         type: String,
