@@ -1,5 +1,5 @@
-const { models: { User } } = require('my-stuff-data')
-const { validate } = require('my-stuff-utils')
+const { models: { User } } = require('jamba-data')
+//const bcrypt = require('bcrypt')
 
 /**
  * Authenticates a user by its credentials.

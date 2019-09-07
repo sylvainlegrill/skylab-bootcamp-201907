@@ -1,24 +1,26 @@
 require('dotenv').config()
 
 const { expect } = require('chai')
-const authenticateUser = require('.')
-const { database, models: { User } } = require('my-stuff-data')
+const authenticateUser = require('../authenticate-user')
+const { database, models: { User } } = require('jamba-data')
+//const bcrypt = require('bcrypt')
 
 const { env: { DB_URL_TEST }} = process
 
 describe('logic - authenticate user', () => {
     before(() => database.connect(DB_URL_TEST))
 
-    let name, surname, email, password, id
+    let name, surname, email, password, phone, id
 
     beforeEach(async () => {
         name = `name-${Math.random()}`
         surname = `surname-${Math.random()}`
         email = `email-${Math.random()}@domain.com`
         password = `password-${Math.random()}`
+        phone= `phone-${Math.random()}`
 
         await User.deleteMany()
-        const user = await User.create({ name, surname, email, password })
+        const user = await User.create({ name, surname, email, password, phone })
         id = user.id
     })
 

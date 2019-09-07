@@ -1,4 +1,4 @@
 module.exports = {
-    registerUser: require('./register-user'),
-    registerArchitect: require('./register-architect')
+    registerUser: require('./users/register-user')
+   
 }
