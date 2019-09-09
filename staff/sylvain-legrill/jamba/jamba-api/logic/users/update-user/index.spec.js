@@ -8,7 +8,7 @@ const { database, models: { User } } = require('jamba-data')
 //const { env: { DB_URL_TEST }} = process
 
 
-describe.only('logic - update user', () => {
+describe('logic - update user', () => {
     before(() => database.connect('mongodb://localhost/jamba'))
 
 
@@ -24,7 +24,6 @@ describe.only('logic - update user', () => {
                 name = `name-${Math.random()}`
                 surname = `surname-${Math.random()}`
                 email = `email-${Math.random()}@domain.com`
-                password = `password-${Math.random()}`
                 phone = `phone-${Math.random()}`
                 city = `city-${Math.random()}`
                 license = `license-${Math.random()}`
@@ -33,33 +32,54 @@ describe.only('logic - update user', () => {
                 const user = await User.create({name, surname, email, phone, city, license, specialty, password})
                 id = user.id
             })
-            it('should succeed on correct data', async () => {
+        it('should succeed on correct user data', async () => {
+            
+            const user =  await updateUser(id, { name: 'newName', surname: 'newSurname', email: 'new@email.com', phone: 'newPhone', password: 'newPassword' })
+                expect(user).not.to.exist
                 
-                const user =  await updateUser(id, { name: 'newName', surname: 'newSurname', email: 'new@email.com', phone: '634342323', city: 'paris', password: 'newPassword' })
-                    expect(user).not.to.exist
-                    
-                const userUpdate = await User.findOne({ _id: id })
-              
-                    expect(userUpdate).to.exist
-                    expect(userUpdate.name).to.equal('newName')
-                    expect(userUpdate.surname).to.equal('newSurname')
-                    expect(userUpdate.email).to.equal('new@email.com')
-                    expect(userUpdate.password).to.equal('newPassword')
-                 
-                })
-            it('should fail on empty id', () =>
-                expect(() =>
-                    logic.user.update('', { name: 'newName', surname: 'newSurname', email: 'new@email.com', password: 'newPassword' })
-                ).to.throw('id is empty or blank')
-            )
-            it('should fail on undefined id', () =>
-                expect(() =>
-                    logic.user.update(undefined, { name: 'newName', surname: 'newSurname', email: 'new@email.com', password: 'newPassword' })
-                ).to.throw('id with value undefined is not a string')
-            )
+            const userUpdate = await User.findOne({ _id: id })
+            
+                expect(userUpdate).to.exist
+                expect(userUpdate.name).to.equal('newName')
+                expect(userUpdate.surname).to.equal('newSurname')
+                expect(userUpdate.email).to.equal('new@email.com')
+                expect(userUpdate.phone).to.equal('newPhone')
+                expect(userUpdate.password).to.equal('newPassword')
+                
+        })
+
+        it('should succeed on correct architect data', async () => {
+            
+            const user =  await updateUser(id, { name: 'newName', surname: 'newSurname', email: 'new@email.com', phone: 'newPhone', city:'newCity', license: 'newLicense', specialty:'newSpecialty', password: 'newPassword' })
+                expect(user).not.to.exist
+                
+            const userUpdate = await User.findOne({ _id: id })
+            
+                expect(userUpdate).to.exist
+                expect(userUpdate.name).to.equal('newName')
+                expect(userUpdate.surname).to.equal('newSurname')
+                expect(userUpdate.email).to.equal('new@email.com')
+                expect(userUpdate.phone).to.equal('newPhone')
+                expect(userUpdate.city).to.equal('newCity')
+                expect(userUpdate.license).to.equal('newLicense')
+                expect(userUpdate.password).to.equal('newPassword')
+                
+        })
+           
         })
    
     after(() => database.disconnect())
 
     
 })
+
+ // it('should fail on empty id', () =>
+            //     expect(() =>
+            //         logic.user.update('', { name: 'newName', surname: 'newSurname', email: 'new@email.com', password: 'newPassword' })
+            //     ).to.throw('id is empty or blank')
+            // )
+            // it('should fail on undefined id', () =>
+            //     expect(() =>
+            //         logic.user.update(undefined, { name: 'newName', surname: 'newSurname', email: 'new@email.com', password: 'newPassword' })
+            //     ).to.throw('id with value undefined is not a string')
+            // )

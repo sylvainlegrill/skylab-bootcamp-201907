@@ -5,6 +5,9 @@ module.exports = {
     // retrieveAllArchitects: require('./users/retrieve-all-architects'),
     updateUser: require('./users/update-user'),
     unregisterUser: require('./users/unregister-user'),
-    addMeeting: require('./meetings/add-meeting')
-   
+    addMeeting: require('./meetings/add-meeting'),
+    deleteMeeting: require('./meetings/delete-meeting'),
+    retrieveMeeting: require('./meetings/retrieve-meeting'),
+    listMeetings: require('./meetings/list-meetings'),
+     
 }

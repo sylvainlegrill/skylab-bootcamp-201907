@@ -1,17 +1,18 @@
 require('dotenv').config()
 
 const { expect } = require('chai')
-const retrieveMeeting = require('.')
+const listMeetings = require('.')
 const { database, models: { User, Meeting } } = require('jamba-data')
 const { random } = Math
 
 const { env: { DB_URL_TEST }} = process
 
-describe('logic - retrieve meeting', () => {
+describe.only('logic - list meeting(s)', () => {
+
     before(() => database.connect(DB_URL_TEST))
 
     let user, architect, date, address, meeting
-    
+
     beforeEach(async () => {
         await Promise.all([User.deleteMany(), Meeting.deleteMany()])
 
@@ -38,22 +39,18 @@ describe('logic - retrieve meeting', () => {
         meeting = await Meeting.create({
             date, address, user: user.id, architect: architect.id
         })
-
-        debugger
     })
 
     it('should succeed on correct data', async () => {
-        const _meeting = await retrieveMeeting(meeting.id)
+
+        const result = await listMeetings(meeting.id, user.id)
+
+        expect (result).to.exist
+
+        const _meeting = await Meeting.find(meeting)
 
         expect(_meeting).to.exist
-        expect (_meeting.date).to.deep.equal(date)
-        expect (_meeting.address).to.equal(address)
-        expect (_meeting.user.toString()).to.equal(user.id)
-        expect (_meeting.architect.toString()).to.equal(architect.id)
-   
-        
     })
 
     after(() => database.disconnect())
-    
 })
