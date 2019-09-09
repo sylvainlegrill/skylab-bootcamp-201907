@@ -29,6 +29,9 @@ describe('logic - retrieve meeting', () => {
             email: `email-${random()}@mail.com`,
             password: `password-${random()}`,
             phone: `123-${random()}`,
+            city: `city-${random()}`,
+            license: `license-${random()}`,   
+            specialty: `specialty-${random()}`,   
             role: 'architect'
         })
 
@@ -39,7 +42,7 @@ describe('logic - retrieve meeting', () => {
             date, address, user: user.id, architect: architect.id
         })
 
-        debugger
+        
     })
 
     it('should succeed on correct data', async () => {

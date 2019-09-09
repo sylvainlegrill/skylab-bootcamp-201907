@@ -4,25 +4,28 @@ const { validate }= require('jamba-utils')
 /**
  * Retrieve all architects
  * 
- * @param {*} id 
+ * @param {role} role
+ * 
+ * 
  * @returns {Promise}
  * 
 */
 
-module.exports = function(id,role) {
+module.exports = function(role) {
+    debugger
+ 
+    validate.string(role, 'role')
     
-    validate.string(id, 'id')
-    validate.string(role)
 
         return (async () => {
-            const user = await User.find({ _id: id }, { _id: 0, password: 0 }).lean()
-            if (!user) throw Error(`User with id ${id} does not exist.`)
-            user.forEach(user => {
-                    // user.id = user._id
-                    // delete user._i1d
-                    user.id = id
-                })
-                return user
+            const architects = await User.find({role:'architect'}, { password: 0 }).lean()
+            if (!architects) throw Error(`No user with role ${role} found.`)
+            architects.forEach(user => {
+                user.id = user._id.toString()
+                delete user._id
+                //user.id = id
+            })
+            return architects
         })()
     
 }

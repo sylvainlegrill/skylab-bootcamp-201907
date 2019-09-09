@@ -1,50 +1,61 @@
-// require('dotenv').config()
+require('dotenv').config()
 
-// const { expect } = require('chai')
-// const retrieveAllArchitects = require('.')
-// const { database, models: { User } } = require('jamba-data')
-// //const bcrypt = require('bcrypt')
+const { expect } = require('chai')
+const retrieveAllArchitects = require('.')
+const { database, models: { User } } = require('jamba-data')
+//const bcrypt = require('bcrypt')
 
-// const { env: { DB_URL_TEST }} = process
+const { env: { DB_URL_TEST }} = process
 
-// describe.only('logic - retrieve all architects', () => {
-//     before(() => database.connect(DB_URL_TEST))
+describe('logic - retrieve all architects', () => {
+    before(() => database.connect(DB_URL_TEST))
 
-//     let name, surname, email, phone, city, license, specialty, password, id
+    let name1 , surname1, email1, password1, phone1, city1, license1, specialty1, role1, name2 , surname2, email2, password2, phone2, city2, license2, specialty2, role2
 
-//     beforeEach(() => {
-//         name = `name-${Math.random()}`
-//         surname = `surname-${Math.random()}`
-//         email = `email-${Math.random()}@domain.com`
-//         phone = `phone-${Math.random()}`
-//         city = `city-${Math.random()}`
-//         license = `license-${Math.random()}`
-//         specialty = `specialty-${Math.random()}`
-//         password = `password-${Math.random()}`
+    beforeEach(async() => {
+        
+            name1= `name-${Math.random()}`
+            surname1= `surname-${Math.random()}`
+            email1= `email-${Math.random()}@mail.com`
+            password1= `password-${Math.random()}`
+            phone1= `123-${Math.random()}`
+            city1= `city-${Math.random()}`
+            license1= `license-${Math.random()}`
+            specialty1= `specialty-${Math.random()}`
+            role1= "architect"
+       
+            name2= `name-${Math.random()}`
+            surname2= `surname-${Math.random()}`
+            email2= `email-${Math.random()}@mail.com`
+            password2= `password-${Math.random()}`
+            phone2= `123-${Math.random()}`
+            city2= `city-${Math.random()}`
+            license2= `license-${Math.random()}`
+            specialty2= `specialty-${Math.random()}`
+            role2= 'architect'
 
-//         return (async () => {
-//             await User.deleteMany()
-//             const user = await User.create({name, surname, email, phone, city, license, specialty, password})
-//             id = user.id
-//         })()
-//     })
+            await User.deleteMany()
+            const user1= await User.create({name: name1, surname: surname1, email: email1, password: password1, phone: phone1, city: city1, license: license1, specialty: specialty1, role: role1})
+            userId1 = user1.id
 
-//     it('should succeed on correct architect data', async() =>{
+            const user2= await User.create({name: name2, surname: surname2, email: email2, password: password2, phone: phone2, city: city2, license: license2, specialty: specialty2, role: role2})
+            userId2 = user2.id
+        
 
-//         const user = await retrieveAllArchitects(name, surname, email, password, phone, "architect", city, license, specialty)
-//         expect(user).to.exist
-//         expect(user.id).to.equal(id)
-//         expect(user._id).not.to.exist
-//         expect(user.name).to.equal(name)
-//         expect(user.surname).to.equal(surname)
-//         expect(user.email).to.equal(email)
-//         expect(user.phone).to.equal(phone)
-//         expect(user.city).to.equal(city)
-//         expect(user.license).to.equal(license)
-//         expect(user.specialty).to.equal(specialty)
-//         expect(user.password).to.equal(password)
-//         expect(user.role).to.equal("architect")
-//     })
+    })
 
-//     after(() => database.disconnect())
-// })
+    it('should succeed on correct architect data ', async () => {
+        
+        const _role = 'architect'
+        
+        const architects = await retrieveAllArchitects( _role)
+
+        expect(architects).to.exist
+        expect(architects.length).to.equal(2)
+        expect(architects[0]).to.exist
+        expect(architects[1]).to.exist
+
+    })
+
+    after(() => database.disconnect())
+})
