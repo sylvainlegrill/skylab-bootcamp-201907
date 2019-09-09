@@ -58,7 +58,7 @@ module.exports = new Schema({
     role: {
         type: String,
         required: true,
-        enum: ['customer', 'architect','contractor'],
+        enum: ['customer', 'architect'],
         default: 'customer'
 
     }
