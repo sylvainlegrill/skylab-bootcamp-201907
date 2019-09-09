@@ -39,6 +39,5 @@ module.exports = function (name, surname, email, password, phone, role, city, li
             await User.create({name, surname, email, phone, role})
         }
 
-        //registerUser(pepito, grillo, g@g.com, 12345566, user)
     })()
 }

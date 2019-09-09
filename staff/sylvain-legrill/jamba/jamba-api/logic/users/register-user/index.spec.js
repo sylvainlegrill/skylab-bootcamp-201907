@@ -3,12 +3,13 @@ require('dotenv').config()
 const { expect } = require('chai')
 const registerUser= require('.')
 const { database, models: { User } } = require('jamba-data')
-//const bcrypt = require('bcrypt')
+// const bcrypt = require('bcrypt')
 
-const { env: { DB_URL_TEST }} = process
+//const { env: { DB_URL_TEST }} = process
 
-describe.only('logic - register user', () => {
-    before(() => database.connect(DB_URL_TEST))
+describe('logic - register user', () => {
+    before(() => database.connect('mongodb://localhost/jamba'))
+
 
     let name, surname, email, phone, city, license, specialty, password
 

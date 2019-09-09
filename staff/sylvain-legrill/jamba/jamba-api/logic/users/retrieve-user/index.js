@@ -1,4 +1,6 @@
 const { models: { User } } = require('jamba-data')
+const { validate }= require('jamba-utils')
+
 
 /**
  * Retrieves a user by its id.
@@ -7,13 +9,14 @@ const { models: { User } } = require('jamba-data')
  * 
  * @returns {Promise}
  */
-module.exports = function (id) {
-    return User.findOne({ _id: id }, { _id: 0, password: 0 }).lean()
-        .then(user => {
-            if (!user) throw new Error(`user with id ${id} not found`)
+module.exports = function(id) {
+    
+    validate.string(id, 'id')
 
-            user.id = id
-
-            return user
-        })
+    return (async () => {
+        const user = await User.findOne({ _id: id }, { _id: 0, password: 0 }).lean()
+        if (!user) throw Error(`User with id ${id} does not exist.`)
+        user.id = id
+        return user
+    })()
 }

@@ -1,16 +1,19 @@
 const { models: { User } } = require('jamba-data')
+const { validate }= require('jamba-utils')
 
 /**
- * Updates a user.
  * 
- * @param {string} id
- * @param {Object} data
+ * @param {*} id
+ * @param {*} fieldsToUpdate 
  * 
- * @returns {Promise}
- */
-module.exports = function (id, data) {
-    return User.findByIdAndUpdate(id, { $set: data })
-        .then(user => {
-            if (!user) throw new Error(`user with id ${id} does not exist`)
-        })
+* @returns {Promise}
+*/
+module.exports = function(id, fieldsToUpdate) {
+    validate.string(id, 'id')
+    return (async()=>{
+        const user = await User.findByIdAndUpdate(id, { $set: fieldsToUpdate })
+        if (!user) throw Error(`User with id ${id} does not exist.`)
+        
+    })()
+   
 }

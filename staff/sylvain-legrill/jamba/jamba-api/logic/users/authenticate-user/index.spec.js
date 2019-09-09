@@ -5,10 +5,11 @@ const authenticateUser = require('../authenticate-user')
 const { database, models: { User } } = require('jamba-data')
 //const bcrypt = require('bcrypt')
 
-const { env: { DB_URL_TEST }} = process
+//const { env: { DB_URL_TEST }} = process
 
 describe('logic - authenticate user', () => {
-    before(() => database.connect(DB_URL_TEST))
+    before(() => database.connect('mongodb://localhost/jamba'))
+
 
     let name, surname, email, password, phone, id
 

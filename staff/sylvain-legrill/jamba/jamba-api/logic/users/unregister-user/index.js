@@ -1,17 +1,24 @@
 const { models: { User } } = require('jamba-data')
-/**
- * Unregisters a user.
- * 
- * @param {string} id
- * @param {string} password
- * 
- * @returns {Promise}
- */
-module.exports = function (id, password) {
-    // TODO validate fields
+const { validate }= require('jamba-utils')
 
-    return User.deleteOne({ _id: id, password })
-        .then(result => {
-            if (!result.deletedCount) throw new Error(`wrong credentials`)
-        })
+/**
+* Unregisters a user by their id
+* 
+* @param {string} id 
+* @param {string} email
+* @param {string} password 
+* 
+* @returns {Promise}
+*/
+
+module.exports = function(id, email, password) {
+   validate.string(id, 'id')
+   validate.string(email, 'email')
+   validate.string(password, 'password')
+   return (async()=>{
+       const user =  await User.deleteOne({ _id: id, email, password })
+       if (!user.deletedCount) throw Error(`There was an error unregistering the user`)
+      
+   })()
+   
 }
