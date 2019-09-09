@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const { Schema , ObjectId } = mongoose
+const { Schema, ObjectId } = mongoose
 
 module.exports = new Schema({
     name: {
@@ -37,31 +37,29 @@ module.exports = new Schema({
     },
     specialty: {
         type: String,
-        required: false 
-    }, 
+        required: false
+    },
     profileImg: {
         type: String,
         required: false
     },
-    portfolioUrl:{
+    portfolioUrl: {
         type: String,
-        required: false 
+        required: false
     },
-    projectImg:{
+    projectImg: {
         type: String,
-        required: false 
+        required: false
     },
-    description:{
+    description: {
         type: String,
-        required: false 
+        required: false
     },
-
     role: {
         type: String,
         required: true,
-        enum: ['customer', 'architect','contractor'],
+        enum: ['customer', 'architect'],
         default: 'customer'
 
     }
-    
 })

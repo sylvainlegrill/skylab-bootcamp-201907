@@ -1,5 +1,5 @@
 
-const logic = require('../logic')
+const logic = require('../../logic')
 
 module.exports = function (req, res) {
     const { body: { name, surname, email, phone, city, license, specialty, password } } = req
