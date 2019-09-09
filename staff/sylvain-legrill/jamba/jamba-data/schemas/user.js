@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const { Schema , ObjectId } = mongoose //delete ObjectId
+const { Schema , ObjectId } = mongoose 
 
 module.exports = new Schema({
     name: {
