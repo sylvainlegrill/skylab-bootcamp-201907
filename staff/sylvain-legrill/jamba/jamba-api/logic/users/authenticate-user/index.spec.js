@@ -3,12 +3,12 @@ require('dotenv').config()
 const { expect } = require('chai')
 const authenticateUser = require('../authenticate-user')
 const { database, models: { User } } = require('jamba-data')
-//const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
-//const { env: { DB_URL_TEST }} = process
+const { env: { DB_URL_TEST }} = process
 
 describe('logic - authenticate user', () => {
-    before(() => database.connect('mongodb://localhost/jamba'))
+    before(() => database.connect(DB_URL_TEST))
 
 
     let name, surname, email, password, phone, id
@@ -21,7 +21,7 @@ describe('logic - authenticate user', () => {
         phone= `phone-${Math.random()}`
 
         await User.deleteMany()
-        const user = await User.create({ name, surname, email, password, phone })
+        const user = await User.create({ name, surname, email, password: await bcrypt.hash(password,10), phone })
         id = user.id
     })
 
@@ -51,7 +51,7 @@ describe('logic - authenticate user', () => {
         }
     })
 
-    it('should fail on wrong password', async () => {
+     it('should fail on wrong password', async () => {
         password = 'wrong password'
 
         try {

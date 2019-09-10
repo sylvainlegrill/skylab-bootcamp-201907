@@ -3,16 +3,12 @@ require('dotenv').config()
 const { expect } = require('chai')
 const updateUser = require('.')
 const { database, models: { User } } = require('jamba-data')
-//const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
-//const { env: { DB_URL_TEST }} = process
-
+const { env: { DB_URL_TEST }} = process
 
 describe('logic - update user', () => {
-    before(() => database.connect('mongodb://localhost/jamba'))
-
-
-    // let name, surname, email, phone, city, license, specialty, password
+    before(() => database.connect(DB_URL_TEST))
 
     beforeEach(async() => {
         await User.deleteMany()
@@ -29,12 +25,12 @@ describe('logic - update user', () => {
                 license = `license-${Math.random()}`
                 specialty = `specialty-${Math.random()}`
                 password = `password-${Math.random()}`
-                const user = await User.create({name, surname, email, phone, city, license, specialty, password})
+                const user = await User.create({name, surname, email, phone, city, license, specialty, password: await bcrypt.hash(password,10)})
                 id = user.id
             })
         it('should succeed on correct user data', async () => {
             
-            const user =  await updateUser(id, { name: 'newName', surname: 'newSurname', email: 'new@email.com', phone: 'newPhone', password: 'newPassword' })
+            const user =  await updateUser(id, { name: 'newName', surname: 'newSurname', phone: 'newPhone', password: 'newPassword' })
                 expect(user).not.to.exist
                 
             const userUpdate = await User.findOne({ _id: id })
@@ -42,15 +38,14 @@ describe('logic - update user', () => {
                 expect(userUpdate).to.exist
                 expect(userUpdate.name).to.equal('newName')
                 expect(userUpdate.surname).to.equal('newSurname')
-                expect(userUpdate.email).to.equal('new@email.com')
                 expect(userUpdate.phone).to.equal('newPhone')
-                expect(userUpdate.password).to.equal('newPassword')
+                expect(userUpdate.password).to.exist
                 
         })
 
         it('should succeed on correct architect data', async () => {
             
-            const user =  await updateUser(id, { name: 'newName', surname: 'newSurname', email: 'new@email.com', phone: 'newPhone', city:'newCity', license: 'newLicense', specialty:'newSpecialty', password: 'newPassword' })
+            const user =  await updateUser(id, { name: 'newName', surname: 'newSurname', phone: 'newPhone', city:'newCity', license: 'newLicense', specialty:'newSpecialty', password: 'newPassword' })
                 expect(user).not.to.exist
                 
             const userUpdate = await User.findOne({ _id: id })
@@ -58,12 +53,10 @@ describe('logic - update user', () => {
                 expect(userUpdate).to.exist
                 expect(userUpdate.name).to.equal('newName')
                 expect(userUpdate.surname).to.equal('newSurname')
-                expect(userUpdate.email).to.equal('new@email.com')
                 expect(userUpdate.phone).to.equal('newPhone')
                 expect(userUpdate.city).to.equal('newCity')
                 expect(userUpdate.license).to.equal('newLicense')
-                expect(userUpdate.password).to.equal('newPassword')
-                
+                expect(userUpdate.password).to.exist              
         })
            
         })
@@ -72,14 +65,3 @@ describe('logic - update user', () => {
 
     
 })
-
- // it('should fail on empty id', () =>
-            //     expect(() =>
-            //         logic.user.update('', { name: 'newName', surname: 'newSurname', email: 'new@email.com', password: 'newPassword' })
-            //     ).to.throw('id is empty or blank')
-            // )
-            // it('should fail on undefined id', () =>
-            //     expect(() =>
-            //         logic.user.update(undefined, { name: 'newName', surname: 'newSurname', email: 'new@email.com', password: 'newPassword' })
-            //     ).to.throw('id with value undefined is not a string')
-            // )

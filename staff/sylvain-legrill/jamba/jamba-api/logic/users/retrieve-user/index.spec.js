@@ -5,10 +5,10 @@ const retrieveUser = require('.')
 const { database, models: { User } } = require('jamba-data')
 // const bcrypt = require('bcrypt')
 
-//const { env: { DB_URL_TEST }} = process
+const { env: { DB_URL_TEST }} = process
 
 describe('logic - retrieve user', () => {
-    before(() => database.connect('mongodb://localhost/jamba'))
+    before(() => database.connect(DB_URL_TEST))
 
     let name, surname, email, phone, password, id
 

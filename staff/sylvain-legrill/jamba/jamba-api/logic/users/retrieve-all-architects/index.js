@@ -12,7 +12,7 @@ const { validate }= require('jamba-utils')
 */
 
 module.exports = function(role) {
-    debugger
+    
  
     validate.string(role, 'role')
     
