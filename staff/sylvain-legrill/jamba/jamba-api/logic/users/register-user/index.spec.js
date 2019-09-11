@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs')
 
 const { env: { DB_URL_TEST }} = process
 
-describe('logic - register user', () => {
+describe.only('logic - register user', () => {
     before(() => database.connect(DB_URL_TEST))
 
 
