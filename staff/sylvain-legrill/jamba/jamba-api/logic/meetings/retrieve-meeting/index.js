@@ -1,6 +1,4 @@
-const {
-  models: { User, Meeting }
-} = require("jamba-data");
+const {models: { User, Meeting }} = require("jamba-data");
 const { validate } = require("jamba-utils");
 
 /**

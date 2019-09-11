@@ -2,7 +2,7 @@ const { unregisterUser } = require('../../logic')
 
 
 module.exports = async (req, res) => {
-    const { params: {id} , body: { email , password } } = req
+    const { params: {id} , body: {email} , body: {password} } = req
     
     try {
         await unregisterUser(id, email, password)

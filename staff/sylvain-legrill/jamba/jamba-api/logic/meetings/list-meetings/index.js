@@ -11,15 +11,17 @@ const { validate } = require("jamba-utils")
    */
   
    
-  module.exports = function(userId, userRole) {
+  module.exports = function(userId) {
     
     validate.string(userId, 'user id')
-    validate.string(userRole, 'user role')
     
     let meetings
     
-
     return (async () => {
+      
+          const user = await User.findById(userId).lean()
+          if(!user) throw Error('User doesnt exist')
+          const userRole = user.role
         // const meeting = await Meeting.findById(meetingId).lean()
         // if (!meeting) throw Error(`meeting with id ${meetingId} does not exist`)
         if(userRole==='customer'){
@@ -31,12 +33,14 @@ const { validate } = require("jamba-utils")
         }
 
         if(meetings.length === 0) {
-        return []
+          return []
         }
         else {
-          meetings.map(meeting=>{ 
+          return meetings.map(meeting=>{ 
             meeting.id = meeting._id.toString()
             delete meeting._id
+
+            return meeting
           })
           
         }

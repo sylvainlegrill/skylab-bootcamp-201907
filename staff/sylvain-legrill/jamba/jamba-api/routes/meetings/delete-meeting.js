@@ -1,11 +1,11 @@
-const { meeting} = require('../../logic')
+const { deleteMeeting} = require('../../logic')
 
 
 module.exports = async (req, res) => {
-    const { id } = req
+    const { params: {meetingId} } = req
 
     try {
-        await meeting.deleteMeeting(id)
+        await deleteMeeting(meetingId)
         res.status(201).json({ message: `meeting correctly deleted` })
     } catch ({ message }) {
         res.status(400).json({ error: message })
