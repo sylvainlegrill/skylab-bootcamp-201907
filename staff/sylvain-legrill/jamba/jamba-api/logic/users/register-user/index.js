@@ -8,8 +8,8 @@ const bcrypt = require('bcryptjs')
  * @param {string} name 
  * @param {string} surname 
  * @param {string} email
- * @param {string} password   
  * @param {string} phone
+ * @param {string} password  
  * @param {string} city
  * @param {string} license
  * @param {string} specialty
@@ -23,8 +23,8 @@ module.exports = function (name, surname, email,  phone, password, role, city, l
     validate.string(surname)
     validate.string(email)
     validate.email(email, 'e-mail')
-    validate.string(password)
     validate.string(phone)
+    validate.string(password)
     validate.string(role)
     return ( async () => {
         const user = await User.findOne({ email })

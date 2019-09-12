@@ -2,7 +2,7 @@ const { deleteMeeting} = require('../../logic')
 
 
 module.exports = async (req, res) => {
-    const { params: {meetingId} } = req
+    const { userId, params: {meetingId} } = req
 
     try {
         await deleteMeeting(meetingId)

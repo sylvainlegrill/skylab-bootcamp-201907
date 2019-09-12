@@ -1,15 +1,15 @@
-const { listMeetings } = require("../../logic");
+const { listMeetings } = require("../../logic")
 
 module.exports = async (req, res) => {
-    debugger
-  const { params: {id} } = req;
+    
+  const { userId } = req;
 
   try {
-    debugger;
-    const meetings = await listMeetings(id);
+    
+    const meetings = await listMeetings(userId)
 
-    res.status(201).json({ message: `meeting correctly listed`, meetings });
+    res.status(201).json({ message: `meeting correctly listed`, meetings })
   } catch ({ message }) {
-    res.status(400).json({ error: message });
+    res.status(400).json({ error: message })
   }
-};
+}

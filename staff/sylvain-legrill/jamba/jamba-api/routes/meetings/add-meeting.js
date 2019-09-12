@@ -1,7 +1,7 @@
 const { addMeeting} = require('../../logic')
 
 module.exports = async (req, res) => {
-    const { body: { date, address, userId, architectId} } = req
+    const { userId, body: { date, address, architectId } } = req
 
     try {
         const _date = new Date(date)

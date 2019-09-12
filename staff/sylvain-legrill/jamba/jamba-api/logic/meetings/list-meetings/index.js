@@ -20,7 +20,7 @@ const { validate } = require("jamba-utils")
     return (async () => {
       
           const user = await User.findById(userId).lean()
-          if(!user) throw Error('User doesnt exist')
+          if(!user) throw Error('User does not exist')
           const userRole = user.role
         // const meeting = await Meeting.findById(meetingId).lean()
         // if (!meeting) throw Error(`meeting with id ${meetingId} does not exist`)

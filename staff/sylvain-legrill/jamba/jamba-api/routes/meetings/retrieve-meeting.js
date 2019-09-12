@@ -2,7 +2,7 @@
 const { retrieveMeeting } = require('../../logic')
 
 module.exports = async(req, res) => {
-    const { params: {meetingId} } = req
+    const { meetingId } = req
     
     try {
         const _meeting = await retrieveMeeting(meetingId)
