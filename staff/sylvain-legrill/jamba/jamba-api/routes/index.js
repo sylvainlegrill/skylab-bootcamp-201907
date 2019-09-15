@@ -5,7 +5,10 @@ const tokenMiddleware = require('../helpers/token-middleware')
 const registerUser = require('./users/register-user')
 const authenticateUser = require('./users/authenticate-user')
 const retrieveUser = require('./users/retrieve-user')
-const retrieveAllArchitects = require('./users/retrieve-all-architects')
+//const retrieveAllArchitects = require('./users/retrieve-all')
+const retrieveAll = require('./users/retrieve-all')
+const listArchitects = require('./users/list-architects')
+// const listASC = require('./users/list-asc')
 const updateUser = require('./users/update-user')
 const unregisterUser = require('./users/unregister-user')
 const addMeeting = require('./meetings/add-meeting')
@@ -27,7 +30,11 @@ router.post('/auth', jsonBodyParser, authenticateUser)
 
 router.get('/users', [tokenMiddleware, jsonBodyParser], retrieveUser)
 
-router.get('/users/:role', [tokenMiddleware, jsonBodyParser], retrieveAllArchitects)
+// router.get('/users/:role', [tokenMiddleware, jsonBodyParser], retrieveAllArchitects)
+
+router.get('/users-all/:role', [tokenMiddleware, jsonBodyParser], retrieveAll)
+
+router.get('/users-all/:role/:city/:specialty', [tokenMiddleware, jsonBodyParser], listArchitects)
 
 router.patch('/users', [tokenMiddleware, jsonBodyParser], updateUser)
 
@@ -38,6 +45,9 @@ router.delete('/users', [tokenMiddleware, jsonBodyParser], unregisterUser)
 router.post('/users/meetings', [tokenMiddleware, jsonBodyParser], addMeeting)
 
 router.get('/users/meetings/:id', [tokenMiddleware, jsonBodyParser], retrieveMeeting)
+
+// router.get('/users/architects/specialty/city/', [tokenMiddleware, jsonBodyParser], listASC)
+
 
 router.get('/users/meetings', [tokenMiddleware, jsonBodyParser], listMeetings)
 
