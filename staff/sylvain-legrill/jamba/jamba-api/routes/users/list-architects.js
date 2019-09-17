@@ -4,11 +4,11 @@ const { listArchitects } = require('../../logic')
 
 module.exports = async (req, res) => {
     
-const { params:{role, city, specialty} } = req
+    const { params: { city,specialty }}  = req
 
     try {
 
-        const user = await listArchitects(role, city, specialty)
+        const user = await listArchitects( city, specialty)
 
         res.json({ message: 'user retrieved correctly', user })
 

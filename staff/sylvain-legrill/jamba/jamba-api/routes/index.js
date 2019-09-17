@@ -34,7 +34,8 @@ router.get('/users', [tokenMiddleware, jsonBodyParser], retrieveUser)
 
 router.get('/users-all/:role', [tokenMiddleware, jsonBodyParser], retrieveAll)
 
-router.get('/users-all/:role/:city/:specialty', [tokenMiddleware, jsonBodyParser], listArchitects)
+router.get('/architects/:city/:specialty', [tokenMiddleware, jsonBodyParser], listArchitects)
+
 
 router.patch('/users', [tokenMiddleware, jsonBodyParser], updateUser)
 
