@@ -1,40 +1,55 @@
-import React from 'react'
-//import './index.sass'
+import React, { useState, useEffect } from 'react'
+import './index.sass'
+import logic from '../../logic'
+import { withRouter } from 'react-router-dom'
 
-export default function ({onSearch}){
+
+
+function Search ({ history, onSearch}){
+
+    const [user, setUser] = useState()
+
+
+
     
     return  <>
-    <form class = "home__searchlists">
-        <select required class ="home__searchlist--professional">
-            <option value="" disabled selected hidden>Select type of professional</option>
-            <option value="0">architect</option>
-            <option value="1">technical architect</option>
-            <option value="2">interior architect</option>
-            <option value="2">landscaper</option>
+
+    <form className = "home__searchlists" 
+        onSubmit={event => {
+            event.preventDefault()
+
+            const { target: { specialty: { value: specialty }, city: { value: city } } } = event
+            debugger
+            onSearch( city, specialty)
+        }}>
+     
+        <select required className ="home__searchlist--professional" name="specialty">
+            <option defaultValue="" >Select type of professional</option>
+            <option value="residential architect">residential architect</option>
+            <option value="technical architect">technical architect</option>
+            <option value="interior architect">interior architect</option>
+            <option value="landscaper">landscaper</option>
         </select>
-        <select required class ="home__searchlist--housing">
-            <option value="" disabled selected hidden>Select type of housing</option>
+        {/* <select required className ="home__searchlist--housing" name="housing">
+            <option defaultValue="">Select type of housing</option>
             <option value="0">individual house</option>
             <option value="1">appartment</option>
             <option value="2">business shop</option>
-            <option value="2">office</option>
+            <option value="3">office</option>
+        </select> */}
+
+        <select required className ="home__searchlist--city" name="city">
+            <option defaultValue="">Select a city</option>
+            <option value="Barcelona">Barcelona</option>
+            <option value="Madrid">Madrid</option>
+            <option value="Valencia">Valencia</option>
+            <option value="Paris">Paris</option>
         </select>
 
-        <input type="text" name="type of architect" placeholder="search"></input>
-        <button>> search</button>
+        <button className = "home__searchlist--button"href="#">search</button>
+
     </form>
     </>
-    
-    
-    
-    // <form className={`home__search`} onSubmit={event => {
-    //     event.preventDefault()
-
-    //     const { target: { query: { value: query } } } = event
-
-    // }}>
-    //     <label className={`search__label`} htmlFor="query">Search</label>
-    //     <input className={`search__input`} type="text" name="query" id="query" placeholder="What makes you laugh?"/>
-    //     <button className={`search__button`}><i className="fas fa-search"></i></button>
-    // </form>
+  
 }
+export default withRouter(Search)

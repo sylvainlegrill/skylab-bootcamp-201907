@@ -1,12 +1,19 @@
-// const { env: { REACT_APP_API_URL } } = process
-
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+//const { validate }= require('jamba-utils')
 
-export default function () {
-    // validate fields
+
+/**
+ * Return all architects by specialty, city.
+ * 
+ * 
+ */
+
+
+export default function (city, specialty) {
+    // validate.string(id, 'id')
 
     return (async () => {
-        const response = await fetch(`${REACT_APP_API_URL}/users`, {
+        const response = await fetch(`${REACT_APP_API_URL}/architects/${city}/${specialty}`, {
             method: 'get',
             headers: {
                 authorization: `bearer ${this.__token__}`

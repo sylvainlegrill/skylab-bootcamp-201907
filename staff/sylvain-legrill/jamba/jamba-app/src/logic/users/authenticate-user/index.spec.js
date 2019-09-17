@@ -1,4 +1,4 @@
-import logic from '..'
+import logic from '../..'
 import { database, models } from 'jamba-data'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'

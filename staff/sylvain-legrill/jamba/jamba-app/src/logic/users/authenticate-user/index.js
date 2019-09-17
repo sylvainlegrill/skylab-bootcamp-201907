@@ -1,5 +1,5 @@
 // const { env: { REACT_APP_API_URL } } = process
-import { validate } from 'jamba-utils'
+const {validate} = require('jamba-utils')
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 

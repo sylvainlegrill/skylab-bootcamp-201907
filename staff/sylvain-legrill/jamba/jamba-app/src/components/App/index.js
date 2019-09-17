@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import './index.sass'
 import Register from '../Register'
+import Architects from '../Architects'
 import Login from '../Login'
 import logic from '../../logic'
 import { Route, Link, withRouter } from 'react-router-dom'
 import Home from '../Home'
+// import ListAllArchitects from '../ListAllArchitects'
 
 export default withRouter(function ({ history }) {
   const [view, setView] = useState(logic.isUserLoggedIn() ? 'home' : undefined)
@@ -85,5 +87,8 @@ export default withRouter(function ({ history }) {
     <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
     <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
     {logic.isUserLoggedIn() && <Route path="/home" render={() => <Home onLogout={handleLogout}/>} />}
+    <Route path="/architects" render={() => <Architects />} />
+
+    <Route path="/architects/:id" render={() => <Architects />} />
   </div>
 })

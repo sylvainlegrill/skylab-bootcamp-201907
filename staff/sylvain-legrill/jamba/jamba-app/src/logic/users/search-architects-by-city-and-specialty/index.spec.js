@@ -1,4 +1,4 @@
-import logic from '..'
+import logic from '../..'
 import { database, models } from 'jamba-data'
 import jwt from 'jsonwebtoken'
 
@@ -8,7 +8,7 @@ const { User } = models
 const REACT_APP_DB_URL_TEST = process.env.REACT_APP_DB_URL_TEST
 const REACT_APP_JWT_SECRET_TEST = process.env.REACT_APP_JWT_SECRET_TEST
 
-describe('logic - retrieve user', () => {
+describe('logic - search architects', () => {
     beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
 
     let name, surname, email, password, id
