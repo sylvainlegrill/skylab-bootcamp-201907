@@ -9,6 +9,8 @@ function Architects({history}) {
 
    const [architects, setArchitects] = useState([])
 
+   
+
   useEffect(() => {
     
     (async () => {

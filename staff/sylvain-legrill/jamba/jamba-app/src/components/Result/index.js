@@ -1,28 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React from 'react'
 
-import { withRouter } from "react-router-dom";
-import logic from "../../logic";
+import { withRouter } from "react-router-dom"
+//import logic from "../../logic"
 
-function Result({architects}) {
+function Result({history, architects}) {
 
 
-  // const [architects, setArchitects] = useState([]);
+  function handleArchitectDetail(id) {
+    
+    history.push(`/architects/${id}`)
+  }
+
+  function handleArrangeMeeting() {
+    
+    history.push(`/meeting`)
+  }
+
+
+  // const [architects, setArchitects] = useState([])
 
   // useEffect(() => {
   //   async function retrieveAllArchitects() {
-  //     const res = await logic.retrieveUsersByRole("architect");
-  //     setArchitects(res);
+  //     const res = await logic.retrieveUsersByRole("architect")
+  //     setArchitects(res)
   //   }
-  //   retrieveAllArchitects();
-  // }, []);
+  //   retrieveAllArchitects()
+  // }, [])
 
 //   useEffect(() => {
 //     async function searchArchitects() {
-//       const res = await logic.searchArchitectsByCityAndSpecialty();
-//       setArchitects(res);
+//       const res = await logic.searchArchitectsByCityAndSpecialty()
+//       setArchitects(res)
 //     }
-//     searchArchitects();
-//   }, []);
+//     searchArchitects()
+//   }, [])
 
   return (
     <>     
@@ -31,10 +42,19 @@ function Result({architects}) {
             architects.map(architect => (
               <li className="architects" key={architect._id}>
                 {/* <img className="user__img" src={architect.profileImg}></img> */}
-                <div className="user__container">
-                  <p className="user__name">{architect.name}</p>
-                  <p className="user__specialty">{architect.specialty}</p>
-                  <p className="user__city">{architect.city}</p>
+                <div className="architect__container">
+                  <p className="architect__name">{architect.name}</p>
+                  <p className="architect__specialty">{architect.specialty}</p>
+                  <p className="architect__city">{architect.city}</p>
+                  <button className="architect__detail" 
+                  title=""
+                  href="#"
+                  onClick={() => {handleArchitectDetail(architect._id)}}>see profile</button>
+                  <button className="architect__meeting" 
+                  title="meeting"
+                  href="#"
+                  onClick={() => {handleArrangeMeeting()}}>arrange meeting</button>
+
                 </div>
               </li>
             ))
@@ -44,7 +64,7 @@ function Result({architects}) {
         </ul>
      
     </>
-  );
+  )
 }
 
-export default withRouter(Result);
+export default withRouter(Result)

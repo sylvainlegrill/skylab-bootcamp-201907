@@ -4,6 +4,7 @@ import isUserLoggedIn from './users/is-user-logged-in'
 import logUserOut from './users/log-user-out'
 import retrieveUser from './users/retrieve-user'
 import retrieveUsersByRole from './users/retrieve-users-by-role'
+import retrieveArchitect from './users/retrieve-architect'
 import searchArchitectsByCityAndSpecialty from './users/search-architects-by-city-and-specialty'
 
 
@@ -35,6 +36,7 @@ export default {
     logUserOut,
     retrieveUsersByRole,
     retrieveUser,
+    retrieveArchitect,
     searchArchitectsByCityAndSpecialty,
 
 

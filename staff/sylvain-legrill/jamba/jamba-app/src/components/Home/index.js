@@ -42,7 +42,7 @@ function Home({ history, onLogout }) {
 //     event.preventDefault()
 
 //     history.push("/architects") 
-//     // Pas Besoin du meme url que API url : le useEffect permet de lier /architects a l API url ( qui se trouve dans la logique) 
+//     // Pas Besoin du meme url que API url : le useEffect permet de lier / a l API url ( qui se trouve dans la logique) 
 //   }
   
 // TO DO : Put user and setUser in Context.

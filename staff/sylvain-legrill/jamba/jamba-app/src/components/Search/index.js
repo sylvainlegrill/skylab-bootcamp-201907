@@ -19,7 +19,7 @@ function Search ({ history, onSearch}){
             event.preventDefault()
 
             const { target: { specialty: { value: specialty }, city: { value: city } } } = event
-            debugger
+            
             onSearch( city, specialty)
         }}>
      
