@@ -30,6 +30,8 @@ router.post('/auth', jsonBodyParser, authenticateUser)
 
 router.get('/users', [tokenMiddleware, jsonBodyParser], retrieveUser)
 
+router.get('/architects/:id', [tokenMiddleware, jsonBodyParser], retrieveUser)
+
 // router.get('/users/:role', [tokenMiddleware, jsonBodyParser], retrieveAllArchitects)
 
 router.get('/users-all/:role', [tokenMiddleware, jsonBodyParser], retrieveAll)

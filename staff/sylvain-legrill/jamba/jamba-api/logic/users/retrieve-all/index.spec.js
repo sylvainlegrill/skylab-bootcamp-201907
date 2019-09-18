@@ -7,7 +7,7 @@ const { database, models: { User } } = require('jamba-data')
 
 const { env: { DB_URL_TEST }} = process
 
-describe.only('logic - retrieve all users', () => {
+describe('logic - retrieve all users', () => {
     before(() => database.connect(DB_URL_TEST))
 
     let name1 , surname1, email1, password1, phone1, city1, license1, specialty1, role1, name2 , surname2, email2, password2, phone2, city2, license2, specialty2, role2

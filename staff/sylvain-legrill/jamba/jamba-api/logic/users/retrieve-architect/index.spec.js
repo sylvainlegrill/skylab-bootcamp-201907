@@ -1,16 +1,16 @@
 require('dotenv').config()
 
 const { expect } = require('chai')
-const retrieveUser = require('.')
+const retrieveArchitect = require('.')
 const { database, models: { User } } = require('jamba-data')
 // const bcrypt = require('bcrypt')
 
 const { env: { DB_URL_TEST }} = process
 
-describe.only('logic - retrieve user', () => {
+describe.only('logic - retrieve architect', () => {
     before(() => database.connect(DB_URL_TEST))
 
-    let name, surname, email, phone, password, id
+    let name, surname, email, phone, password, city, license, specialty, role, id
 
     beforeEach(() => {
         name = `name-${Math.random()}`
@@ -18,18 +18,22 @@ describe.only('logic - retrieve user', () => {
         email = `email-${Math.random()}@domain.com`
         phone= `phone-${Math.random()}`
         password = `password-${Math.random()}`
+        city = "Barcelona"
+        license = `license-${Math.random()}`
+        specialty = "residential architect"
+        role = "architect"
        
 
 
         return (async () => {
             await User.deleteMany()
-            const user = await User.create({ name, surname, email, phone, password })
+            const user = await User.create({ name, surname, email, phone, password, city, license, specialty, role })
             id = user.id
         })()
     })
 
     it('should succeed on correct data', async () => {
-        const user = await retrieveUser(id)
+        const user = await retrieveArchitect(id)
             expect(user).to.exist
             expect(user.id).to.equal(id)
             expect(user._id).not.to.exist
@@ -38,7 +42,13 @@ describe.only('logic - retrieve user', () => {
             expect(user.email).to.equal(email)
             expect(user.phone).to.equal(phone)
             expect(user.password).not.to.exist
+            expect(user.city).to.equal(city)
+            expect(user.license).to.equal(license)
+            expect(user.specialty).to.equal(specialty)
+            expect(user.role).to.equal("architect")
         })
+
+       
     
     // it('should fail on empty id', () => {
     //     expect(() =>
