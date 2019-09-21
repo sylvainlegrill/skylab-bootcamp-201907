@@ -11,6 +11,7 @@ const { validate } = require("jamba-utils");
 
 module.exports = function(meetingId) {
   validate.string(meetingId, "meeting id");
+  
 
   return (async () => {
     const meeting = await Meeting.findById(meetingId).lean();

@@ -14,10 +14,13 @@ const bcrypt = require('bcryptjs')
  * @param {string} license
  * @param {string} specialty
  * @param {string} role
+ * @param {string} profileImg
+ * @param {string} portfolioImg
+ * @param {string} description
  * 
  * @returns {Promise}
  */
-module.exports = function (name, surname, email,  phone, password, role, city, license, specialty) {
+module.exports = function (name, surname, email,  phone, password, role, city, license, specialty, profileImg, portfolioUrl, projectImg, description) {
 
     validate.string(name)
     validate.string(surname)
@@ -28,7 +31,7 @@ module.exports = function (name, surname, email,  phone, password, role, city, l
     validate.string(role)
     return ( async () => {
         const user = await User.findOne({ email })
-        if (user) throw Error('User already exists.')
+        if (user) throw Error(`user with e-mail ${email} already exists.`)
 
         const hash = await bcrypt.hash(password, 10)
 
@@ -36,7 +39,11 @@ module.exports = function (name, surname, email,  phone, password, role, city, l
             if(!city) throw Error ("City cannot be empty for architect role")
             if(!license) throw Error ("License cannot be empty for architect role")
             if(!specialty) throw Error ("Speciality cannot be empty for architect role")
-            await User.create({name, surname, email,  phone, password: hash, role, city, license, specialty})
+            if(!profileImg) throw Error ("Profile Image cannot be empty for architect role")
+            if(!portfolioUrl) throw Error ("Portfolio url cannot be empty for architect role")
+            if(!projectImg) throw Error ("Project Image cannot be empty for architect role")
+            if(!description) throw Error ("Description cannot be empty for architect role")
+            await User.create({name, surname, email,  phone, password: hash, role, city, license, specialty, profileImg,  portfolioUrl, projectImg, description})
         }
         if(role === "customer"){
             await User.create({name, surname, email, phone, password: hash, role })

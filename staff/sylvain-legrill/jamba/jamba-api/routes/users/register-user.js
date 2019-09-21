@@ -1,12 +1,12 @@
 const { registerUser } = require('../../logic')
 
 module.exports = async (req, res) => {
-    const { body: { name, surname, email, phone, password, role, city, license, specialty } } = req
+    const { body: { name, surname, email, phone, password, role, city, license, specialty, profileImg, portfolioUrl, projectImg, description } } = req
     
     if (role === "architect")
     try {
-        await registerUser(name, surname, email, phone, password, role, city, license, specialty )
-        res.status(201).json({ message: `user with ${role} correctly registered` })
+        await registerUser(name, surname, email, phone, password, role, city, license, specialty, profileImg,  portfolioUrl, projectImg, description )
+        res.status(201).json({ message: `user with role ${role} correctly registered` })
     } catch ({ message }) {
         res.status(400).json({ error: message })
     }
@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
     if (role === "customer")
     try {
         await registerUser(name, surname, email, phone, password, role)
-        res.status(201).json({ message: `user with ${role} correctly registered` })
+        res.status(201).json({ message: `user with role ${role} correctly registered` })
     } catch ({ message }) {
         res.status(400).json({ error: message })
     }

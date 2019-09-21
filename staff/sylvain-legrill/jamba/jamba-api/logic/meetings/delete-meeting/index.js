@@ -24,5 +24,9 @@ const { validate }= require('jamba-utils')
             if (!user) throw Error(`user with id ${userId} does not exist`)
             
             await Meeting.deleteOne(meeting)
+
+        
+            
+            
         })()
     }    

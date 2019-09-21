@@ -15,7 +15,7 @@ module.exports = function(id) {
 
     return (async () => {
         const user = await User.findOne({ _id: id }, { _id: 0, password: 0 }, {role: "architect"}).lean()
-        if (!user) throw Error(`User with id ${id} does not exist.`)
+        if (!user) throw Error(`User with id ${id} not found`)
         user.id = id
         return user
     })()

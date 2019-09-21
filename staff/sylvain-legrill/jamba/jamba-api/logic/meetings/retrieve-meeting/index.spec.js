@@ -27,12 +27,16 @@ describe('logic - retrieve meeting', () => {
             name: `name-${random()}`,
             surname: `surname-${random()}`,
             email: `email-${random()}@mail.com`,
-            password: `password-${random()}`,
             phone: `123-${random()}`,
+            password: `password-${random()}`,
+            role: 'architect',
             city: `city-${random()}`,
-            license: `license-${random()}`,   
-            specialty: `specialty-${random()}`,   
-            role: 'architect'
+            license: `license-${random()}`,
+            specialty: `specialty-${random()}`,
+            profileImg: `profileImg-${random()}`,
+            portfolioUrl: `portfolioUrl-${random()}`,
+            projectImg: `projectImg-${random()}`,
+            description: `description-${random()}`
         })
 
         date = new Date
@@ -56,6 +60,24 @@ describe('logic - retrieve meeting', () => {
    
         
     })
+
+    it('should fail if on incorrect meeting id', async () =>{ 
+        try{
+            await retrieveMeeting('5d7204963b3ea6a2f0c7a6a2')
+        }catch(error) {
+                expect(error).to.exist
+                expect(error.message).to.equal(`meeting with id 5d7204963b3ea6a2f0c7a6a2 does not exist`)
+            }
+    })
+
+    it('should fail on wrong meeting id type', () => 
+    expect(() => retrieveMeeting(123)).to.throw(`meeting id with value 123 is not a string`)
+    )
+    it('should fail on wrong meeting id type', () => 
+    expect(() => retrieveMeeting(undefined)).to.throw(`meeting id with value undefined is not a string`)
+)
+
+    
 
     after(() => database.disconnect())
     

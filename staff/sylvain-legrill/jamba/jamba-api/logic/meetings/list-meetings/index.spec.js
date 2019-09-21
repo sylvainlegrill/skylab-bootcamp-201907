@@ -41,16 +41,29 @@ describe('logic - list meeting(s)', () => {
         })
     })
 
+    // it('should succeed on correct data', async () => {
+
+    //     const result = await listMeetings(meeting.id, user.id)
+
+    //     expect (result).to.exist
+
+    //     const _meeting = await Meeting.find(meeting)
+
+    //     expect(_meeting).to.exist
+    // })
+
     it('should succeed on correct data', async () => {
+        const id = await listMeetings(date, address, user.id, architect.id)
 
-        const result = await listMeetings(meeting.id, user.id)
+        expect(id).to.be.a('string')
+        expect(id).to.have.lengthOf(24)
 
-        expect (result).to.exist
+        const meeting = await Meeting.findById(id)
 
-        const _meeting = await Meeting.find(meeting)
-
-        expect(_meeting).to.exist
+        expect(meeting.date).to.deep.equal(date)
+        expect(meeting.address).to.equal(address)
     })
+
 
     after(() => database.disconnect())
 })
