@@ -2,6 +2,7 @@ module.exports = {
     registerUser: require('./users/register-user'),
     authenticateUser: require('./users/authenticate-user'),
     retrieveUser: require('./users/retrieve-user'),
+    retrieveArchitect: require('./users/retrieve-architect'),
     retrieveAll: require('./users/retrieve-all'),
     listArchitects: require('./users/list-architects'),
     updateUser: require('./users/update-user'),
@@ -9,6 +10,6 @@ module.exports = {
     addMeeting: require('./meetings/add-meeting'),
     deleteMeeting: require('./meetings/delete-meeting'),
     retrieveMeeting: require('./meetings/retrieve-meeting'),
-    listMeetings: require('./meetings/list-meetings'),
+    listMeetings: require('./meetings/list-meetings')
      
 }

@@ -1,5 +1,5 @@
 const { models: { User } } = require('jamba-data')
-const { validate }= require('jamba-utils')
+const { validate } = require('jamba-utils')
 
 
 /**

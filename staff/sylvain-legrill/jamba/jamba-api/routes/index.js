@@ -5,6 +5,7 @@ const tokenMiddleware = require('../helpers/token-middleware')
 const registerUser = require('./users/register-user')
 const authenticateUser = require('./users/authenticate-user')
 const retrieveUser = require('./users/retrieve-user')
+const retrieveArchitect = require('./users/retrieve-architect')
 //const retrieveAllArchitects = require('./users/retrieve-all')
 const retrieveAll = require('./users/retrieve-all')
 const listArchitects = require('./users/list-architects')
@@ -30,7 +31,7 @@ router.post('/auth', jsonBodyParser, authenticateUser)
 
 router.get('/users', [tokenMiddleware, jsonBodyParser], retrieveUser)
 
-router.get('/architects/:id', [tokenMiddleware, jsonBodyParser], retrieveUser)
+router.get('/architects/:id', [tokenMiddleware, jsonBodyParser], retrieveArchitect)
 
 // router.get('/users/:role', [tokenMiddleware, jsonBodyParser], retrieveAllArchitects)
 
