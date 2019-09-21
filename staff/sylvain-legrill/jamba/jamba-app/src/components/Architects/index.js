@@ -6,15 +6,15 @@ import Result from "../Result"
 
 function Architects({history}) {
 
-
+    
    const [architects, setArchitects] = useState([])
 
-   
+    
 
   useEffect(() => {
     
     (async () => {
-            
+      
         const searchArchitects = await logic.retrieveUsersByRole("architect")
             
         setArchitects(searchArchitects)

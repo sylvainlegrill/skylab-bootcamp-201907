@@ -7,7 +7,7 @@ function PresentationArchitects ({history}){
 
   const handleListArchitects = event => {
     event.preventDefault()
-
+    
     history.push("/architects") 
   }
 

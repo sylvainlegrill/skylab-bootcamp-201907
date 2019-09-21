@@ -1,42 +1,38 @@
-import React from 'react'
+import React, { Route, useState } from "react"
 
 import { withRouter } from "react-router-dom"
+
 //import logic from "../../logic"
 
-function Result({history, architects}) {
+export default withRouter(function ({history, architects}) {
 
 
-  function handleArchitectDetail(id) {
+  // function handleArchitectDetail(id) {
     
-    history.push(`/architects/${id}`)
+  //   history.push(`/architects/${id}`)
+  // }
+
+  // const [view, setView] = useState(false)
+   
+  // const handleArchitectDetail = (_id) => {
+  //   setView(true)
+  //   history.push(`/architects/${_id}`)
+  // }
+
+  const handleArchitectDetail = ( _id) => {
+    // event.preventDefault()
+    
+    history.push(`/architects/${_id}`) 
   }
 
-  function handleArrangeMeeting() {
+  function handleCalendar() {
     
     history.push(`/meeting`)
   }
 
-
-  // const [architects, setArchitects] = useState([])
-
-  // useEffect(() => {
-  //   async function retrieveAllArchitects() {
-  //     const res = await logic.retrieveUsersByRole("architect")
-  //     setArchitects(res)
-  //   }
-  //   retrieveAllArchitects()
-  // }, [])
-
-//   useEffect(() => {
-//     async function searchArchitects() {
-//       const res = await logic.searchArchitectsByCityAndSpecialty()
-//       setArchitects(res)
-//     }
-//     searchArchitects()
-//   }, [])
-
   return (
     <>     
+      {/* {view === true && <Route path="/architects/:id" render={() =>  <ArchitectDetail/>} />} */}
         <ul className="architect__ul">
           {architects.length ? (
             architects.map(architect => (
@@ -53,7 +49,7 @@ function Result({history, architects}) {
                   <button className="architect__meeting" 
                   title="meeting"
                   href="#"
-                  onClick={() => {handleArrangeMeeting()}}>arrange meeting</button>
+                  onClick={() => {handleCalendar()}}>arrange meeting</button>
 
                 </div>
               </li>
@@ -65,6 +61,4 @@ function Result({history, architects}) {
      
     </>
   )
-}
-
-export default withRouter(Result)
+})

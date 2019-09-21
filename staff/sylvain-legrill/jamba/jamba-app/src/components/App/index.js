@@ -3,6 +3,8 @@ import './index.sass'
 import Register from '../Register'
 import Architects from '../Architects'
 import ArchitectDetail from '../ArchitectDetail'
+import Dashboard from '../Dashboard'
+//import CalendarMeeting from '../CalendarMeeting'
 import Login from '../Login'
 import logic from '../../logic'
 import { Route, Link, withRouter } from 'react-router-dom'
@@ -87,11 +89,15 @@ export default withRouter(function ({ history }) {
 
     <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
     <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
+    <Route path="/dashboard" render={() =>  <Dashboard onLogOut={handleLogout} />} />
     {logic.isUserLoggedIn() && <Route path="/home" render={() => <Home onLogout={handleLogout}/>} />}
     <Route exact path="/architects" render={() => <Architects />} />
 
-    <Route exact path="/architects/:id" render={() => <ArchitectDetail /> } />
+    <Route path="/architects/:id" render={() => <ArchitectDetail /> }/>
+
+    {/* <Route path="/meetings" render={() => <CalendarMeeting /> } /> */}
+
   </div>
 })
 
-//
+//3) definir route where you are going

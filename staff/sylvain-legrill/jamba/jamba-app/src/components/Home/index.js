@@ -5,9 +5,9 @@ import Search from "../Search"
 import Presentation from "../Presentation"
 import PresentationArchitects from "../PresentationArchitects"
 import Result from "../Result"
+import Dashboard from "../Dashboard" 
 
-
-import { Link, withRouter } from "react-router-dom"
+import { Route, Link, withRouter } from "react-router-dom"
 
 //COMPONENTS in HOME
 
@@ -18,10 +18,12 @@ import { Link, withRouter } from "react-router-dom"
 // import Header from '../Header'
 // import Footer from '../Footer'
 
-function Home({ history, onLogout }) {
+export default withRouter(function ({ history, onLogout }) {
   const [user, setUser] = useState()
 
   const [result, setResult] = useState()
+
+  const [view, setView] = useState(false)
 
     function onHandleSearch (city, specialty){
 
@@ -55,43 +57,27 @@ function Home({ history, onLogout }) {
   }, [history.location])
 
   // useEffect change la location (via history)
+  const handleToDashboard = () => {
+    setView(true)
+    history.push("/dashboard")
+  }
 
+  //4) copy paste route and add the view status.
+  //5) add onClick on button and define the handleTo . Define the setView
   return (
     <main className="home">
-      Hola, {user && user.name}!<button onClick={onLogout}>Logout</button>
-      {/* <section className="home__search">
-        <h3 className="home__title-search"> Tell us more about your project</h3>
-
-        <form className="home__searchlists">
-          <select required className="home__searchlist--professional">
-            <option defaultValue="">Select type of professional</option>
-            <option value="0">architect</option>
-            <option value="1">technical architect</option>
-            <option value="2">interior architect</option>
-            <option value="2">landscaper</option>
-          </select>
-          <select required className="home__searchlist--housing">
-            <option defaultValue="">Select type of housing</option>
-            <option value="0">individual house</option>
-            <option value="1">appartment</option>
-            <option value="2">business shop</option>
-            <option value="2">office</option>
-          </select>
-          <input
-            type="text"
-            name="query"
-            className="home__searchlist--city"
-            placeholder="city"
-          ></input>
-            Replace with <Search />
-          <button type="search" className="home__searchlist--button"
-            title="more architects"
-            href="#"
-            onSubmit={handleSearchArchitects} >
-         
-          </button>
-        </form>
-      </section> */}
+      
+        {/* Hola,{user && user.name}! */}
+      {view === true && <Route path="/dashboard" render={() =>  <Dashboard/>} />}
+      
+      {/* <a className="nav__a dropdown__button" href="#" onClick={onLogout}>Logout</a> */}
+      <button onClick={onLogout}>Logout</button>
+      <div className="dropdown-content">
+      <button className="" onClick={handleToDashboard}> Dashboard </button>
+      {/* <Lin className="nav__a dropdown__button" href="#" to="/dashboard">Dashboard</Link> */}
+      {/* <a className="nav__a dropdown__button" href="#" onClick={onLogout}>Logout</a> */}
+      </div>
+     
       <Search onSearch={onHandleSearch} />
 
       {!result && <Presentation />} 
@@ -108,6 +94,4 @@ function Home({ history, onLogout }) {
       
     </main>
   )
-}
-
-export default withRouter(Home) // Permet d exporter avec router la route Home : aller dans app 
+})
