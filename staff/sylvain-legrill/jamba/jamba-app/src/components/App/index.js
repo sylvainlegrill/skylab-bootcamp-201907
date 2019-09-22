@@ -4,7 +4,7 @@ import Register from '../Register'
 import Architects from '../Architects'
 import ArchitectDetail from '../ArchitectDetail'
 import Dashboard from '../Dashboard'
-//import CalendarMeeting from '../CalendarMeeting'
+import CalendarMeeting from '../CalendarMeeting'
 import Login from '../Login'
 import logic from '../../logic'
 import { Route, Link, withRouter } from 'react-router-dom'
@@ -20,9 +20,10 @@ export default withRouter(function ({ history }) {
     history.push('/')
   }
 
-  const handleRegister = async (name, surname, email, phone, password, role, city, license, specialty) => {
+  const handleRegister = async (role, name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description) => {
     try {
-      await logic.registerUser(name, surname, email, phone, password, role, city, license, specialty)
+      debugger
+      await logic.registerUser(role, name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description)
 
       history.push('/login')
     } catch ({ message }) {
@@ -89,13 +90,13 @@ export default withRouter(function ({ history }) {
 
     <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
     <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
+    <Route path="/calendar" render={() =>  <CalendarMeeting/> } />
     <Route path="/dashboard" render={() =>  <Dashboard onLogOut={handleLogout} />} />
     {logic.isUserLoggedIn() && <Route path="/home" render={() => <Home onLogout={handleLogout}/>} />}
     <Route exact path="/architects" render={() => <Architects />} />
 
     <Route path="/architects/:id" render={() => <ArchitectDetail /> }/>
 
-    {/* <Route path="/meetings" render={() => <CalendarMeeting /> } /> */}
 
   </div>
 })

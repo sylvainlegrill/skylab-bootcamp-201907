@@ -40,13 +40,6 @@ export default withRouter(function ({ history, onLogout }) {
     }
    
 
-//   const handleListArchitects = event => {
-//     event.preventDefault()
-
-//     history.push("/architects") 
-//     // Pas Besoin du meme url que API url : le useEffect permet de lier / a l API url ( qui se trouve dans la logique) 
-//   }
-  
 // TO DO : Put user and setUser in Context.
   useEffect(() => {
     (async () => {
@@ -56,7 +49,6 @@ export default withRouter(function ({ history, onLogout }) {
     })()
   }, [history.location])
 
-  // useEffect change la location (via history)
   const handleToDashboard = () => {
     setView(true)
     history.push("/dashboard")

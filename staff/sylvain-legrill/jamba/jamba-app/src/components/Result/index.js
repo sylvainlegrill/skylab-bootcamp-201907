@@ -1,38 +1,29 @@
 import React, { Route, useState } from "react"
 
 import { withRouter } from "react-router-dom"
+import CalendarMeeting from "../CalendarMeeting"
 
 //import logic from "../../logic"
 
 export default withRouter(function ({history, architects}) {
 
-
-  // function handleArchitectDetail(id) {
-    
-  //   history.push(`/architects/${id}`)
-  // }
-
-  // const [view, setView] = useState(false)
-   
-  // const handleArchitectDetail = (_id) => {
-  //   setView(true)
-  //   history.push(`/architects/${_id}`)
-  // }
+  const [view, setView] = useState(false)
 
   const handleArchitectDetail = ( _id) => {
-    // event.preventDefault()
     
     history.push(`/architects/${_id}`) 
   }
 
-  function handleCalendar() {
-    
-    history.push(`/meeting`)
+  function handleGoToCalendar() {
+    setView(true)
+    history.push(`/calendar`)
   }
+
+
 
   return (
     <>     
-      {/* {view === true && <Route path="/architects/:id" render={() =>  <ArchitectDetail/>} />} */}
+      {view === true && <Route path="/calendar" render={() =>  <CalendarMeeting/>} />}
         <ul className="architect__ul">
           {architects.length ? (
             architects.map(architect => (
@@ -49,7 +40,7 @@ export default withRouter(function ({history, architects}) {
                   <button className="architect__meeting" 
                   title="meeting"
                   href="#"
-                  onClick={() => {handleCalendar()}}>arrange meeting</button>
+                  onClick={() => {handleGoToCalendar()}}>arrange meeting</button>
 
                 </div>
               </li>

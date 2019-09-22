@@ -1,317 +1,118 @@
 import React, { useState, useEffect } from 'react'
+import * as dateFns from 'date-fns'
+import './index.sass'
 import logic from '../../logic'
 import { withRouter, Link } from 'react-router-dom'
-import moment from "moment"
 
 
-export default withRouter(function ({ onEvent, history }) {
+export default withRouter(function Calendar ({ onEvent, history }) {
     // STATES
-    const [currentDate, setCurrentDate] = useState(moment())
-    // const [monthKeys, setMonthKeys] = useState([])
-    const [monthMeetings, setMonthMeetings] = useState([])
-    
-    // useEffect(() => {
-    //     (async () => {
-    //         try {
-    //             const keys =  await logic.retrieveKeys()
-    
-    //             const monthKeys = keys.filter(task => moment(currentDate).isSame(keys.valid_from, 'month'))
-    //             setMonthKeys(monthKeys)
-    //         } catch ({message}) {
-    //             console.error(message)
-    //         }
-    //     })()
-    // },[])
 
-        useEffect(() => {
-            (async() => {
-                try {
-                    const meetings = await logic.retrieveMeetings()  //add logic retrieve all meetings from architect
+    const [user, setUser] = useState(null)
+    // const  [calendar, setCalendar] = useState([])
 
-                    const monthMeetings = meetings.filter( task => moment(currentDate).isSame(meetings.date, 'month'))
-                    setMonthMeetings(monthMeetings)
+    const [currentDate, setCurrentDate] = useState(new Date())
+    const [selectedDate, setSelectedDate] = useState(new Date())
 
-                }catch({message}){
-                    console.error(message)
-                }
-            })()
-        })
+    useEffect(() => {
+        (async () => {
+        const user = await logic.retrieveUser()
+        setUser(user)
+        })()
+    }, [history.location])
 
-    // HANDLES
+   
 
-    const handleGoToAddMeeting = () => {
-        history.push('/users/meetings/add-meeting')
-    }
-    // const handleGoToRegisterKey = () => {
-    //     history.push('/deployments/keys/register-key')
-    // }
+    const header = () => {
+        const dateFormat = "MMMM yyyy";
+        return (
+           <div className="header row flex-middle">
+              <div className="column col-start">
+                 <div className="icon" onClick={prevMonth}>
+                    chevron_left
+                 </div>
+              </div>
+              <div className="column col-center">
+                 <span>{dateFns.format(currentDate, dateFormat)}</span>
+              </div>
+              <div className="column col-end">
+                 <div className="icon" onClick={nextMonth}>
+                    chevron_right
+                 </div>
+              </div>
+           </div>
+        );
+    };
 
-    // const handleGoToRegisterDeployment = () => {
-    //     history.push('/deployments/register')
-    // }
-
-    function handleGoToNextMonth(event) {
-        event.preventDefault()
-        setCurrentDate(moment(currentDate).add(1, 'months'))
-    }
-    function handleGoToPreviousMonth(event) {
-        event.preventDefault()
-
-        setCurrentDate(moment(currentDate).subtract(1, 'months'))
-    }
-
-    // function handleDayKeys (dataDate) {
-    //     return monthKeys.map(key => {
-    //         let keyDay = moment(key.valid_from).format('YYYY MMMM D')
-    //         let currentDay = moment(dataDate).format('YYYY MMMM D')
-    //         if(keyDay === currentDay) {
-    //             return <div onClick={event => {
-    //                 event.preventDefault()
-    //                 event.stopPropagation()
-
-    //                 history.push(`/deployments/keys/detail/${key.id}`)
-    //             }}><i class="fas fa-key"></i> {key.deployment.alias}</div>
-    //         }
-    //     })
-    // }
-
-
-    // TO IMPROVE
-    function handleDayMeetings (dataDate) {
-        return monthMeetings.map(meeting => {
-            let meetingDay = moment(meeting.valid_from).format('YYYY MMMM D')
-            let currentDay = moment(dataDate).format('YYYY MMMM D')
-            if(meetingDay === currentDay) {
-                return <div onClick={event => {
-                    event.preventDefault()
-                    event.stopPropagation()
-
-                    history.push(`/users/meetings/detail/${meeting.id}`) // ROUTE TO DOUBLE CHECK
-                }}><i class="fas fa-key"></i> {}</div> // TO DETERMINE
-            }
-        })
-    }
-
-    // RENDERS
-    // const header = () => {
-    //     return (
-    //         <>
-    //             <h2>calendar</h2>
-    //             <i class="fas fa-caret-left" onClick={handleGoToPreviousMonth}></i> <h3 class="month__title"> {moment(currentDate).format("MMMM")} </h3> <i class="fas fa-caret-right" onClick={handleGoToNextMonth}></i>
-    //             <p class="month__year">{moment(currentDate).format("YYYY")}</p>
-    //             <button onClick={handleGoToRegisterKey}><i class="fas fa-plus"></i> key</button> 
-    //             <button onClick={handleGoToRegisterDeployment}><i class="fas fa-plus"></i> deployment</button>
-    //         </>
-    //     )
-    // }
-
-     const header = () => {
-         return (
-             <>
-                <h2>calendar</h2>
-                <i class="fas fa-caret-left" onClick={handleGoToPreviousMonth}></i> <h3 class="month__title"> {moment(currentDate).format("MMMM")} </h3> <i class="fas fa-caret-right" onClick={handleGoToNextMonth}></i>
-                <p class="month__year">{moment(currentDate).format("YYYY")}</p>
-                <button onClick={handleGoToAddMeeting}><i class="fas fa-plus"></i> confirm meeting</button>
-             </>
-         )
+    const nextMonth = () => {
+        setCurrentDate(dateFns.addMonths(currentDate, 1))
      }
-     
-     
+     const prevMonth = () => {
+        setCurrentDate(dateFns.subMonths(currentDate, 1))
+     }
 
-//     const week = () => {
-//         const days = []
-//         const startDate = moment(currentDate).startOf('week')
-
-//         for (let i = 0; i < 7; i++) {
-//             days.push(
-//                 <div>
-//                     {startDate.add(1, 'days').format('ddd')}
-//                 </div>
-//             )
-//         }
-//         return <div class="calendar__header">{days}</div>
-//     }
-
-//     const days = () => {
-//         const monthStart = moment(currentDate).startOf('month'),
-//             monthEnd = moment(currentDate).endOf('month'),
-//             endDate = moment(monthEnd).endOf('week'),
-//             rows = []
-
-//         let days = []
-//         let formattedDate = ''
-//         let eventDate = ''
-//         let first = monthStart
-//         switch (first.day()) {
-//             case 1:
-//                 first.add(7, 'days')
-//                 break
-//             case 2:
-//                 first.add(6, 'days')
-//                 break
-//             case 3:
-//                 first.add(5, 'days')
-//                 break
-//             case 4:
-//                 first.add(4, 'days')
-//                 break
-//             case 5:
-//                 first.add(3, 'days')
-//                 break
-//             case 6:
-//                 first.add(2, 'days')
-//                 break
-//             case 0:
-//                 first.add(1, 'days')
-//         }
-
-//         if (monthStart.day() !== '1') {
-//             first = moment(first).subtract(1, 'week')
-//             while (first <= moment(first).endOf('week').day()) {
-//                 for (let i = 0; i < 7; i++) {
-//                     formattedDate = first.format('D')
-//                     eventDate = first.format("YYYY-MM-DD")
-//                     const dataDate = first.format()
-//                     days.push(
-//                         <a onClick={onEvent} data-day={eventDate} className={
-//                             `calendar__day day column cell ${!dataDate.isSameMonth(formattedDate, 'month')
-//                              ? "disabled"
-//                              : dataDate.isSame(formattedDate, 'day') 
-//                              ? "selected" 
-//                              : ""
-//                              }`} >
-//                             {formattedDate}
-//                             {monthKeys && <div>{handleDayKeys(dataDate)}</div>}
-//                         </a>
-//                     )
-//                     first = first.add(1, 'days')
-//                 }
-//             }
-//         }
-
-//         while (first <= endDate) {
-//             for (let i = 0; i < 7; i++) {
-//                 formattedDate = first.format('D')
-//                 eventDate = first.format("YYYY-MM-DD")
-//                 const dataDate = first.format()
-//                 days.push(
-//                     <a onClick={onEvent} data-day={eventDate} className={
-//                         `calendar__day day column cell ${moment(dataDate).isSame(eventDate) === true
-//                          ? "selected"
-//                          : "disabled" }`}>
-//                         {formattedDate}
-//                         {monthKeys && <Link>{handleDayKeys(dataDate)}</Link>}
-//                     </a>
-//                 )
-//                 first = first.add(1, 'days')
-//             }
-//             rows.push(<div class="calendar__week"> {days} </div>)
-//             days = []
-//         }
-//         return <div>{rows}</div>
-//     }
-
-//     return <section className="calendar">
-//         <div className="calendar__header">{header()}</div>
-//         <div>{week()}{days()}</div>
-//     </section>
-// })
-
-const week = () => {
-    const days = []
-    const startDate = moment(currentDate).startOf('week')
-
-    for (let i = 0; i < 7; i++) {
-        days.push(
-            <div>
-                {startDate.add(1, 'days').format('ddd')}
-            </div>
-        )
-    }
-    return <div class="calendar__header">{days}</div>
-}
-
-const days = () => {
-    const monthStart = moment(currentDate).startOf('month'),
-        monthEnd = moment(currentDate).endOf('month'),
-        endDate = moment(monthEnd).endOf('week'),
-        rows = []
-
-    let days = []
-    let formattedDate = ''
-    let eventDate = ''
-    let first = monthStart
-    switch (first.day()) {
-        case 1:
-            first.add(7, 'days')
-            break
-        case 2:
-            first.add(6, 'days')
-            break
-        case 3:
-            first.add(5, 'days')
-            break
-        case 4:
-            first.add(4, 'days')
-            break
-        case 5:
-            first.add(3, 'days')
-            break
-        case 6:
-            first.add(2, 'days')
-            break
-        case 0:
-            first.add(1, 'days')
-    }
-
-    if (monthStart.day() !== '1') {
-        first = moment(first).subtract(1, 'week')
-        while (first <= moment(first).endOf('week').day()) {
-            for (let i = 0; i < 7; i++) {
-                formattedDate = first.format('D')
-                eventDate = first.format("YYYY-MM-DD")
-                const dataDate = first.format()
-                days.push(
-                    <a onClick={onEvent} data-day={eventDate} className={
-                        `calendar__day day column cell ${!dataDate.isSameMonth(formattedDate, 'month')
-                         ? "disabled"
-                         : dataDate.isSame(formattedDate, 'day') 
-                         ? "selected" 
-                         : ""
-                         }`} >
-                        {formattedDate}
-                        {monthMeetings && <div>{handleDayMeetings(dataDate)}</div>}
-                    </a>
-                )
-                first = first.add(1, 'days')
-            }
-        }
-    }
-
-    while (first <= endDate) {
+     const daysOfWeek = () => {
+        const dateFormat = 'EEEEEE'
+        const days = [];
+        let startDate = dateFns.startOfWeek(currentDate);
         for (let i = 0; i < 7; i++) {
-            formattedDate = first.format('D')
-            eventDate = first.format("YYYY-MM-DD")
-            const dataDate = first.format()
+              days.push(
+                 <div className="column col-center" key={i}>
+                 {dateFns.format(dateFns.addDays(startDate, i), dateFormat)}
+                 </div>
+              );
+           }
+           return <div className="days row">{days}</div>;
+        };
+        const cells = () => {
+            const monthStart = dateFns.startOfMonth(currentDate);
+            const monthEnd = dateFns.endOfMonth(monthStart);
+            const startDate = dateFns.startOfWeek(monthStart);
+            const endDate = dateFns.endOfWeek(monthEnd);
+            const dateFormat = "d";
+            const rows = [];
+            let days = [];
+            let day = startDate;
+            let formattedDate = "";
+            while (day <= endDate) {
+               for (let i = 0; i < 7; i++) {
+               formattedDate = dateFns.format(day, dateFormat);
+               const cloneDay = day;
             days.push(
-                <a onClick={onEvent} data-day={eventDate} className={
-                    `calendar__day day column cell ${moment(dataDate).isSame(eventDate) === true
-                     ? "selected"
-                     : "disabled" }`}>
-                    {formattedDate}
-                    {monthMeetings && <Link>{handleDayMeetings(dataDate)}</Link>}
-                </a>
-            )
-            first = first.add(1, 'days')
-        }
-        rows.push(<div class="calendar__week"> {days} </div>)
-        days = []
-    }
-    return <div>{rows}</div>
-}
+                  <div 
+                   className={`column cell ${!dateFns.isSameMonth(day, monthStart)
+                   ? "disabled" : dateFns.isSameDay(day, selectedDate) 
+                   ? "selected" : "" }`} 
+                   key={day} 
+                   onClick={() => onDateClick(dateFns.parse(cloneDay))}
+                   > 
+                   <span className="number">{formattedDate}</span>
+                   <span className="bg">{formattedDate}</span>
+                 </div>
+                 );
+               day = dateFns.addDays(day, 1);
+              }
+            rows.push(
+                  <div className="row" key={day}> {days} </div>
+                );
+               days = [];
+             }
+             return <div className="body">{rows}</div>;
+            }
 
-return <section className="calendar">
-    <div className="calendar__header">{header()}</div>
-    <div>{week()}{days()}</div>
-</section>
+            const onDateClick = day => { 
+               debugger
+            setSelectedDate(day);
+            }
+
+
+    return (<> 
+         <h2>calendar</h2>
+         <div className="calendar">
+            <div>{header()}</div>        
+            <div>{daysOfWeek()}</div>        
+            <div>{cells()}</div>
+        </div>
+    </> 
+    );
 })
