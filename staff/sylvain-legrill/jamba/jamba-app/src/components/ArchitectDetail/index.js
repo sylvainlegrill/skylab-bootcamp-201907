@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react"
+import React, { Route,useState, useEffect } from "react"
 
 import { withRouter } from "react-router-dom"
 import logic from "../../logic"
+import CalendarMeeting from "../CalendarMeeting"
+
 
 
 
 export default withRouter (function ({match,  history, onBack }) {
   
+  const [view, setView] = useState(false)
   const [architect, setArchitect] = useState([])
     
   useEffect(() => {
@@ -26,8 +29,14 @@ export default withRouter (function ({match,  history, onBack }) {
     })()
   }, [])
 
+  function handleGoToCalendar(id) {
+    setView(true)
+    history.push(`/architects/${id}/calendar`)
+  }
+
   return (
     <>    
+        {view === true && <Route path="/calendar" render={() =>  <CalendarMeeting/>} />}
         {/* {user && <Result architects ={user} />}  */}
         {architect && <li className="architect" key={architect.id}>
         {/* <img className="user__img" src={architect.profileImg}></img> */}
@@ -37,6 +46,10 @@ export default withRouter (function ({match,  history, onBack }) {
           <p className="user__city">{architect.city}</p>
         </div>
         </li>}
+        <button className="architect__meeting" 
+                  title="meeting"
+                  href="#"
+                  onClick={() => {handleGoToCalendar(architect.id)}}>arrange meeting</button>
         {/* {architect && <a href="#" onClick={event => {
             event.preventDefault()
 

@@ -1,4 +1,5 @@
 import registerUser from './users/register-user'
+import registerArchitect from './users/register-architect'
 import authenticateUser from './users/authenticate-user'
 import isUserLoggedIn from './users/is-user-logged-in'
 import logUserOut from './users/log-user-out'
@@ -6,6 +7,9 @@ import retrieveUser from './users/retrieve-user'
 import retrieveUsersByRole from './users/retrieve-users-by-role'
 import retrieveArchitect from './users/retrieve-architect'
 import searchArchitectsByCityAndSpecialty from './users/search-architects-by-city-and-specialty'
+import uploadImage from './users/upload-image'
+import getUserId from './users/get-user-id'
+import addMeeting from './meetings/add-meeting'
 
 
 export default {
@@ -31,6 +35,7 @@ export default {
 
 
     registerUser,
+    registerArchitect,
     authenticateUser,
     isUserLoggedIn,
     logUserOut,
@@ -38,6 +43,9 @@ export default {
     retrieveUser,
     retrieveArchitect,
     searchArchitectsByCityAndSpecialty,
+    uploadImage,
+    getUserId,
+    addMeeting
 
 
 

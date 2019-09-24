@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import './index.sass'
+import moment from "moment"
+import Context from '../Context'
 import Register from '../Register'
+import RegisterArchitect from '../RegisterArchitect'
 import Architects from '../Architects'
 import ArchitectDetail from '../ArchitectDetail'
 import Dashboard from '../Dashboard'
 import CalendarMeeting from '../CalendarMeeting'
+import AddMeeting from '../AddMeeting'
 import Login from '../Login'
 import logic from '../../logic'
 import { Route, Link, withRouter } from 'react-router-dom'
 import Home from '../Home'
 // import ListAllArchitects from '../ListAllArchitects'
 
-export default withRouter(function ({ history }) {
+
+
+
+export default withRouter(function ({ history }) { 
   const [view, setView] = useState(logic.isUserLoggedIn() ? 'home' : undefined)
 
   const handleBack = () => {
@@ -20,16 +27,28 @@ export default withRouter(function ({ history }) {
     history.push('/')
   }
 
-  const handleRegister = async (role, name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description) => {
-    try {
-      debugger
-      await logic.registerUser(role, name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description)
+  const handleRegister = async (name, surname, email, phone, password, role) => { 
+    try { 
+      
+      await logic.registerUser(name, surname, email, phone, password, role)
 
       history.push('/login')
     } catch ({ message }) {
-      console.log('fail register', message)
+      console.error('fail register', message)
     }
   }
+
+  const handleRegisterArchitect = async (name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role) => {
+    try {
+      
+      await logic.registerArchitect(name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role)
+
+      history.push('/login')
+    } catch ({ message }) {
+      console.error('fail register', message)
+    }
+  }
+
 
   const handleLogin = async (email, password) => {
     try {
@@ -49,6 +68,8 @@ export default withRouter(function ({ history }) {
 
     history.push('/register')
   }
+  
+  
 
   const handleGoToLogin = event => {
     event.preventDefault()
@@ -69,7 +90,19 @@ export default withRouter(function ({ history }) {
     history.push('/')
   }
 
-  return <div className="App">
+  const [userMeeting, setUserMeeting] = useState()
+  const [ currentDate, setCurrentDate ] = useState(moment())
+  const [ thisDay, setThisDay ] = useState()
+  const [ thisHour, setThisHour ] = useState()
+
+  return (<>
+    
+    <Context.Provider value = {{ 
+      userMeeting, setUserMeeting, 
+      currentDate, setCurrentDate, 
+      thisDay, setThisDay, 
+      thisHour, setThisHour, 
+    }}>
     {/* <header>
         <nav>
           <ul>
@@ -87,18 +120,23 @@ export default withRouter(function ({ history }) {
         </ul>
       </nav>}
     </header>
-
+    <main className="main">
     <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
+    <Route path="/registerarchitect" render={() => <RegisterArchitect onBack={handleBack} onRegister={handleRegisterArchitect} />} />
     <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
-    <Route path="/calendar" render={() =>  <CalendarMeeting/> } />
+    <Route exact path="/architects/:id/calendar" render={() =>  <CalendarMeeting/> } />
+    <Route exact path="/architects/:id/calendar/submit" render={() =>  <AddMeeting/> } />
     <Route path="/dashboard" render={() =>  <Dashboard onLogOut={handleLogout} />} />
     {logic.isUserLoggedIn() && <Route path="/home" render={() => <Home onLogout={handleLogout}/>} />}
     <Route exact path="/architects" render={() => <Architects />} />
 
-    <Route path="/architects/:id" render={() => <ArchitectDetail /> }/>
+    <Route exact path="/architects/:id" render={() => <ArchitectDetail /> }/>
+    </main>
 
+    </Context.Provider>
 
-  </div>
+  </>)
+
+  
 })
 
-//3) definir route where you are going

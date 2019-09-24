@@ -1,57 +1,71 @@
-import React, {useState} from 'react'
-import logic from '../../logic'
+import React, { useState} from 'react'
+import { withRouter, history } from 'react-router-dom'
 
+export default function ({ onBack, onRegister, history }) {
 
-export default function ({ onBack, onRegister, history }) { 
     
-    
-    const [view, setView] = useState(logic.isUserLoggedIn() ? 'home' : undefined)
+    // const [role, setRole] = useState('architect')
 
-    // const handleRegisterArchitect = async (name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role) => {
-    //     try {
-          
-    //       await logic.registerArchitect(name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role)
-    
-    //       history.push('/login')
-    //     } catch ({ message }) {
-    //       console.error('fail register', message)
+    // function handleChange(event){ 
+    //     event.preventDefault()
+    //     const {target: { value: role}} = event
+
+    //     if (role === "architect") {
+    //         setRole('architect') 
     //     }
-    //   }
-
-    
-
-    const handleGoToRegisterArchitect = () => {
-       
-    
-        history.push('/register-architect')
-      }
-    
+    //     if (role === "customer") {
+    //         setRole('customer')
+    //     }
+    // }
 
     return <>
-        <h2>Register</h2>
-
+    
+        <h2>Register Architect</h2>
         
-        <button className="architect__meeting"  title="meeting" onClick={() => {
-            handleGoToRegisterArchitect()}}> Sign up as an architect here. </button>
-        <form onSubmit={event => {
+        <form onSubmit={event => {  
+            
             event.preventDefault()
-            const { target: { name: { value: name }, surname: { value: surname }, email: { value: email }, phone:{ value: phone}, password: { value: password }, role:{ value: role} } } = event
+            
+            const { target: { name: { value: name }, surname: { value: surname }, email: { value: email },phone: { value: phone }, password: { value: password }, city: { value: city }, license: { value: license }, specialty: { value: specialty }, profileImg: { value: profileImg }, portfolioUrl: { value: portfolioUrl }, projectImg: { value: projectImg }, description: { value: description }, role: { value: role } } } = event
+            
+            onRegister( name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role) 
+            
 
-            onRegister(name, surname, email, phone, password, role)
         }}>
+            <>
             <input type="text" name="name" placeholder="name" />
-            <input type="text" name="surname" placeholder="surname" />
+            <input type="text" name="surname" placeholder="surname"/>
             <input type="email" name="email" placeholder="email" />
-            <input type="tel" name="phone" placeholder="phone number"/>
-            <input type="password" name="password" placeholder="password"/>
-            <input type="text" hidden name="role" value="customer"/>
+            <input type="tel" name="phone" placeholder="phone number" />
+            <input type="password" name="password" placeholder="password" />
+            <input type="text" name="city" placeholder="your city" />
+            <input type="text" name="license" placeholder="license" />   
+            <select required className ="register__selector" type="text" name="specialty">
+            <option defaultValue="" >Select type of professional</option>
+            <option value="residential architect">residential architect</option>
+            <option value="technical architect">technical architect</option>
+            <option value="interior architect">interior architect</option>
+            <option value="landscaper">landscaper</option>
+            </select>
+            <input type="#" name="profileImg" placeholder="your profile picture" />
+            <input type="link" name="portfolioUrl" placeholder="add a weblink to your porfolio" />
+            <input type="#" name="projectImg" placeholder="image of one of your project" />
+            <textarea type="text" name="description" rows="10" cols="10" placeholder="finally describe youself in few lines" />
+            <imput type="text" hidden name= "role" defaultValue= "architect"/> 
+            </>
+        
+            
+        
             <button>Proceed</button>
         </form>
-        <a href="#" onClick={event => { 
-            event.preventDefault()
+        
+        <div>
+            <a href="#" onClick={event => {
+                event.preventDefault()
 
-            onBack()
-        }}>Go back</a>
+                onBack()
+            }}>Go back</a>
+        </div>
     </>
 }
 

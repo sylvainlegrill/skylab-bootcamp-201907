@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs')
 const REACT_APP_DB_URL_TEST = process.env.REACT_APP_DB_URL_TEST
 
 describe('logic - register user', () => {
-    let name, surname, email, phone, password, role
+    let name, surname, email, phone, password, city, license, specialty, profileImg , portfolioUrl, projectImg, description, role 
 
     beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
 
@@ -18,13 +18,21 @@ describe('logic - register user', () => {
         email = `email-${random()}@mail.com`
         phone = `phone-${random()}`
         password = `password-${random()}`
-        role = `customer`
+        city= `city-${random()}`
+        license= `license-${random()}`
+        specialty = `specialty-${random()}`
+        profileImg = `profileImg-${random()}`
+        portfolioUrl = `portfolioUrl-${random()}`
+        projectImg = `projectImg-${random()}`
+        description = `description-${random()}`
+        role = `architect`
+
 
         await User.deleteMany()
     })
 
     it('should succeed on correct data', async () => {
-        const response = await registerUser(name, surname, email, phone, password, role)
+        const response = await registerUser(name, surname, email, phone, password, city, license, specialty, profileImg , portfolioUrl, projectImg, description, role )
 
         expect(response).toBeUndefined()
 
@@ -39,6 +47,13 @@ describe('logic - register user', () => {
         const match = await bcrypt.compare(password, user.password)
         expect(match).toBeTruthy()
         
+        expect(user.city).toBe(city)
+        expect(user.license).toBe(license)
+        expect(user.specialty).toBe(specialty)
+        expect(user.profileImg).toBe(profileImg)
+        expect(user.portfolioUrl).toBe(portfolioUrl)
+        expect(user.projectImg).toBe(projectImg)
+        expect(user.description).toBe(description)
         expect(user.role).toBe(role)
 
         // expect(user.password).toBe(password)
