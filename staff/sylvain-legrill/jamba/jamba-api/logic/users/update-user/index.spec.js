@@ -13,7 +13,7 @@ describe('logic - update user', () => {
     beforeEach(async() => {
         await User.deleteMany()
         })
-        describe('update user', () => {
+        describe('update user', () => {debugger
             let id, name, surname, email, phone, city, license, specialty, profileImg, portfolioUrl, projectImg, description, password
             beforeEach(async () => {
                 
@@ -32,7 +32,7 @@ describe('logic - update user', () => {
                 const user = await User.create({name, surname, email, phone, city, license, specialty, profileImg, portfolioUrl, projectImg, description, password: await bcrypt.hash(password,10)})
                 id = user.id
             })
-        it('should succeed on correct architect data', async () => {
+        it('should succeed on correct architect data', async () => {debugger
             
             const user =  await updateUser(id, { name: 'newName', surname: 'newSurname', phone: 'newPhone', city: 'newCity', license: 'newLicense', specialty: 'newSpecialty', profileImg: 'newProfile', portfolioUrl: 'newPortfolio', projectImg: 'newProject', description: 'newDescription', password: 'newPassword' })
                 expect(user).not.to.exist

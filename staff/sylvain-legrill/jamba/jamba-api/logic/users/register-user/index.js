@@ -20,7 +20,7 @@ const bcrypt = require('bcryptjs')
  * 
  * @returns {Promise}
  */
-module.exports = function (name, surname, email,  phone, password, role, city, license, specialty, profileImg, portfolioUrl, projectImg, description) {
+module.exports = function (name, surname, email, phone, password, role, city, license, specialty, profileImg, portfolioUrl, projectImg, description) {
 
     validate.string(name)
     validate.string(surname)
@@ -43,7 +43,7 @@ module.exports = function (name, surname, email,  phone, password, role, city, l
             if(!portfolioUrl) throw Error ("Portfolio url cannot be empty for architect role")
             if(!projectImg) throw Error ("Project Image cannot be empty for architect role")
             if(!description) throw Error ("Description cannot be empty for architect role")
-            await User.create({name, surname, email,  phone, password: hash, role, city, license, specialty, profileImg,  portfolioUrl, projectImg, description})
+            await User.create({name, surname, email,  phone, password: hash, role, city, license, specialty, profileImg, portfolioUrl, projectImg, description})
         }
         if(role === "customer"){
             await User.create({name, surname, email, phone, password: hash, role })
