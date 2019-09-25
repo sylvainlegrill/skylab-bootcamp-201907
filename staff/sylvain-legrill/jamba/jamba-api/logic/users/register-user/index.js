@@ -20,7 +20,7 @@ const bcrypt = require('bcryptjs')
  * 
  * @returns {Promise}
  */
-module.exports = function (name, surname, email, phone, password, role, city, license, specialty, profileImg, portfolioUrl, projectImg, description) {
+module.exports = function (name, surname, email, phone, password, role, city, license, specialty, portfolioUrl, projectImg, description) {
 
     validate.string(name)
     validate.string(surname)
@@ -30,7 +30,7 @@ module.exports = function (name, surname, email, phone, password, role, city, li
     validate.string(password)
     validate.string(role)
     return ( async () => {
-        const user = await User.findOne({ email })
+        let user = await User.findOne({ email })
         if (user) throw Error(`user with e-mail ${email} already exists.`)
 
         const hash = await bcrypt.hash(password, 10)
@@ -39,15 +39,15 @@ module.exports = function (name, surname, email, phone, password, role, city, li
             if(!city) throw Error ("City cannot be empty for architect role")
             if(!license) throw Error ("License cannot be empty for architect role")
             if(!specialty) throw Error ("Speciality cannot be empty for architect role")
-            if(!profileImg) throw Error ("Profile Image cannot be empty for architect role")
             if(!portfolioUrl) throw Error ("Portfolio url cannot be empty for architect role")
             if(!projectImg) throw Error ("Project Image cannot be empty for architect role")
             if(!description) throw Error ("Description cannot be empty for architect role")
-            await User.create({name, surname, email,  phone, password: hash, role, city, license, specialty, profileImg, portfolioUrl, projectImg, description})
+            user = await User.create({name, surname, email,  phone, password: hash, role, city, license, specialty, portfolioUrl, projectImg, description})
         }
         if(role === "customer"){
-            await User.create({name, surname, email, phone, password: hash, role })
+            user = await User.create({name, surname, email, phone, password: hash, role })
         }
-
+        const { id } = user
+        return id
     })()
 }

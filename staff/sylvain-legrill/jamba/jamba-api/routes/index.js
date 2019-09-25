@@ -44,7 +44,7 @@ router.delete('/users', [tokenMiddleware, jsonBodyParser], unregisterUser)
 
 router.post('/users/meetings', [tokenMiddleware, jsonBodyParser], addMeeting)
 
-router.post('/users/uploads', [tokenMiddleware, jsonBodyParser], uploadImage)
+router.post('/users/:id/uploads', uploadImage)
 
 router.get('/users/meetings/:id', [tokenMiddleware, jsonBodyParser], retrieveMeeting)
 

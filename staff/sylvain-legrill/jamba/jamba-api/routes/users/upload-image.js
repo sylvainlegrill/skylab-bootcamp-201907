@@ -1,7 +1,8 @@
 const logic = require('../../logic')
 const Busboy = require('busboy')
 module.exports = (req, res) => {
-    const { id } = req
+    const { params: {id} } = req
+    debugger
     const busboy = new Busboy({ headers: req.headers })
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) =>
         logic.uploadImage(id, file)
