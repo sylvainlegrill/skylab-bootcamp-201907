@@ -1,38 +1,37 @@
 import React, { useState} from 'react'
+import logic from '../../logic'
 import { withRouter, history } from 'react-router-dom'
 
-export default function ({ onBack, onRegister, history }) {
+export default withRouter (function ({ onBack, history }) {
 
-    
-    // const [role, setRole] = useState('architect')
 
-    // function handleChange(event){ 
-    //     event.preventDefault()
-    //     const {target: { value: role}} = event
-
-    //     if (role === "architect") {
-    //         setRole('architect') 
-    //     }
-    //     if (role === "customer") {
-    //         setRole('customer')
-    //     }
-    // }
+    async function onRegister(name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description){
+        try{    debugger
+                const response = await logic.registerArchitect( name, surname, email, phone, password, city, license, specialty, portfolioUrl, projectImg, description)
+                const { id } = response
+            debugger
+                await logic.uploadImage(id, profileImg)
+        
+        }catch({message}){
+            debugger
+            console.log(message)
+        }
+    }
 
     return <>
     
         <h2>Register Architect</h2>
         
-        <form onSubmit={event => {  
-            
+        <form className = "register__form" method="post" encType="multipart/form-data" onSubmit={event => {  
+            debugger
             event.preventDefault()
+            const { target: { name: { value: name }, surname: { value: surname }, email: { value: email },phone: { value: phone }, password: { value: password }, city: { value: city }, license: { value: license }, specialty: { value: specialty }, profileImg: { files: [profileImg] }, portfolioUrl: { value: portfolioUrl }, projectImg: { value: projectImg }, description: { value: description } } } = event
             
-            const { target: { name: { value: name }, surname: { value: surname }, email: { value: email },phone: { value: phone }, password: { value: password }, city: { value: city }, license: { value: license }, specialty: { value: specialty }, profileImg: { value: profileImg }, portfolioUrl: { value: portfolioUrl }, projectImg: { value: projectImg }, description: { value: description }, role: { value: role } } } = event
-            
-            onRegister( name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role) 
+            onRegister( name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description) 
             
 
         }}>
-            <>
+            
             <input type="text" name="name" placeholder="name" />
             <input type="text" name="surname" placeholder="surname"/>
             <input type="email" name="email" placeholder="email" />
@@ -47,27 +46,24 @@ export default function ({ onBack, onRegister, history }) {
             <option value="interior architect">interior architect</option>
             <option value="landscaper">landscaper</option>
             </select>
-            <input type="#" name="profileImg" placeholder="your profile picture" />
+            <p>Upload profile picture</p><input type="file" name="profileImg" placeholder="your profile picture" />
             <input type="link" name="portfolioUrl" placeholder="add a weblink to your porfolio" />
-            <input type="#" name="projectImg" placeholder="image of one of your project" />
+            <input type="text" name="projectImg" placeholder="image of one of your project" />
             <textarea type="text" name="description" rows="10" cols="10" placeholder="finally describe youself in few lines" />
-            <imput type="text" hidden name= "role" defaultValue= "architect"/> 
-            </>
-        
             
         
             <button>Proceed</button>
         </form>
         
-        <div>
+    
             <a href="#" onClick={event => {
                 event.preventDefault()
 
                 onBack()
             }}>Go back</a>
-        </div>
+        
     </>
-}
+})
 
 
 // import React, { useState} from 'react'
@@ -91,17 +87,17 @@ export default function ({ onBack, onRegister, history }) {
 //         }
 //     }
 
-//     // async function onRegister(role, name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description){
-//     //     try{
-//     //             const register = await logic.registerUser(role, name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description)
-//     //             id=register
+    // async function onRegister(role, name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description){
+    //     try{
+    //             const register = await logic.registerUser(role, name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description)
+    //             id=register
 
-//     //             await logic.uploadImage(id, profileImg)
+    //             await logic.uploadImage(id, profileImg)
         
-//     //     }catch(error){
-//     //         console.log(error.message)
-//     //     }
-//     // }
+    //     }catch(error){
+    //         console.log(error.message)
+    //     }
+    // }
 
 
 //     return <>

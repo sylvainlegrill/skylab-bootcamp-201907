@@ -27,7 +27,7 @@ const {validate} = require('jamba-utils')
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
-export default function (name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role) {  
+export default function (name, surname, email, phone, password, city, license, specialty, portfolioUrl, projectImg, description) {  
     // validate fields
 // if (role==='architect'){
     validate.string(name)
@@ -39,25 +39,24 @@ export default function (name, surname, email, phone, password, city, license, s
     validate.string(city)
     validate.string(license)
     validate.string(specialty)
-    validate.string(profileImg)
     validate.string(portfolioUrl)
     validate.string(projectImg)
     validate.string(description)
-    validate.string(role)
 
 
 
     return (async () => { 
         const response = await fetch(`${REACT_APP_API_URL}/users`, {
-            method: 'POST',
+            method: 'post',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role }) 
+            body: JSON.stringify({name, surname, email, phone, password, city, license, specialty,  portfolioUrl, projectImg, description, role:"architect" }) 
         })
- 
+        debugger
         if (response.status !== 201) {
             const { error } = await response.json()
 
             throw Error(error)
         }
+        return await response.json()
     })()
 } 

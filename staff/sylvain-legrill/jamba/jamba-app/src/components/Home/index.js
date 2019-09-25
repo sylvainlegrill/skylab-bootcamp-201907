@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import "./index.sass"
+import homeMainPicture from './../../images/homemainpicture.png'
 import logic from "../../logic"
 import Search from "../Search"
 import Presentation from "../Presentation"
@@ -69,7 +70,8 @@ export default withRouter(function ({ history, onLogout }) {
       {/* <Lin className="nav__a dropdown__button" href="#" to="/dashboard">Dashboard</Link> */}
       {/* <a className="nav__a dropdown__button" href="#" onClick={onLogout}>Logout</a> */}
       </div>
-     
+      <img className="home__picture"src={homeMainPicture} alt="MainPicture" />
+
       <Search onSearch={onHandleSearch} />
 
       {!result && <Presentation />} 

@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
+import {withRouter} from 'react-router-dom'
 import logic from '../../logic'
 
 
-export default function ({ onBack, onRegister, history }) { 
+export default withRouter (function ({ onBack, onRegister, history }) { 
     
     
     const [view, setView] = useState(logic.isUserLoggedIn() ? 'home' : undefined)
@@ -17,8 +18,6 @@ export default function ({ onBack, onRegister, history }) {
     //       console.error('fail register', message)
     //     }
     //   }
-
-    
 
     const handleGoToRegisterArchitect = () => {
        
@@ -44,7 +43,7 @@ export default function ({ onBack, onRegister, history }) {
             <input type="email" name="email" placeholder="email" />
             <input type="tel" name="phone" placeholder="phone number"/>
             <input type="password" name="password" placeholder="password"/>
-            <input type="text" hidden name="role" value="customer"/>
+            <input type="text" hidden name="role" defaultValue="customer"/>
             <button>Proceed</button>
         </form>
         <a href="#" onClick={event => { 
@@ -53,7 +52,7 @@ export default function ({ onBack, onRegister, history }) {
             onBack()
         }}>Go back</a>
     </>
-}
+})
 
 
 // import React, { useState} from 'react'

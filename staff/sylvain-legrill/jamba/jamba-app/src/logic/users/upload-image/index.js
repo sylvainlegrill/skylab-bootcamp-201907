@@ -2,17 +2,17 @@
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 export default function (id, profileImg) {
     // validate fields
-    const image = profileImg[0]
+    const image = profileImg
 
     var formData = new FormData();
     formData.append('image', image);
     //headers: { 'content-type': 'multipart/form-data', authorization: `bearer ${token}` },
     return (async () => {
         // if(image !== undefined)
-        const response = await fetch(`${REACT_APP_API_URL}/users/upload`, {
-            method: 'POST',
+        const response = await fetch(`${REACT_APP_API_URL}/users/${id}/uploads`, {
+            method: 'post',
             headers: {
-                authorization: `bearer ${this.__token__}`
+                headers: { 'content-type': 'application/json' },
             },
             body: formData
         })

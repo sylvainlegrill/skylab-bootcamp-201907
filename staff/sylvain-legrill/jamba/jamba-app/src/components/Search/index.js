@@ -14,7 +14,7 @@ function Search ({ history, onSearch}){
     
     return  <>
 
-    <form className = "home__searchlists" 
+    <form className = "searchlist" 
         onSubmit={event => {
             event.preventDefault()
 
@@ -22,15 +22,17 @@ function Search ({ history, onSearch}){
             
             onSearch( city, specialty)
         }}>
-     
-        <select required className ="home__searchlist--professional" name="specialty">
-            <option defaultValue="" >Select type of professional</option>
-            <option value="residential architect">residential architect</option>
-            <option value="technical architect">technical architect</option>
-            <option value="interior architect">interior architect</option>
-            <option value="landscaper">landscaper</option>
+        <div className="searchlist__background-clip">
+        <h3 className = "searchlist__title"> Tell us more about your project </h3>
+        </div>
+         <select required className ="searchlist__selector" name="specialty">
+            <option defaultValue="" >Select professional ></option>
+            <option className="searchlist__input"value="residential architect">residential architect</option>
+            <option className="searchlist__input" value="technical architect">technical architect</option>
+            <option className="searchlist__input" value="interior architect">interior architect</option>
+            <option className="searchlist__input" value="landscaper">landscaper</option>
         </select>
-        {/* <select required className ="home__searchlist--housing" name="housing">
+        {/* <select required className ="searchlist--housing" name="housing">
             <option defaultValue="">Select type of housing</option>
             <option value="0">individual house</option>
             <option value="1">appartment</option>
@@ -38,15 +40,15 @@ function Search ({ history, onSearch}){
             <option value="3">office</option>
         </select> */}
 
-        <select required className ="home__searchlist--city" name="city">
-            <option defaultValue="">Select a city</option>
-            <option value="Barcelona">Barcelona</option>
-            <option value="Madrid">Madrid</option>
-            <option value="Valencia">Valencia</option>
-            <option value="Paris">Paris</option>
+        <select required className ="searchlist__selector" name="city">
+            <option className="searchlist__input" defaultValue="">Select a city ></option>
+            <option className="searchlist__input" value="Barcelona">Barcelona</option>
+            <option className="searchlist__input" value="Madrid">Madrid</option>
+            <option className="searchlist__input" value="Valencia">Valencia</option>
+            <option className="searchlist__input" value="Paris">Paris</option>
         </select>
 
-        <button className = "home__searchlist--button"href="#">search</button>
+        <button className = "searchlist__button"href="#">SEARCH</button>
 
     </form>
     </>

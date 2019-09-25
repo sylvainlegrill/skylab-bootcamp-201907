@@ -28,7 +28,7 @@ function AddMeeting({ history, match }) {
     }
 
     async function handleAddMeeting(date, address, userId, architectId ) { //, userId, architectId
-            debugger
+            
         try {
             const userMeeting = await logic.addMeeting(date, address, userId, architectId) //, userId, architectId
 
@@ -47,6 +47,12 @@ function AddMeeting({ history, match }) {
         history.push(`/architects/${architectId}/calendar`)
     }
 
+    function goConfirmation(event) {
+        event.preventDefault()
+
+        history.push(`/architects/${architectId}/calendar/submit/confirmation`)
+    }
+ 
     return <>
 
             <section className="meeting-register">
@@ -71,7 +77,7 @@ function AddMeeting({ history, match }) {
                             <Feedback message={error}/>
                         </li> } */}
                         <li className="meeting-register__form-item">
-                            <button className="meeting-register__form-button">confirm meeting</button>
+                            <button className="meeting-register__form-button"onClick={goConfirmation}>confirm meeting</button>
                         </li>
                     </ul>
                 </form>

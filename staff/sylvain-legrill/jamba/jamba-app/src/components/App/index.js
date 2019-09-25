@@ -9,6 +9,7 @@ import ArchitectDetail from '../ArchitectDetail'
 import Dashboard from '../Dashboard'
 import CalendarMeeting from '../CalendarMeeting'
 import AddMeeting from '../AddMeeting'
+import ConfirmMeeting from '../AddMeetingConfirmation'
 import Login from '../Login'
 import logic from '../../logic'
 import { Route, Link, withRouter } from 'react-router-dom'
@@ -114,7 +115,7 @@ export default withRouter(function ({ history }) {
 
     <header>
       {view !== 'home' && <nav>
-        <ul>
+        <ul>  
           {view !== 'register' && <li><a href="" onClick={handleGoToRegister}>Register</a></li>}
           {view !== 'login' && <li><a href="" onClick={handleGoToLogin}>Login</a></li>}
         </ul>
@@ -122,10 +123,11 @@ export default withRouter(function ({ history }) {
     </header>
     <main className="main">
     <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
-    <Route path="/registerarchitect" render={() => <RegisterArchitect onBack={handleBack} onRegister={handleRegisterArchitect} />} />
+    <Route path="/register-architect" render={() => <RegisterArchitect onBack={handleBack} onRegister={handleRegisterArchitect} />} />
     <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
     <Route exact path="/architects/:id/calendar" render={() =>  <CalendarMeeting/> } />
     <Route exact path="/architects/:id/calendar/submit" render={() =>  <AddMeeting/> } />
+    <Route exact path="/architects/:id/calendar/confirmation" render={() =>  <ConfirmMeeting/> } />
     <Route path="/dashboard" render={() =>  <Dashboard onLogOut={handleLogout} />} />
     {logic.isUserLoggedIn() && <Route path="/home" render={() => <Home onLogout={handleLogout}/>} />}
     <Route exact path="/architects" render={() => <Architects />} />
