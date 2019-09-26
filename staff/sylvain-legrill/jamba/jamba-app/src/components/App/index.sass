@@ -1,3 +1,41 @@
+
 @import ../../style/base-settings
+@import ../Header
+@import ../Login
+@import ../Register
+@import ../RegisterArchitect
 @import ../Home
 @import ../Search
+@import ../Presentation
+@import ../PresentationArchitects
+@import ../Architects
+@import ../Result
+@import ../ArchitectDetail
+@import ../CalendarMeeting
+@import ../AddMeeting
+@import ../AddMeetingConfirmation
+
+.logo
+    background-color: $color-white
+    &__image
+        width: 20%
+        padding-left: 2%
+        
+
+.register
+    &__button
+        width: 50%
+        height: 6vh
+        margin: 1rem auto
+        padding: 0.6rem
+        background-color: $color-green
+        border: 0px solid transparent
+        text-align: center
+        text-decoration: none
+        color: $color-pink
+        font-family: $font-poppins
+.login
+    &__button
+        @extend %button-white
+        font-family: $font-poppins
+    

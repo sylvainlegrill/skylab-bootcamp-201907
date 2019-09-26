@@ -1,1 +1,31 @@
-import React from 'react'
+@import ../../style/base-settings
+
+.presentation
+
+    &__title
+        @extend %text-title2
+        
+
+    &__subtitle
+        @extend %text-little
+        margin: 0.8rem auto 0.5rem auto
+
+    &__number
+        color: $color-green
+
+    h3
+    text-align: center
+    color: $color-green
+    padding-bottom: 2%
+
+.projects
+    margin-top: 20 rem
+
+    &__title
+        @extend %text-title
+
+    &__picture
+        @extend %picture-render
+
+
+

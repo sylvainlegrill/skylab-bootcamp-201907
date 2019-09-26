@@ -8,16 +8,16 @@ import logic from '../../logic'
 
 function AddMeetingConfirmation({ history, match }) {
 
-    const [view, setView] = useState(true)
+    
+
 
 
     return (
-        <> 
-        {view &&
-
+        
+        
             <section className="meeting-confirmation"> meeting confirmed</section>
-        }
-            </>
+        
+    
 
     )
     

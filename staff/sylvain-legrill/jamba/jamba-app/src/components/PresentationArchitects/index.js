@@ -1,5 +1,7 @@
 import React from 'react'
 import { withRouter } from "react-router-dom"
+import homeArchitect1 from './../../images/home-architect1.png'
+import homeArchitect2 from './../../images/home-architect2.png'
 
 //import './index.sass'
 
@@ -13,25 +15,17 @@ function PresentationArchitects ({history}){
 
 
  return <>
-<section className="home__architects">
-<div className="home__architects-div">
-  <h3 className="home__architects--title">The architects</h3>
+<section className="architects">
+<div className="architects-div">
+  <h3 className="architects__title">The architects</h3>
 </div>
-<figure className="home__architects-figure">
-  <img
-    className="home__architects--img"
-    alt=""
-    src="../../img/architects1.jpg"
-  ></img>
-  <img
-    className="home__architects--img"
-    alt=""
-    src="../../img/architects2.jpg"
-  ></img>
+<figure className="architects-figure">
+  <img className="home__picture"src={homeArchitect1} alt="MainPicture" />
+  <img className="home__picture"src={homeArchitect2} alt="MainPicture" />
 </figure>
-<div className="home__architects-div">
+<div className="architects__div">
   <a
-    className="home__architects--link"
+    className="architects__link"
     title="more architects"
     href="#"
     onClick={handleListArchitects}

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import './index.sass'
 import moment from "moment"
+import Header from '../Header'
 import Context from '../Context'
 import Register from '../Register'
 import RegisterArchitect from '../RegisterArchitect'
 import Architects from '../Architects'
 import ArchitectDetail from '../ArchitectDetail'
-import Dashboard from '../Dashboard'
+// import Dashboard from '../Dashboard'
 import CalendarMeeting from '../CalendarMeeting'
 import AddMeeting from '../AddMeeting'
 import ConfirmMeeting from '../AddMeetingConfirmation'
@@ -14,6 +15,7 @@ import Login from '../Login'
 import logic from '../../logic'
 import { Route, Link, withRouter } from 'react-router-dom'
 import Home from '../Home'
+import homeMainPicture from './../../images/homemainpicture.png'
 // import ListAllArchitects from '../ListAllArchitects'
 
 
@@ -113,22 +115,26 @@ export default withRouter(function ({ history }) {
         </nav>
       </header> */}
 
-    <header>
-      {view !== 'home' && <nav>
+    <Header/>
+    
+    <main className="main">
+    {view !== 'home' && <nav> 
+    <div className="logo">
+        <img src={require('../../images/logo.svg')} alt="jamba project logo" className="logo__image" />
+    </div>
+    <img className="home__picture"src={homeMainPicture} alt="MainPicture" />
         <ul>  
-          {view !== 'register' && <li><a href="" onClick={handleGoToRegister}>Register</a></li>}
-          {view !== 'login' && <li><a href="" onClick={handleGoToLogin}>Login</a></li>}
+          {view !== 'register' && <li><a className="register__button"href="" onClick={handleGoToRegister}>Sign up</a></li>}
+          {view !== 'login' && <li><a className="login__button" href="" onClick={handleGoToLogin}>Sign in</a></li>}
         </ul>
       </nav>}
-    </header>
-    <main className="main">
     <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
     <Route path="/register-architect" render={() => <RegisterArchitect onBack={handleBack} onRegister={handleRegisterArchitect} />} />
     <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
     <Route exact path="/architects/:id/calendar" render={() =>  <CalendarMeeting/> } />
     <Route exact path="/architects/:id/calendar/submit" render={() =>  <AddMeeting/> } />
-    <Route exact path="/architects/:id/calendar/confirmation" render={() =>  <ConfirmMeeting/> } />
-    <Route path="/dashboard" render={() =>  <Dashboard onLogOut={handleLogout} />} />
+    <Route exact path="/architects/:id/calendar/submit/confirmation" render={() =>  <ConfirmMeeting/> } />
+    {/* <Route path="/dashboard" render={() =>  <Dashboard onLogOut={handleLogout} />} /> */}
     {logic.isUserLoggedIn() && <Route path="/home" render={() => <Home onLogout={handleLogout}/>} />}
     <Route exact path="/architects" render={() => <Architects />} />
 

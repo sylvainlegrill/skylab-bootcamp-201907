@@ -9,13 +9,14 @@ import moment from 'moment'
 
 function AddMeeting({ history, match }) {
 
+    const [view, setView] = useState(false)
     const { params: { id }} = match //architectId
     const { thisDay, thisHour, setUserMeeting } = useContext(Context)
     const  [error, setError]  = useState()
     const userId = logic.getUserId()
     const architectId = id
 
-    function handleSubmit(event) {
+    function handleSubmit(event) { debugger
             event.preventDefault()
 
             const { target: { date: { value: date}, time: { value: time }, address: { value: address} } } = event
@@ -29,29 +30,25 @@ function AddMeeting({ history, match }) {
 
     async function handleAddMeeting(date, address, userId, architectId ) { //, userId, architectId
             
-        try {
+        try { debugger
             const userMeeting = await logic.addMeeting(date, address, userId, architectId) //, userId, architectId
 
             setUserMeeting(userMeeting)
             // console.log("hello Carol")
 
-            // history.push(`users/meetings`)
+            history.push(`/architects/${architectId}/calendar/submit/confirmation`)
         } catch({ message }) {
             setError(message)
         }
     }  
 
-    function goBack(event) {
+    function goBack(event) { 
         event.preventDefault()
 
         history.push(`/architects/${architectId}/calendar`)
     }
 
-    function goConfirmation(event) {
-        event.preventDefault()
-
-        history.push(`/architects/${architectId}/calendar/submit/confirmation`)
-    }
+  
  
     return <>
 
@@ -77,11 +74,11 @@ function AddMeeting({ history, match }) {
                             <Feedback message={error}/>
                         </li> } */}
                         <li className="meeting-register__form-item">
-                            <button className="meeting-register__form-button"onClick={goConfirmation}>confirm meeting</button>
+                            <button className="meeting-register__form-button">confirm meeting</button>
                         </li>
                     </ul>
                 </form>
-                <a href="#" className="meeting-register__back-link" onClick={goBack}><i className="fas fa-arrow-left"></i> Go back</a>
+                <button href="#" className="meeting-register__back-button" onClick={goBack}><i className="fas fa-arrow-left"></i> Go back</button>
             </section>
 
     </>

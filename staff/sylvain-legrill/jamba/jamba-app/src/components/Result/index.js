@@ -15,30 +15,32 @@ export default withRouter(function ({history, architects}) {
 
 
   return (
-    <>     
-      
-        <ul className="architect__ul">
-          {architects.length ? (
-            architects.map(architect => (
-              <li className="architects" key={architect._id}>
-                {/* <img className="user__img" src={architect.profileImg}></img> */}
-                <div className="architect__container">
-                  <p className="architect__name">{architect.name}</p>
-                  <p className="architect__specialty">{architect.specialty}</p>
-                  <p className="architect__city">{architect.city}</p>
-                  <button className="architect__detail" 
-                  title=""
-                  href="#"
-                  onClick={() => {handleArchitectDetail(architect._id)}}>see profile</button>
-                  
+    <>  
+        <section className="result">
+          <ul className="architect__ul">
+            {architects.length ? (
+              architects.map(architect => (
+                <li className="architect__li" key={architect._id}>
+                  <div className="architect__container--image">
+                   <img className="architect__profileImg" src={architect.profileImg}></img>
+                   </div>
+                   <div
+                   className="architect__container--text">
+                    <p className="architect__description">{architect.description}</p>
+                    <p className="architect__name">{architect.name}</p>
+                    <p className="architect__specialty">{architect.specialty}</p>
+                    <p className="architect__city">{architect.city}</p>
+                    <button className="architect__button" title="" href="#" onClick={() => {handleArchitectDetail(architect._id)}}>see profile</button>
+                    </div>
 
-                </div>
-              </li>
-            ))
-          ) : (
-            <p className="user__none">No architects found</p>
-          )}
-        </ul>
+                  
+                </li>
+              ))
+            ) : (
+              <p className="architect__none">No architects found  :( </p>
+            )}
+          </ul>
+        </section>
      
     </>
   )

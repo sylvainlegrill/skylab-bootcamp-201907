@@ -11,6 +11,8 @@ export default withRouter (function ({ onBack, history }) {
                 const { id } = response
             debugger
                 await logic.uploadImage(id, profileImg)
+
+            history.push('/login')
         
         }catch({message}){
             debugger
@@ -19,8 +21,9 @@ export default withRouter (function ({ onBack, history }) {
     }
 
     return <>
-    
-        <h2>Register Architect</h2>
+        
+        <section>
+
         
         <form className = "register__form" method="post" encType="multipart/form-data" onSubmit={event => {  
             debugger
@@ -31,13 +34,60 @@ export default withRouter (function ({ onBack, history }) {
             
 
         }}>
-            
-            <input type="text" name="name" placeholder="name" />
-            <input type="text" name="surname" placeholder="surname"/>
-            <input type="email" name="email" placeholder="email" />
-            <input type="tel" name="phone" placeholder="phone number" />
-            <input type="password" name="password" placeholder="password" />
-            <input type="text" name="city" placeholder="your city" />
+           <ul>
+           <li className="register__form-item">
+                <label htmlFor="name"></label>
+                <input className="register__form-input" type="text" name="name" id="name" placeholder="name" />
+            </li>
+            <li className="register__form-item">
+                <label htmlFor="surname"></label>
+                <input className="register__form-input" type="text" name="surname" placeholder="surname" />
+            </li>
+            <li className="register__form-item">
+                <label htmlFor="email"></label>
+                <input className="register__form-input" type="email" name="email" placeholder="email" />
+            </li>
+            <li className="register__form-item">
+                <label htmlFor="phone"></label>
+                <input className="register__form-input" type="text" name="phone" id="phone" placeholder="phone" />
+            </li>
+            <li className="register__form-item">
+                <label htmlFor="password"></label>
+                <input className="register__form-input" type="password" name="password" id="password" placeholder="password" />
+            </li>
+            <li className="register__form-item">
+                <label htmlFor="city"></label>
+                <input className="register__form-input" type="text" name="city" placeholder="city where you are operating" />
+            </li>
+            <li className="register__form-item">
+                <label htmlFor="license"></label>
+                <input className="register__form-input" type="text" name="license" placeholder="architect license number" />
+            </li>
+            <li className="register__form-item">
+            <select required className ="register__selector" type="text" name="specialty">
+                <option defaultValue="" >Select type of professional</option>
+                <option value="residential architect">residential architect</option>
+                <option value="technical architect">technical architect</option>
+                <option value="interior architect">interior architect</option>
+                <option value="landscaper">landscaper</option>
+            </select>
+            </li>
+            <li className="register__form-item">
+                <label className="register__file-uploader" htmlForm="profileImg"><h3 className="register__file-uploader-title">upload your profile picture:</h3></label>
+                <input type="file" name="profileImg" placeholder="upload your profile picture" />
+            </li>
+            <li className="register__form-item">
+                <label htmlForm="portfolioUrl"></label>
+                <input className="register__form-input" type="link" name="portfolioUrl" placeholder="add a link to your porfolio" />
+            </li>
+            <li className="register__form-item">
+                    <input className="register__form-input" type="text" hidden name="projectImg" defaultValue="project image"/>
+            </li>
+            <li className="register__form-item">
+                <label htmlFor="description"></label>
+                <input className="register__form-input" type="textarea" name="description" placeholder="finally add few words presenting yourself and your work" />
+            </li>
+            {/* <input type="text" name="city" placeholder="your city" />
             <input type="text" name="license" placeholder="license" />   
             <select required className ="register__selector" type="text" name="specialty">
             <option defaultValue="" >Select type of professional</option>
@@ -47,23 +97,29 @@ export default withRouter (function ({ onBack, history }) {
             <option value="landscaper">landscaper</option>
             </select>
             <p>Upload profile picture</p><input type="file" name="profileImg" placeholder="your profile picture" />
-            <input type="link" name="portfolioUrl" placeholder="add a weblink to your porfolio" />
-            <input type="text" name="projectImg" placeholder="image of one of your project" />
-            <textarea type="text" name="description" rows="10" cols="10" placeholder="finally describe youself in few lines" />
+            <input type="link" name="portfolioUrl" placeholder="add a weblink to your porfolio" /> */}
+            {/* <input type="text" name="projectImg" placeholder="image of one of your project" /> */}
+            {/* <textarea type="text" name="description" rows="10" cols="10" placeholder="finally describe youself in few lines" /> */}
             
         
-            <button>Proceed</button>
+            <li className="register__form-item">
+                <button className="register__form-button" type="submit">Confirm sign up</button>
+            </li>
+            </ul> 
         </form>
         
-    
-            <a href="#" onClick={event => {
-                event.preventDefault()
+        <button href="#" className="register__back-button" onClick={event => {
+            event.preventDefault()
 
-                onBack()
-            }}>Go back</a>
+            onBack()
+        }}>Go back</button>
+        </section>        
         
     </>
 })
+
+
+
 
 
 // import React, { useState} from 'react'

@@ -6,7 +6,7 @@ import Search from "../Search"
 import Presentation from "../Presentation"
 import PresentationArchitects from "../PresentationArchitects"
 import Result from "../Result"
-import Dashboard from "../Dashboard" 
+// import Dashboard from "../Dashboard" 
 
 import { Route, Link, withRouter } from "react-router-dom"
 
@@ -19,7 +19,7 @@ import { Route, Link, withRouter } from "react-router-dom"
 // import Header from '../Header'
 // import Footer from '../Footer'
 
-export default withRouter(function ({ history, onLogout }) {
+export default withRouter(function ({ history }) {
   const [user, setUser] = useState()
 
   const [result, setResult] = useState()
@@ -50,10 +50,10 @@ export default withRouter(function ({ history, onLogout }) {
     })()
   }, [history.location])
 
-  const handleToDashboard = () => {
-    setView(true)
-    history.push("/dashboard")
-  }
+  // const handleToDashboard = () => {
+  //   setView(true)
+  //   history.push("/dashboard")
+  // }
 
   //4) copy paste route and add the view status.
   //5) add onClick on button and define the handleTo . Define the setView
@@ -61,14 +61,13 @@ export default withRouter(function ({ history, onLogout }) {
     <main className="home">
       
         {/* Hola,{user && user.name}! */}
-      {view === true && <Route path="/dashboard" render={() =>  <Dashboard/>} />}
+      {/* {view === true && <Route path="/dashboard" render={() =>  <Dashboard/>} />} */}
       
       {/* <a className="nav__a dropdown__button" href="#" onClick={onLogout}>Logout</a> */}
-      <button onClick={onLogout}>Logout</button>
+      {/* <button onClick={onLogout}>Logout</button> */}
       <div className="dropdown-content">
-      <button className="" onClick={handleToDashboard}> Dashboard </button>
-      {/* <Lin className="nav__a dropdown__button" href="#" to="/dashboard">Dashboard</Link> */}
-      {/* <a className="nav__a dropdown__button" href="#" onClick={onLogout}>Logout</a> */}
+      {/* <button className="" onClick={handleToDashboard}> Dashboard </button> */}
+
       </div>
       <img className="home__picture"src={homeMainPicture} alt="MainPicture" />
 
@@ -77,7 +76,7 @@ export default withRouter(function ({ history, onLogout }) {
       {!result && <Presentation />} 
       {!result && <PresentationArchitects />} 
       {result && <Result architects ={result} />}
-      {result && <a href="#" onClick={event => {
+      {result && <a href="#" className="home__back" onClick={event => {
             event.preventDefault()
 
             handleBack()

@@ -33,11 +33,11 @@ function Architects({history}) {
   return (
     <>     
         {architects && <Result architects ={architects} />}
-        {architects && <a href="#" onClick={event => {
+        {architects && <button className="architect__back" href="#" onClick={event => {
             event.preventDefault()
 
             history.push("/home") 
-        }}>Go back</a> }
+        }}>Go back</button> }
     </>
   )
 }

@@ -1,0 +1,68 @@
+@import ../../style/base-settings
+
+.architect
+    &__li
+        display: block
+        flex-direction: column
+        margin-left: auto
+        margin-right: auto
+        text-align: center
+        width: 90%
+    
+    &__container--image
+        background-image: url("https://images.unsplash.com/photo-1474351622873-3a37a2545060?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=100")
+      
+    &__container--text
+        background-color: $color-transparent
+        margin-top: 0.3rem
+  
+    &__profileImg
+        // margin-left: auto
+        // margin-right: auto
+        border-block-end: 
+        width: 50%
+        border: 1px solid $color-white
+        align-items: flex-end 
+
+    &__portfolioUrl
+        width: 100%
+    
+    &__description
+        @extend %text-little 
+        margin-left: 1rem 
+        margin-right: 1rem
+        padding-top: 1rem 
+    
+    &__name
+        @extend %text-title 
+
+    &__specialty
+        @extend %text-little
+
+    &__city
+        @extend %text-little 
+        
+    &__button
+        @extend %button-green
+
+    &__none
+        width: 80vw
+        height: 6vh
+        margin: 1rem auto
+        padding: 0.6rem
+        background-color: $color-white
+        text-align: center
+        text-decoration: none
+        color: $color-green
+    
+    &__back
+        @extend %button-green
+        display: block
+      
+
+    &__meeting
+        @extend %button-white
+        display: block
+     
+
+        

@@ -2,7 +2,8 @@ import React from 'react'
 
 export default function ({ onBack, onLogin }) {
     return <>
-        <h2>Login</h2>
+    <section>
+       
         <form onSubmit={event => {
             event.preventDefault()
 
@@ -10,14 +11,25 @@ export default function ({ onBack, onLogin }) {
 
             onLogin(email, password)
         }}>
-            <input type="email" name="email" placeholder ="email" />
-            <input type="password" name="password" placeholder ="password" />
-            <button>Proceed</button>
+            <ul>
+            <li className="login__form-item">
+                <label htmlFor="email"></label>
+                <input className="login__form-input" type="email" name="email" id="email"  placeholder="email"/>
+            </li>
+            <li className="login__form-item">
+                <label htmlFor="password"></label>
+                <input className="login__form-input" type="password" name="password" id="password" placeholder="password"/>
+            </li >
+            <li className="login__form-item">
+                <button className="login__form-button" type="submit">Sign in</button>
+            </li>
+            </ul>
         </form>
-        <a href="#" onClick={event => {
+        <button href="#" className="login__back-button" onClick={event => {
             event.preventDefault()
 
             onBack()
-        }}>Go back</a>
+        }}>Go back</button>
+        </section>
     </>
 }

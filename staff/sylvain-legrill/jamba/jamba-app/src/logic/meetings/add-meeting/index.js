@@ -26,6 +26,7 @@ export default function (date, address, userId, architectId) {
     validate.string(address)
     validate.string(userId)
     validate.string(architectId)
+    console.log(date, address, userId, architectId)
 
 
 

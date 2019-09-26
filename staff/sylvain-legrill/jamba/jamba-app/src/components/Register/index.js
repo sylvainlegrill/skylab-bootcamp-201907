@@ -27,30 +27,51 @@ export default withRouter (function ({ onBack, onRegister, history }) {
     
 
     return <>
-        <h2>Register</h2>
-
         
-        <button className="architect__meeting"  title="meeting" onClick={() => {
-            handleGoToRegisterArchitect()}}> Sign up as an architect here. </button>
+        <button className="register__architect"  title="register" onClick={() => {
+            handleGoToRegisterArchitect()}}> 👋🏽 Hi there! Are you an architect? Sign up HERE </button>
+        <section>
         <form onSubmit={event => {
             event.preventDefault()
             const { target: { name: { value: name }, surname: { value: surname }, email: { value: email }, phone:{ value: phone}, password: { value: password }, role:{ value: role} } } = event
 
             onRegister(name, surname, email, phone, password, role)
-        }}>
-            <input type="text" name="name" placeholder="name" />
-            <input type="text" name="surname" placeholder="surname" />
-            <input type="email" name="email" placeholder="email" />
-            <input type="tel" name="phone" placeholder="phone number"/>
-            <input type="password" name="password" placeholder="password"/>
-            <input type="text" hidden name="role" defaultValue="customer"/>
-            <button>Proceed</button>
+        }}> 
+            <ul>
+                <li className="register__form-item">
+                    <label htmlFor="name"></label>
+                    <input className="register__form-input" type="text" name="name" id="name" placeholder="name" />
+                </li>
+                <li className="register__form-item">
+                    <label htmlFor="surname"></label>
+                    <input className="register__form-input" type="text" name="surname" id="surname" placeholder="surname" />
+                </li>
+                <li className="login__form-item">
+                    <label htmlFor="email"></label>
+                    <input className="login__form-input" type="email" name="email" id="email"  placeholder="email"/>
+                </li>
+                <li className="register__form-item">
+                    <label htmlFor="phone"></label>
+                    <input className="register__form-input" type="text" name="phone" id="phone" placeholder="phone" />
+                </li>
+                <li className="register__form-item">
+                    <label htmlFor="password"></label>
+                    <input className="register__form-input" type="password" name="password" id="password" placeholder="password" />
+                </li>
+                <li className="register__form-item">
+                    <input className="register__form-input" type="text" hidden name="role" defaultValue="customer"/>
+                </li>
+                <li className="register__form-item">
+                <button className="register__form-button" type="submit">Confirm sign up</button>
+                </li>
+            </ul>
         </form>
-        <a href="#" onClick={event => { 
+        <button href="#" className="register__back-button" onClick={event => {
             event.preventDefault()
 
             onBack()
-        }}>Go back</a>
+        }}>Go back</button>
+        </section>
     </>
 })
 

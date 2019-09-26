@@ -1,0 +1,36 @@
+@import ../../style/base-settings
+
+.meeting-register
+    padding: 0
+    text-align: center
+     display: block
+    font-family: $font-poppins
+
+    &__title
+        @extend %text-title
+
+    &__form-item
+        list-style: none
+        margin: 1em auto
+    &__form-input
+        padding: .5em
+        width: 98%
+        display: block
+
+    &__back-button
+        width: 20vw
+        height: 6vh
+        margin: 1rem auto
+        padding: 0.6rem
+        border: 0px solid transparent
+        background-color: $color-transparent
+        text-align: center
+        text-decoration: none
+        color: $color-green
+        display: block
+
+    &__form-button
+        @extend %button-green
+   
+
+

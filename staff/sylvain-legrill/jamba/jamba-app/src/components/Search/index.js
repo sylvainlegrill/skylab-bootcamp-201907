@@ -26,7 +26,7 @@ function Search ({ history, onSearch}){
         <h3 className = "searchlist__title"> Tell us more about your project </h3>
         </div>
          <select required className ="searchlist__selector" name="specialty">
-            <option defaultValue="" >Select professional ></option>
+            <option defaultValue="" >Select professional </option>
             <option className="searchlist__input"value="residential architect">residential architect</option>
             <option className="searchlist__input" value="technical architect">technical architect</option>
             <option className="searchlist__input" value="interior architect">interior architect</option>
@@ -41,7 +41,7 @@ function Search ({ history, onSearch}){
         </select> */}
 
         <select required className ="searchlist__selector" name="city">
-            <option className="searchlist__input" defaultValue="">Select a city ></option>
+            <option className="searchlist__input" defaultValue="">Select a city </option>
             <option className="searchlist__input" value="Barcelona">Barcelona</option>
             <option className="searchlist__input" value="Madrid">Madrid</option>
             <option className="searchlist__input" value="Valencia">Valencia</option>
