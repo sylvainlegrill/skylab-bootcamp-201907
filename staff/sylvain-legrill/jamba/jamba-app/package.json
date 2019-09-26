@@ -1,0 +1,45 @@
+{
+  "name": "jamba-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "cloudinary": "^1.15.0",
+    "context": "^0.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jamba-utils": "file:../jamba-utils",
+    "moment": "^2.24.0",
+    "node-sass": "^4.12.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "test:inspect": "react-scripts --inspect-brk=9230 test --runInBand --no-cache --timeout 10000"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "bcryptjs": "^2.4.3",
+    "jamba-data": "file:../jamba-data",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
