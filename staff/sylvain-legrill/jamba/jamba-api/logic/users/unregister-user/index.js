@@ -1,24 +1,30 @@
 const { models: { User } } = require('jamba-data')
 const { validate }= require('jamba-utils')
+const bcrypt = require('bcryptjs')
+
 
 /**
-* Unregisters a user by their id
-* 
-* @param {string} id 
-* @param {string} email
-* @param {string} password 
-* 
-* @returns {Promise}
-*/
-
-module.exports = function(id, email, password) {
-   validate.string(id, 'id')
-   validate.string(email, 'email')
-   validate.string(password, 'password')
-   return (async()=>{
-       const user =  await User.deleteOne({ _id: id, email, password })
-       if (!user.deletedCount) throw Error(`There was an error unregistering the user`)
-      
-   })()
+ * Unregisters a user.
+ * 
+ * @param {string} id
+ * @param {string} password
+ * 
+ * @returns {Promise}
+ */
+module.exports = function (id, password) {
    
+    validate.string(id, 'id')
+    validate.string(password, 'password')
+
+    return (async () => {
+        const user = await User.findById(id)
+
+        if (!user) throw new Error(`user with id ${id} does not exist`)
+
+        const match = await bcrypt.compare(password, user.password)
+
+        if (!match) throw new Error(`wrong credentials`)
+
+        await User.deleteOne({ _id: id })
+    })()
 }

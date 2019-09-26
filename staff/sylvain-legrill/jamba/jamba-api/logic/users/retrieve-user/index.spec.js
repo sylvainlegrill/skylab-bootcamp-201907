@@ -5,10 +5,10 @@ const retrieveUser = require('.')
 const { database, models: { User } } = require('jamba-data')
 // const bcrypt = require('bcrypt')
 
-//const { env: { DB_URL_TEST }} = process
+const { env: { DB_URL_TEST }} = process
 
 describe('logic - retrieve user', () => {
-    before(() => database.connect('mongodb://localhost/jamba'))
+    before(() => database.connect(DB_URL_TEST))
 
     let name, surname, email, phone, password, id
 
@@ -40,36 +40,29 @@ describe('logic - retrieve user', () => {
             expect(user.password).not.to.exist
         })
     
-    // it('should fail on empty id', () => {
-    //     expect(() =>
-    //         retrieveUser('')
-    //     ).to.throw(Error, 'id is empty or blank')
-    // })
+    it('should throw an error with a wrong id', async () =>{
+        try{
+            await retrieveUser("5d5fe532b4f3f827e6fc64f8")
+            throw new Error('should not reach this point')
+        }catch(error){
+            expect(error).to.exist
+            expect(error.message).to.equal(`User with id 5d5fe532b4f3f827e6fc64f8 does not exist.`)
+        }
+    })
 
-    // it('should fail on empty id', () => {
-    //     id = ''
+    it('should fail on empty user id', () =>
+        expect(() => retrieveUser("")).to.throw('id is empty or blank')
+    )
 
-    //     expect(() => retrieveUser(name, surname, email, phone, password)).to.throw(Error, `id is empty or blank`)
-    // })
+    it('should fail on undefined user id', () =>
+    expect(() => retrieveUser(undefined)).to.throw('id with value undefined is not a string')
+)
+
+    it('should fail on wrong user id type', () =>
+        expect(() => retrieveUser(123)).to.throw('id with value 123 is not a string')
+    )
 
 
-    // it('should fail on emtpy password', () => {
-    //     expect(()=> 
-    //         retrieveUser(undefined)
-    //     ).to.throw(Error, 'id with value undefined is not a string')
-    // })
-
-    // it('should fail on non-valid email', () => {
-    //     expect(()=> 
-    //         retrieveUser(123)
-    //     ).to.throw(Error, 'id with value 123 is not a string')
-    // })
-
-    // it('should fail on non-valid phone', () => {
-    //     expect(()=> 
-    //         retrieveUser(123)
-    //     ).to.throw(Error, 'id with value 123 is not a string')
-    // })
 
     after(() => database.disconnect())
 })

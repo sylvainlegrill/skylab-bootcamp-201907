@@ -1,6 +1,6 @@
 const { models: { User } } = require('jamba-data')
 const { validate }= require('jamba-utils')
-//const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 /**
  * Registers a user.
@@ -8,36 +8,46 @@ const { validate }= require('jamba-utils')
  * @param {string} name 
  * @param {string} surname 
  * @param {string} email
- * @param {string} password   
  * @param {string} phone
+ * @param {string} password  
  * @param {string} city
  * @param {string} license
  * @param {string} specialty
  * @param {string} role
+ * @param {string} profileImg
+ * @param {string} portfolioImg
+ * @param {string} description
  * 
  * @returns {Promise}
  */
-module.exports = function (name, surname, email, password, phone, role, city, license, specialty) {
+module.exports = function (name, surname, email, phone, password, role, city, license, specialty, portfolioUrl, projectImg, description) {
 
     validate.string(name)
     validate.string(surname)
     validate.string(email)
     validate.email(email, 'e-mail')
-    validate.string(password)
     validate.string(phone)
+    validate.string(password)
     validate.string(role)
     return ( async () => {
-        const user = await User.findOne({ email })
-        if (user) throw Error('User already exists.')
+        let user = await User.findOne({ email })
+        if (user) throw Error(`user with e-mail ${email} already exists.`)
+
+        const hash = await bcrypt.hash(password, 10)
+
         if(role === "architect"){
             if(!city) throw Error ("City cannot be empty for architect role")
             if(!license) throw Error ("License cannot be empty for architect role")
             if(!specialty) throw Error ("Speciality cannot be empty for architect role")
-            await User.create({name, surname, email, phone, role, city, license, specialty, password})
+            if(!portfolioUrl) throw Error ("Portfolio url cannot be empty for architect role")
+            if(!projectImg) throw Error ("Project Image cannot be empty for architect role")
+            if(!description) throw Error ("Description cannot be empty for architect role")
+            user = await User.create({name, surname, email,  phone, password: hash, role, city, license, specialty, portfolioUrl, projectImg, description})
         }
         if(role === "customer"){
-            await User.create({name, surname, email, phone, role})
+            user = await User.create({name, surname, email, phone, password: hash, role })
         }
-
+        const { id } = user
+        return id
     })()
 }

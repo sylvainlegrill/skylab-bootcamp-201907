@@ -7,22 +7,26 @@
     "start": "node .",
     "watch": "npx nodemon .",
     "debug": "node debug .",
-    "test": "npx mocha logic/**/**/*.spec.js",
+    "test": "npx mocha logic/**/**/*.spec.js --timeout 10000",
     "test-debug": "npx mocha debug logic/**/**/*.spec.js",
-    "test-inspect": "npx mocha --inspect-brk logic/**/**/*.spec.js",
+    "test-inspect": "npx mocha --inspect-brk logic/**/**/*.spec.js --timeout 10000",
     "test:coverage": "nyc --reporter=html --reporter=text mocha logic/**/**/*.spec.js --runInBand"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "busboy": "^0.3.1",
+    "cloudinary": "^1.15.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
+    "fs": "^0.0.1-security",
     "jamba-data": "file:../jamba-data",
-    "jamba-utils": "file:../jamba-utils"
+    "jamba-utils": "file:../jamba-utils",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
