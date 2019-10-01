@@ -3,14 +3,25 @@
 
 .mobile-menu
     background-color: $color-white   
+    display: flex
+    &__logo-container
     
     &__list
         display: flex
-        justify-content: space-between
+        // justify-content: space-between
+    &__item
+        margin: 0
         
     &__logo
-        width: 80%
+        width: 50%
     &__logout-button
+        width: 20vw
+        height: 4vh
+        background-color: $color-white
+        border: 1px solid $color-green
+        text-decoration: none
+        color: $color-green
+    &__dashboard-button
         width: 20vw
         height: 4vh
         background-color: $color-green

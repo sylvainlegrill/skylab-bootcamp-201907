@@ -7,7 +7,7 @@ import Register from '../Register'
 import RegisterArchitect from '../RegisterArchitect'
 import Architects from '../Architects'
 import ArchitectDetail from '../ArchitectDetail'
-// import Dashboard from '../Dashboard'
+import Dashboard from '../Dashboard'
 import CalendarMeeting from '../CalendarMeeting'
 import AddMeeting from '../AddMeeting'
 import ConfirmMeeting from '../AddMeetingConfirmation'
@@ -131,10 +131,11 @@ export default withRouter(function ({ history }) {
     <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
     <Route path="/register-architect" render={() => <RegisterArchitect onBack={handleBack} onRegister={handleRegisterArchitect} />} />
     <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
+    <Route path="/dashboard" render={() =>  <Dashboard/> } />
     <Route exact path="/architects/:id/calendar" render={() =>  <CalendarMeeting/> } />
     <Route exact path="/architects/:id/calendar/submit" render={() =>  <AddMeeting/> } />
     <Route exact path="/architects/:id/calendar/submit/confirmation" render={() =>  <ConfirmMeeting/> } />
-    {/* <Route path="/dashboard" render={() =>  <Dashboard onLogOut={handleLogout} />} /> */}
+    
     {logic.isUserLoggedIn() && <Route path="/home" render={() => <Home onLogout={handleLogout}/>} />}
     <Route exact path="/architects" render={() => <Architects />} />
 
