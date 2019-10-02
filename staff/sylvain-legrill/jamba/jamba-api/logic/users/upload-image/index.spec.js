@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs')
 
 const { env: { DB_URL_TEST } } = process
 
-describe.only('logic - upload image', () => {
+describe('logic - upload image', () => {
     before(() => database.connect(DB_URL_TEST))
     debugger
 
