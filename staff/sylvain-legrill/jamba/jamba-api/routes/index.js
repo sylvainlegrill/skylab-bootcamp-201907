@@ -51,8 +51,9 @@ router.get('/users/meetings/:meetingId', [tokenMiddleware, jsonBodyParser], retr
 
 router.get('/users/meetings', [tokenMiddleware, jsonBodyParser], retrieveMeetings)
 
-router.get('/users/:architectId/meetings', [tokenMiddleware, jsonBodyParser], retrieveMeetingsArchitect)
+router.get('/users/meetings', [tokenMiddleware, jsonBodyParser], retrieveMeetings)
 
-router.delete('/users/meetings/:id', tokenMiddleware, deleteMeeting)
+//router.delete('/users/meetings/:id', tokenMiddleware, deleteMeeting)
+router.delete('/users/meetings/:meetingId', deleteMeeting)
 
 module.exports = router

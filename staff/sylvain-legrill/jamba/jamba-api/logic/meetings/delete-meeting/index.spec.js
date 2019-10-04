@@ -7,7 +7,7 @@ const { random } = Math
 
 const { env: { DB_URL_TEST }} = process
 
-describe('logic - delete meeting', () => {
+describe.only('logic - delete meeting', () => {
 
     before(() => database.connect(DB_URL_TEST))
 
@@ -39,10 +39,12 @@ describe('logic - delete meeting', () => {
         meeting = await Meeting.create({
             date, address, user: user.id, architect: architect.id
         })
+
+        
     })
 
     it('should succeed on correct data', async () => {
-        const result = await deleteMeeting(meeting.id, user.id)
+        const result = await deleteMeeting(meeting.id)
 
         expect(result).not.to.exist
 
