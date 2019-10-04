@@ -57,7 +57,8 @@ export default withRouter (function ({match,  history, onBack }) {
         <button className="architect__meeting"  title="meeting" href="#" onClick={() => {handleGoToCalendar(architect.id)}}>arrange meeting</button>
         </ul>
         </section>
-         {architect && <button className="architect__back" href="#" onClick={event => {
+         {architect && 
+         <button className="architect__back" href="#" onClick={event => {
             event.preventDefault()
 
             history.push("/home") 

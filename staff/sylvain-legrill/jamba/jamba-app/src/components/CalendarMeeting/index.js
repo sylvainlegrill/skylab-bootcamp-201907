@@ -8,16 +8,33 @@ import logic from '../../logic/'
 
 function Month({ history, match }) {
 
-   const [view, setView] = useState(false)
     const { params: { id } } = match //architectId
     const { setThisDay, currentDate, setCurrentDate }  = useContext(Context)
 
     const [ monthMeetings, setMonthMeetings ] = useState([])
+    const architectId = id
 
-    useEffect(() => {
+    function convertHour(date){
+        
+        const _date = new Date(date)
+        const hour = _date.getHours()
+        return `${hour}H`
+    }
+
+    function startMeeting(date){
+        const endTime = moment(date).subtract(1,'hours').format('HH')
+        return `${endTime}H`
+    }
+
+    function endMeeting(date){
+        const endTime = moment(date).add(1,'hours').format('HH')
+        return `${endTime}H`
+    }
+
+    useEffect(() => {  
         (async () =>{
           try {
-            const meetings = await logic.retrieveAllMeeting(id)
+            const meetings = await logic.retrieveMeetingsArchitect(architectId)
             
             const monthMeetings = meetings.filter(meeting => moment(currentDate).isSame(meeting.date, 'month'))
             setMonthMeetings(monthMeetings)
@@ -26,31 +43,14 @@ function Month({ history, match }) {
             console.log(error.message)
           }
         })()
-    },[id, currentDate])
-
-   //  function handleGoToCalendar(id) {
-   //    setView(true)
-      
-   //  }
-
-    function handleMonth(event) {
-        event.preventDefault()
-
-        setCurrentDate(moment())
-    }
+    },[architectId,currentDate])
 
 
-   //  function handleGoToAddMeeting(day) { //Delete
-        
-   //      setThisDay(moment(day))
-   //      history.push(`/${spaceId}/day`)
-   //  }
-
-    function handleGoToAddMeeting(day) { //Delete
+    function handleGoToAddMeeting(day) {
         
       setThisDay(moment(day))
-      history.push(`/architects/${id}/calendar/submit`)
-  }
+      history.push(`/architects/${architectId}/calendar/submit`)
+    }
 
     function handleGoToNextMonth(event) {
         event.preventDefault()
@@ -69,7 +69,7 @@ function Month({ history, match }) {
             let meetingDay = moment(meeting.date).format('YYYY MMMM D')
             let currentDay = moment(dataDate).format('YYYY MMMM D')
             if (meetingDay === currentDay) {
-                return <i className="fas fa-circle">Not Available</i>   //task.name          
+                return <i className="fas fa-circle">Busy from{startMeeting(meeting.date)} to {endMeeting(meeting.date)} </i>   //for personnal dashboard meeting.address  ?
             }
         })
     }
@@ -183,17 +183,6 @@ function Month({ history, match }) {
         <div className="month">
 
             <div>{header()}</div>
-
-            {/* <div className="month__toolbar">
-                <div className="month__toggle">
-                  <div className="month__toggle-option" onClick={handleDay}>today</div>
-                  <div className="month__toggle-option" onClick={handleWeek}>week</div>
-                  <div className="month__toggle-option month__toggle-option--selected" onClick={handleMonth}>month</div>
-                </div>
-                <form>
-                  <input className="month__search-input" type="text" placeholder="Search"/> <i className="fa fa-search"></i>
-                </form>
-            </div> */}
 
             <div className="month__act">
                 

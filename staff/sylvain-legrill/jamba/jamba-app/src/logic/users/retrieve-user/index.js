@@ -15,9 +15,7 @@ export default function () {
     return (async () => {
         const response = await fetch(`${REACT_APP_API_URL}/users`, {
             method: 'GET',
-            headers: {
-                authorization: `bearer ${this.__token__}`
-            }
+            headers: {'authorization' : `bearer ${this.__token__}`}
         })
 
         if (response.status !== 200) {

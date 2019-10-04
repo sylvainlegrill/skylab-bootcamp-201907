@@ -6,16 +6,16 @@ export default withRouter (function ({ onBack, history }) {
 
 
     async function onRegister(name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description){
-        try{    debugger
+        try{    
                 const response = await logic.registerArchitect( name, surname, email, phone, password, city, license, specialty, portfolioUrl, projectImg, description)
                 const { id } = response
-            debugger
+            
                 await logic.uploadImage(id, profileImg)
 
             history.push('/login')
         
         }catch({message}){
-            debugger
+            
             console.log(message)
         }
     }
@@ -26,7 +26,7 @@ export default withRouter (function ({ onBack, history }) {
 
         
         <form className = "register__form" method="post" encType="multipart/form-data" onSubmit={event => {  
-            debugger
+            
             event.preventDefault()
             const { target: { name: { value: name }, surname: { value: surname }, email: { value: email },phone: { value: phone }, password: { value: password }, city: { value: city }, license: { value: license }, specialty: { value: specialty }, profileImg: { files: [profileImg] }, portfolioUrl: { value: portfolioUrl }, projectImg: { value: projectImg }, description: { value: description } } } = event
             

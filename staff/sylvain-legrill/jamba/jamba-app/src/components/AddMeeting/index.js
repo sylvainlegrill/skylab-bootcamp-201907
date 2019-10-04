@@ -16,25 +16,24 @@ function AddMeeting({ history, match }) {
     const userId = logic.getUserId()
     const architectId = id
 
-    function handleSubmit(event) { debugger
+    function handleSubmit(event) { 
             event.preventDefault()
 
             const { target: { date: { value: date}, time: { value: time }, address: { value: address} } } = event
 
             const _date = new Date(`${date}, ${time}`)
            
-            handleAddMeeting(_date, address, userId , architectId)//, userId, architectId)
+            handleAddMeeting(_date, address, userId , architectId)
 
            
     }
 
-    async function handleAddMeeting(date, address, userId, architectId ) { //, userId, architectId
+    async function handleAddMeeting(date, address, userId, architectId ) { 
             
-        try { debugger
-            const userMeeting = await logic.addMeeting(date, address, userId, architectId) //, userId, architectId
+        try { 
+            const userMeeting = await logic.addMeeting(date, address, userId, architectId) 
 
             setUserMeeting(userMeeting)
-            // console.log("hello Carol")
 
             history.push(`/architects/${architectId}/calendar/submit/confirmation`)
         } catch({ message }) {
@@ -61,7 +60,8 @@ function AddMeeting({ history, match }) {
                             <label htmlFor="dateInput"><input className="meeting-register__form-input" id="dateInput" type="date" name="date" defaultValue={`${moment(thisDay).format('YYYY-MM-DD')}`}/></label>
                         </li>
                         <li className="meeting-register__form-item">
-                            <label htmlFor="dateInput"><input className="meeting-register__form-input" id="dateInput" type="time" name="time" 
+                            <label htmlFor="dateInput">
+                                <input className="meeting-register__form-input" id="dateInput" type="time" name="time" min="9:00:00" max="20:00:00" step="1800"
                             // defaultValue={`${moment(thisHour).format('HH:mm')}`} 
                             />
                             </label>

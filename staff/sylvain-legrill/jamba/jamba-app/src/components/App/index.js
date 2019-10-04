@@ -94,6 +94,7 @@ export default withRouter(function ({ history }) {
   }
 
   const [userMeeting, setUserMeeting] = useState()
+  const [meetings, setMeetings] = useState()
   const [ currentDate, setCurrentDate ] = useState(moment())
   const [ thisDay, setThisDay ] = useState()
   const [ thisHour, setThisHour ] = useState()
@@ -101,7 +102,8 @@ export default withRouter(function ({ history }) {
   return (<>
     
     <Context.Provider value = {{ 
-      userMeeting, setUserMeeting, 
+      userMeeting, setUserMeeting,
+      meetings, setMeetings, 
       currentDate, setCurrentDate, 
       thisDay, setThisDay, 
       thisHour, setThisHour, 

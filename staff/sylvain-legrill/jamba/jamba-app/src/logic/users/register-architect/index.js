@@ -51,7 +51,7 @@ export default function (name, surname, email, phone, password, city, license, s
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({name, surname, email, phone, password, city, license, specialty,  portfolioUrl, projectImg, description, role:"architect" }) 
         })
-        debugger
+        
         if (response.status !== 201) {
             const { error } = await response.json()
 
