@@ -4,32 +4,29 @@ const { validate } = require("jamba-utils")
   /**
    * Retrieve meetings .
    * 
-   * @param {string} userId
+   * @param {string} architectId
    * @param {string} userRole
    *
    * @returns {Promise}
    */
   
    
-  module.exports = function(userId) { 
+  module.exports = function(architectId) { 
     
-    validate.string(userId, 'user id')
+    validate.string(architectId, 'architect id')
     
     let meetings
     
     return (async () => {
       
-          const user = await User.findById(userId).lean() 
-          
-          if(!user) throw Error('User does not exist')
-          const userRole = user.role
+        const user = await User.findById(architectId).lean() 
+        
+        if(!user) throw Error('User does not exist')
+        const userRole = user.role
 
-        if(userRole==='customer'){
-          meetings = await Meeting.find({ user : userId }).lean()
-        }
 
         if(userRole === 'architect') {
-          meetings = await Meeting.find({ architect : userId }).lean()
+          meetings = await Meeting.find({ architect : architectId }).lean()
         }
 
         meetings.forEach(meeting => {

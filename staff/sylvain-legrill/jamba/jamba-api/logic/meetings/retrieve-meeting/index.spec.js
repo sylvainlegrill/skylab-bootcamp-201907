@@ -75,7 +75,7 @@ describe('logic - retrieve meeting', () => {
     )
     it('should fail on wrong meeting id type', () => 
     expect(() => retrieveMeeting(undefined)).to.throw(`meeting id with value undefined is not a string`)
-)
+    )
 
     
 

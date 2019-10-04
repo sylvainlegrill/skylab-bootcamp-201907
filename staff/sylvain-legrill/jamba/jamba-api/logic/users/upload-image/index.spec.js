@@ -10,12 +10,12 @@ const { env: { DB_URL_TEST } } = process
 
 describe('logic - upload image', () => {
     before(() => database.connect(DB_URL_TEST))
-    debugger
+    
 
     beforeEach(async() => {
         await User.deleteMany()
         })
-        describe('upload image', () => {debugger
+        describe('upload image', () => {
             let id, name, surname, email, phone, city, license, specialty, profileImg, portfolioUrl, projectImg, description, password
             beforeEach(async () => {
                 

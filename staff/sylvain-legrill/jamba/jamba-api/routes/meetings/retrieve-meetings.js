@@ -1,7 +1,7 @@
 const { retrieveMeetings } = require("../../logic")
 
 module.exports = async (req, res) => {
-    
+
   const { userId } = req;
 
   try {

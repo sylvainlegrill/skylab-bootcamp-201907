@@ -13,6 +13,7 @@ const unregisterUser = require('./users/unregister-user')
 const addMeeting = require('./meetings/add-meeting')
 const retrieveMeeting = require('./meetings/retrieve-meeting')
 const retrieveMeetings = require('./meetings/retrieve-meetings')
+const retrieveMeetingsArchitect = require('./meetings/retrieve-meetings-architect')
 const deleteMeeting = require('./meetings/delete-meeting')
 const uploadImage = require('./users/upload-image')
 
@@ -46,10 +47,12 @@ router.post('/users/meetings', [tokenMiddleware, jsonBodyParser], addMeeting)
 
 router.post('/users/:id/uploads', uploadImage)
 
-router.get('/users/meetings/:id', [tokenMiddleware, jsonBodyParser], retrieveMeeting)
+router.get('/users/meetings/:meetingId', [tokenMiddleware, jsonBodyParser], retrieveMeeting)
 
 router.get('/users/meetings', [tokenMiddleware, jsonBodyParser], retrieveMeetings)
 
-router.delete('/:id', [tokenMiddleware, jsonBodyParser], deleteMeeting)
+router.get('/users/:architectId/meetings', [tokenMiddleware, jsonBodyParser], retrieveMeetingsArchitect)
+
+router.delete('/users/meetings/:id', tokenMiddleware, deleteMeeting)
 
 module.exports = router

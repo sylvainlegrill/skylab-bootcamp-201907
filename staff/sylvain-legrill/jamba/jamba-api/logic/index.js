@@ -11,6 +11,7 @@ module.exports = {
     deleteMeeting: require('./meetings/delete-meeting'),
     retrieveMeeting: require('./meetings/retrieve-meeting'),
     retrieveMeetings: require('./meetings/retrieve-meetings'),
+    retrieveMeetingsArchitect: require('./meetings/retrieve-meetings-architect'),
     uploadImage: require('./users/upload-image') 
      
 }
