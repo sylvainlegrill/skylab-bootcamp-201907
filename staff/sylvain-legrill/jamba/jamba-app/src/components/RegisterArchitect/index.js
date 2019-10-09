@@ -9,7 +9,7 @@ export default withRouter (function ({ onBack, history }) {
         try{    
                 const response = await logic.registerArchitect( name, surname, email, phone, password, city, license, specialty, portfolioUrl, projectImg, description)
                 const { id } = response
-            
+                
                 await logic.uploadImage(id, profileImg)
 
             history.push('/login')
@@ -27,7 +27,8 @@ export default withRouter (function ({ onBack, history }) {
         
         <form className = "register__form" method="post" encType="multipart/form-data" onSubmit={event => {  
             
-            event.preventDefault()
+            event.preventDefault() 
+            
             const { target: { name: { value: name }, surname: { value: surname }, email: { value: email },phone: { value: phone }, password: { value: password }, city: { value: city }, license: { value: license }, specialty: { value: specialty }, profileImg: { files: [profileImg] }, portfolioUrl: { value: portfolioUrl }, projectImg: { value: projectImg }, description: { value: description } } } = event
             
             onRegister( name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description) 
@@ -36,31 +37,31 @@ export default withRouter (function ({ onBack, history }) {
         }}>
            <ul>
            <li className="register__form-item">
-                <label htmlFor="name"></label>
+                <label htmlform="name"></label>
                 <input className="register__form-input" type="text" name="name" id="name" placeholder="name" />
             </li>
             <li className="register__form-item">
-                <label htmlFor="surname"></label>
+                <label htmlform="surname"></label>
                 <input className="register__form-input" type="text" name="surname" placeholder="surname" />
             </li>
             <li className="register__form-item">
-                <label htmlFor="email"></label>
+                <label htmlform="email"></label>
                 <input className="register__form-input" type="email" name="email" placeholder="email" />
             </li>
             <li className="register__form-item">
-                <label htmlFor="phone"></label>
+                <label htmlform="phone"></label>
                 <input className="register__form-input" type="text" name="phone" id="phone" placeholder="phone" />
             </li>
             <li className="register__form-item">
-                <label htmlFor="password"></label>
+                <label htmlform="password"></label>
                 <input className="register__form-input" type="password" name="password" id="password" placeholder="password" />
             </li>
             <li className="register__form-item">
-                <label htmlFor="city"></label>
+                <label htmlform="city"></label>
                 <input className="register__form-input" type="text" name="city" placeholder="city where you are operating" />
             </li>
             <li className="register__form-item">
-                <label htmlFor="license"></label>
+                <label htmlform="license"></label>
                 <input className="register__form-input" type="text" name="license" placeholder="architect license number" />
             </li>
             <li className="register__form-item">
@@ -73,18 +74,18 @@ export default withRouter (function ({ onBack, history }) {
             </select>
             </li>
             <li className="register__form-item">
-                <label className="register__file-uploader" htmlForm="profileImg"><h3 className="register__file-uploader-title">upload your profile picture:</h3></label>
+                <label className="register__file-uploader" htmlformm="profileImg"><h3 className="register__file-uploader-title">upload your profile picture:</h3></label>
                 <input type="file" name="profileImg" placeholder="upload your profile picture" />
             </li>
             <li className="register__form-item">
-                <label htmlForm="portfolioUrl"></label>
+                <label htmlformm="portfolioUrl"></label>
                 <input className="register__form-input" type="link" name="portfolioUrl" placeholder="add a link to your porfolio" />
             </li>
             <li className="register__form-item">
                     <input className="register__form-input" type="text" hidden name="projectImg" defaultValue="project image"/>
             </li>
             <li className="register__form-item">
-                <label htmlFor="description"></label>
+                <label htmlform="description"></label>
                 <input className="register__form-input" type="textarea" name="description" placeholder="finally add few words presenting yourself and your work" />
             </li>
             {/* <input type="text" name="city" placeholder="your city" />

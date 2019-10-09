@@ -60,7 +60,7 @@ export default withRouter(function ({ history }) {
   return (
     <main className="home">
       
-        {/* Hola,{user && user.name}! */}
+        
       {/* {view === true && <Route path="/dashboard" render={() =>  <Dashboard/>} />} */}
       
       {/* <a className="nav__a dropdown__button" href="#" onClick={onLogout}>Logout</a> */}
@@ -70,7 +70,7 @@ export default withRouter(function ({ history }) {
 
       </div>
       <img className="home__picture"src={homeMainPicture} alt="MainPicture" />
-
+      <div className="home__intro">Hi,{user && user.name}. Please visit the dashboard to see your meetings.</div>
       <Search onSearch={onHandleSearch} />
 
       {!result && <Presentation />} 

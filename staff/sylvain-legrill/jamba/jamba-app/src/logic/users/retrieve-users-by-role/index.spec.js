@@ -8,7 +8,7 @@ const { User } = models
 const REACT_APP_DB_URL_TEST = process.env.REACT_APP_DB_URL_TEST
 const REACT_APP_JWT_SECRET_TEST = process.env.REACT_APP_JWT_SECRET_TEST
 
-describe('logic - list all architects', () => {
+describe('logic - retrieve Users By Role', () => {
     beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
 
     let name, surname, email, phone, password, role, city, license, specialty, id
@@ -36,7 +36,7 @@ describe('logic - list all architects', () => {
     })
 
     it('should succeed on correct data', async () =>
-        await logic.listAllArchitects()
+        await logic.retrieveUsersByRole()
             .then(user => {
                 expect(user).toBeDefined()
                 expect(user.id).toBe(id)

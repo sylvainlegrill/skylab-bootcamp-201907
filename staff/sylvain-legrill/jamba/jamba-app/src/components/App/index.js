@@ -150,4 +150,3 @@ export default withRouter(function ({ history }) {
 
   
 })
-

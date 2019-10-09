@@ -19,11 +19,14 @@ function AddMeeting({ history, match }) {
     function handleSubmit(event) { 
             event.preventDefault()
 
-            const { target: { date: { value: date}, time: { value: time }, address: { value: address} } } = event
+            const { target: { date: { value: date}, time: { value: time }, address: { value: address}, zipcode: { value: zipcode}, city: { value: city}  } } = event
 
             const _date = new Date(`${date}, ${time}`)
+
+            const _address = `${address}, ${zipcode}, ${city}`
+            
            
-            handleAddMeeting(_date, address, userId , architectId)
+            handleAddMeeting(_date, _address, userId , architectId)
 
            
     }
@@ -66,8 +69,20 @@ function AddMeeting({ history, match }) {
                             />
                             </label>
                         </li>
-                        <li className="meeting-register__form-item">
-                            <label htmlFor="addressInput"><textarea className="meeting-register__form-input" id="addressInput" name="address" rows="4" placeholder="address of the meeting"/></label>
+                        <li className="meeting-register__form-item"> ADDRESS
+                            <label htmlFor="addressInput">
+                                <textarea className="meeting-register__form-input" id="addressInput" name="address" rows="4" placeholder="address of the meeting"
+                                /></label>
+                        </li>
+                        <li className="meeting-register__form-item"> ZIP CODE
+                            <label htmlFor="addressInput">
+                                <input className="meeting-register__form-input" id="zipcodeInput" name="zipcode" placeholder="add zipcode"
+                                /></label>
+                        </li>
+                        <li className="meeting-register__form-item"> CITY
+                            <label htmlFor="addressInput">
+                                <input className="meeting-register__form-input" id="cityInput" name="city" placeholder="add city"
+                                /></label>
                         </li>
                         {/* {error &&
                         <li className="meeting-register__form-item">

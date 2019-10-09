@@ -1,30 +1,30 @@
-// import registerMeeting from '.'
+// import addMeeting from '.'
+// import jwt from 'jsonwebtoken'
 
 // const { random } = Math
-// const { database, models: { User } } = require('jamba-data')
+// const { database, models: { User, Meeting } } = require('jamba-data')
 // const bcrypt = require('bcryptjs')
+
 
 // // const { env: { DB_URL_TEST }} = process // WARN this destructuring doesn't work in react-app :(
 // const REACT_APP_DB_URL_TEST = process.env.REACT_APP_DB_URL_TEST
 
-// describe('logic - register user', () => {
+// describe('logic - add meeting', () => {
 //     let date, address, userId, architectId
 
 //     beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
 
 //     beforeEach(async () => {
-//         date = `2019-12-22T18:00:00Z`
+//         date = new Date
 //         address = `address-${random()}`
 //         userId = `userId-${random()}@mail.com`
 //         architectId = `architectId-${random()}`
       
-
-
-//         await User.deleteMany()
+//         await Meeting.deleteMany()
 //     })
 
 //     it('should succeed on correct data', async () => {
-//         const response = await registerMeeting(date, address, userId, architectId)
+//         const response = await addMeeting(date, address, userId, architectId)
 
 //         expect(response).toBeUndefined()
 

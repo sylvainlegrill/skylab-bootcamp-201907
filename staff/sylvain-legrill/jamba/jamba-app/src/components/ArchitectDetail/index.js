@@ -15,7 +15,7 @@ export default withRouter (function ({match,  history, onBack }) {
     
   useEffect(() => {
     
-    (async () => {
+    (async () => { 
         try {
           
         const { params: { id }} = match

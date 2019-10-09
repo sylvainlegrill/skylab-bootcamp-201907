@@ -39,23 +39,23 @@ export default withRouter (function ({ onBack, onRegister, history }) {
         }}> 
             <ul>
                 <li className="register__form-item">
-                    <label htmlFor="name"></label>
+                    <label htmlform="name"></label>
                     <input className="register__form-input" type="text" name="name" id="name" placeholder="name" />
                 </li>
                 <li className="register__form-item">
-                    <label htmlFor="surname"></label>
+                    <label htmlform="surname"></label>
                     <input className="register__form-input" type="text" name="surname" id="surname" placeholder="surname" />
                 </li>
                 <li className="login__form-item">
-                    <label htmlFor="email"></label>
+                    <label htmlform="email"></label>
                     <input className="login__form-input" type="email" name="email" id="email"  placeholder="email"/>
                 </li>
                 <li className="register__form-item">
-                    <label htmlFor="phone"></label>
+                    <label htmlform="phone"></label>
                     <input className="register__form-input" type="text" name="phone" id="phone" placeholder="phone" />
                 </li>
                 <li className="register__form-item">
-                    <label htmlFor="password"></label>
+                    <label htmlform="password"></label>
                     <input className="register__form-input" type="password" name="password" id="password" placeholder="password" />
                 </li>
                 <li className="register__form-item">

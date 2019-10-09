@@ -7,7 +7,9 @@ import { withRouter } from 'react-router-dom'
 
 export default withRouter (function ({match,history}) {
     const [meetings, setMeetings] = useState([])
+    const [ meeting, setMeeting ] = useState(false)
     const [user, setUser] = useState([])
+    
 
     function convertDate(date){
         
@@ -26,6 +28,8 @@ export default withRouter (function ({match,history}) {
         return `${hour}:${minutes}`
     }
 
+    
+
   
 
     useEffect(() => { 
@@ -36,31 +40,29 @@ export default withRouter (function ({match,history}) {
         
         })()
     }, [meetings , setMeetings])
+    
 
-    useEffect(() => {
-    
-        (async () => {
-            try {
-              
-            // const { params: { id }} = match
-            
-            const user = await logic.retrieveUser()
-    
-            setUser(user)
-            
-        } catch({message}) { 
-            console.error('failed retrieving user detail', message)
-          }
-        })()
-      }, [user, setUser])
+  
+
+    async function handleDeleteMeeting(meetingId) { debugger
+        try {
+            await logic.deleteMeeting(meetingId)
+
+            setMeeting(true)
+        } catch(error) {
+            console.log(error.message)
+        }
+    }
+
+
   
 
     return <> 
         <h2> Dashboard</h2>
             <h3> Meetings</h3>
             <section className="meetings">
-                
-                    {meetings ? (
+                <ul className="architect__ul"></ul>
+                    {meetings.length ? (
                     meetings.map(meeting =>  
                         <ul className="meetings__ul">
                         <li key={meeting.id} className="meetings__container--text">
@@ -72,26 +74,13 @@ export default withRouter (function ({match,history}) {
                         <li className="meetings__date">{convertHour(meeting.date)}</li>
                         <li className="meetings__address">{meeting.address}</li>
                         
-                        <button className="meetings__button" title="" href="#" > Cancel meeting</button> 
+                        <button className="meetings__button" title="" href="#" onClick={() => handleDeleteMeeting(meeting.id)} > Cancel meeting</button> 
                         </ul>
                 )   
                     ) : (
                     <p className="meetings__none">No meetings found </p>
                     )}
-                    { user && 
-                    <li className="user__li" key={user.id}>
-                        <div className="user__container--image">
-                        {/* <img className="user__profileImg" src={user.profileImg}></img> */}
-                        </div>
-                        <div className="user__container--text">
-                        <p className="user__name">{user.name}</p>
-                        {/* <p className="user__specialty">{user.specialty}</p>
-                        <p className="user__city">{user.city}</p>
-                        <p className="user__description">{user.description}</p> */}
-                        {/* <a href={user.portfolioUrl}><img className="user__portfolioUrl" src={portfolioUrl}></img></a> */}
-                        </div>
-                    </li>                       
-        }
+                    
                 
             </section>
             <button className="architect__back" href="#" onClick={event => {

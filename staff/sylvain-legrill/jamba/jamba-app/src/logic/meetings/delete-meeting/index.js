@@ -1,4 +1,4 @@
-import { validate } from 'utils'
+const {validate} = require('jamba-utils')
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 
@@ -6,25 +6,23 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
  * Deletes a task.
  * 
  * @param {string} meetingId space id
- * @param {string} userId task id
  * 
- * @throws {TypeError} - if any of the parameters is not a string.
- * @throws {Error} - if any of the parameters is empty or undefined, if user/space/task is not found, if user did not register the provided task, if space does not include the provided task.
+ *
  * 
 */
 
-export default function(spaceId, taskId) {
+export default function(meetingId) {
 
-    validate.string(spaceId, 'space id')
-    validate.string(taskId, 'task id')
+    validate.string(meetingId, 'meeting id')
+   
 
-    const { id, token } = this.__userCredentials__
+    return (async() => { debugger
 
-    return (async() => {
-
-        const response = await fetch(`${REACT_APP_API_URL}/users/${id}/spaces/${spaceId}/tasks/${taskId}`, {
-            method: 'delete',
-            headers: { 'authorization': `bearer ${token}` }
+        const response = await fetch(`${REACT_APP_API_URL}/users/meetings/${meetingId}`, {
+            method: 'DELETE',
+            headers: {
+                'authorization' : `bearer ${this.__token__}`
+            }
         })
 
         if (response.status !== 200) {

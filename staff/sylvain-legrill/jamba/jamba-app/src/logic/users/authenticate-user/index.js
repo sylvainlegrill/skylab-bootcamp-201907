@@ -1,7 +1,17 @@
-// const { env: { REACT_APP_API_URL } } = process
 const {validate} = require('jamba-utils')
-
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+/**
+ * Authenticates a user by its credentials.
+ * 
+ * @param {string} email user's email
+ * @param {string} password user's password
+ * 
+ * @throws {TypeError} - if any parameter is not a string.
+ * @throws {Error} - if any parameter is empty/undefined, if email is not found or password does not match.
+ * 
+ */
+
+
 
 export default function (email, password) {
     validate.string(email, 'e-mail')

@@ -1,16 +1,11 @@
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
-//const { validate }= require('jamba-utils')
-
 
 /**
- * Return all architects by specialty, city.
- * 
- * 
+ * Retrieves a user by its id
  */
 
 
 export default function () {
-    // validate.string(id, 'id')
 
     return (async () => {
         const response = await fetch(`${REACT_APP_API_URL}/users`, {
@@ -24,8 +19,8 @@ export default function () {
             throw Error(error)
         }
 
-        const { user } = await response.json()
+        const { _user } = await response.json()
 
-        return user
+        return _user
      })()
 }
