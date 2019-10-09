@@ -7,10 +7,10 @@ const { database, models: { User } } = require('jamba-data')
 
 const { env: { DB_URL_TEST }} = process
 
-describe('logic - retrieve architect', () => {
+describe.only('logic - retrieve architect', () => { 
     before(() => database.connect(DB_URL_TEST))
 
-    let name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role
+    let name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role, id
 
     beforeEach(async() => {
         name = `name-${Math.random()}`
@@ -30,29 +30,29 @@ describe('logic - retrieve architect', () => {
 
         return (async () => {
             await User.deleteMany()
-            const user = await User.create({ name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role })
-            id = user.id
+            const architect = await User.create({ name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role })
+            id = architect.id
         })()
     })
 
     it('should succeed on correct data', async () => {
-        const user = await retrieveArchitect(id)
-            expect(user).to.exist
-            expect(user.id).to.equal(id)
-            expect(user._id).not.to.exist
-            expect(user.name).to.equal(name)
-            expect(user.surname).to.equal(surname)
-            expect(user.email).to.equal(email)
-            expect(user.phone).to.equal(phone)
-            expect(user.password).not.to.exist
-            expect(user.city).to.equal(city)
-            expect(user.license).to.equal(license)
-            expect(user.specialty).to.equal(specialty)
-            expect(user.profileImg).to.equal(profileImg)
-            expect(user.portfolioUrl).to.equal(portfolioUrl)
-            expect(user.projectImg).to.equal(projectImg)
-            expect(user.description).to.equal(description)
-            expect(user.role).to.equal("architect")
+        const architect = await retrieveArchitect(id)
+            expect(architect).to.exist
+            expect(architect.id).to.equal(id)
+            expect(architect._id).not.to.exist
+            expect(architect.name).to.equal(name)
+            expect(architect.surname).to.equal(surname)
+            expect(architect.email).to.equal(email)
+            expect(architect.phone).to.equal(phone)
+            expect(architect.password).not.to.exist
+            expect(architect.city).to.equal(city)
+            expect(architect.license).to.equal(license)
+            expect(architect.specialty).to.equal(specialty)
+            expect(architect.profileImg).to.equal(profileImg)
+            expect(architect.portfolioUrl).to.equal(portfolioUrl)
+            expect(architect.projectImg).to.equal(projectImg)
+            expect(architect.description).to.equal(description)
+            expect(architect.role).to.equal("architect")
 
         })
 

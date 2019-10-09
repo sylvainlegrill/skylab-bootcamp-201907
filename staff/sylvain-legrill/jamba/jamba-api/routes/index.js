@@ -29,7 +29,7 @@ router.post('/users', jsonBodyParser, registerUser)
 
 router.post('/auth', jsonBodyParser, authenticateUser)
 
-router.get('/users', [tokenMiddleware, jsonBodyParser], retrieveUser)
+router.get('/users', tokenMiddleware , retrieveUser)
 
 router.get('/architects/:id', tokenMiddleware, retrieveArchitect)
 
@@ -51,7 +51,7 @@ router.get('/users/meetings/:meetingId', [tokenMiddleware, jsonBodyParser], retr
 
 router.get('/users/meetings', [tokenMiddleware, jsonBodyParser], retrieveMeetings)
 
-router.get('/users/meetings', [tokenMiddleware, jsonBodyParser], retrieveMeetings)
+router.get('/users/:architectId/meetings', [tokenMiddleware, jsonBodyParser], retrieveMeetingsArchitect)
 
 //router.delete('/users/meetings/:id', tokenMiddleware, deleteMeeting)
 router.delete('/users/meetings/:meetingId', deleteMeeting)

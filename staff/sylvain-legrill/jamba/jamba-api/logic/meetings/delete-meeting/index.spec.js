@@ -7,7 +7,7 @@ const { random } = Math
 
 const { env: { DB_URL_TEST }} = process
 
-describe.only('logic - delete meeting', () => {
+describe('logic - delete meeting', () => {
 
     before(() => database.connect(DB_URL_TEST))
 

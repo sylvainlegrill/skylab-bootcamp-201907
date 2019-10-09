@@ -1,11 +1,10 @@
-const { models: { User, Meeting } } = require('jamba-data')
+const { models: { Meeting } } = require('jamba-data')
 const { validate }= require('jamba-utils')   
    
     
     /**
      * Deletes a meeting.
      * 
-     * @param {string} userId
      * @param {string} meetingId 
      * 
      * @throws {TypeError} - if any of the parameters is not a string.
@@ -18,7 +17,7 @@ const { validate }= require('jamba-utils')
         
        
     
-        return (async () => { debugger
+        return (async () => { 
             
             // const user = await User.findById(userId) 
             // if (!user) throw Error(`user with id ${userId} does not exist`)

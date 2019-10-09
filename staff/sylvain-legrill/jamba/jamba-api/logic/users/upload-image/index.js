@@ -17,7 +17,7 @@ const { env: { CLOUDINARY_API_KEY, CLOUDINARY_NAME, CLOUDINARY_SECRET_KEY } } = 
 module.exports = function (id, image) {
     // validate.string(id, 'id')
     // validate.object(image, 'stream');
-    debugger
+    
     return (async () => {
         const user = await User.findById(id)
         if (!user) throw new Error(`user with id ${id} not found`)
