@@ -69,6 +69,40 @@ describe('logic - update user', () => {
         })
            
         })
+
+        it('should fail on non-existing user', async () => {
+            id = '5d5d5530531d455f75da9fF9'
+            try{
+                await updateUser(id, { name: 'newName', surname: 'newSurname', phone: 'newPhone',  password: 'newPassword' } )
+            }catch({ message }){
+                expect(message).to.equal(`User with id ${id} does not exist.`)
+            }
+        })
+    
+        it('should fail on empty id', async () => {
+            try{
+              await updateUser('', { name: 'newName', surname: 'newSurname', phone: 'newPhone',  password: 'newPassword' } )
+            }catch({ message }) {
+              expect(message).to.equal("id is empty or blank")
+            }
+         })
+        
+        it('should fail on undefined id', async () => {
+            try{
+                await updateUser(undefined, { name: 'newName', surname: 'newSurname', phone: 'newPhone',  password: 'newPassword' } )
+            }catch({ message }) {
+                expect(message).to.equal("id with value undefined is not a string")
+            }
+        })
+     
+        it('should fail on wrong id data type', async() => {
+            try{
+                await updateUser(123, { name: 'newName', surname: 'newSurname', phone: 'newPhone',  password: 'newPassword' } )
+            }catch({ message }) {
+                expect(message).to.equal("id with value 123 is not a string")
+            }
+       
+        })
    
     after(() => database.disconnect())
 

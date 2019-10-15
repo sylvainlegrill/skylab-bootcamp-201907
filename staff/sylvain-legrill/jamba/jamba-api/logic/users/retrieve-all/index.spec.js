@@ -57,5 +57,18 @@ describe('logic - retrieve all users', () => {
 
     })
 
+    it('should failed if role is customer ', async () => {
+        
+        const _role = 'customer'
+        
+        const architects = await retrieveAll( _role)
+
+    
+        expect(architects.length).to.equal(0)
+        expect(architects[0]).not.to.exist
+        expect(architects[1]).not.to.exist
+
+    })
+
     after(() => database.disconnect())
 })

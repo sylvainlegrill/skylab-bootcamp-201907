@@ -5,9 +5,12 @@ const { validate } = require('jamba-utils')
 /**
  * Retrieves an architect by its id.
  * 
- * @param {string} id 
+ * @param {string} id architect id
  * 
- * @returns {Promise}
+ * @throws {TypeError} - if architect id is not a string.
+ * @throws {Error} - if architect id is empty or undefined or user not found.
+ * 
+ * @returns {Object} architect as an object.
  */
 module.exports = function(id) {
     

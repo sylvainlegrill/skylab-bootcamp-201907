@@ -5,9 +5,12 @@ const { validate }= require('jamba-utils')
 /**
  * Retrieves a user by its id.
  * 
- * @param {string} id 
+ * @param {string} id user id
  * 
- * @returns {Promise}
+ * @throws {TypeError} - if id is not a string.
+ * @throws {Error} - if id is empty or undefined or user not found.
+ * 
+ * @returns {Object} user object.
  */
 module.exports = function(id) {
     

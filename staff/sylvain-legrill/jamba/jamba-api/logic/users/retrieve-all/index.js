@@ -2,12 +2,14 @@ const { models: { User } } = require('jamba-data')
 const { validate }= require('jamba-utils')
 
 /**
- * Retrieve all architects
+ * Retrieve all users by role
  * 
- * @param {role} role
+ * @param {role} role user's role: architect or customer (default)
  * 
+ * @throws {TypeError} - if role is not a string.
+ * @throws {Error} - if users with specified role is empty or undefined or users not found.
  * 
- * @returns {Promise}
+ * @returns {Object} users object.
  * 
 */
 

@@ -33,11 +33,19 @@ describe('logic - authenticate user', () => {
         expect(_id).to.equal(id)
     })
 
-    it('should fail on missing e-mail', () => {
+    it('should fail on empty e-mail', () => {
         email = ''
 
         expect(() => authenticateUser(email, password)).to.throw(Error, `e-mail is empty or blank`)
     })
+
+    it('should fail on wrong email type' , () =>
+        expect(() => authenticateUser(123 , password)).to.throw('e-mail with value 123 is not a string')
+    )
+    
+    it('should fail on wrong email format' , () =>
+        expect(() => authenticateUser("123@mailcom" , password)).to.throw('e-mail with value 123@mailcom is not a valid e-mail')
+    )
 
     it('should fail on wrong e-mail', async () => {
         email = 'invalid@mail.com'
@@ -51,7 +59,13 @@ describe('logic - authenticate user', () => {
         }
     })
 
-     it('should fail on wrong password', async () => {
+    it('should fail on empty password', () => {
+        password = ''
+
+        expect(() => authenticateUser(email, password)).to.throw(Error, `password is empty or blank`)
+    })
+
+    it('should fail on wrong password', async () => {
         password = 'wrong password'
 
         try {
@@ -62,6 +76,7 @@ describe('logic - authenticate user', () => {
             expect(message).to.equal('wrong credentials')
         }
     })
+    
 
     after(() => database.disconnect())
 })

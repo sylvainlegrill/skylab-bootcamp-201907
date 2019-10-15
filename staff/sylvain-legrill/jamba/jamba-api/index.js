@@ -6,9 +6,8 @@ const routes = require('./routes')
 const cors = require('cors')
 const { database } = require('jamba-data')
 
-const { env: { PORT, DB_URL } } = process //DB_URL_TEST
-
-database.connect(DB_URL) //DB_URL_TEST
+const { env: { PORT, DB_URL_TEST } } = process //DB_URL
+database.connect(DB_URL_TEST) //DB_URL_TEST
     .then(() => {
         const app = express()
 

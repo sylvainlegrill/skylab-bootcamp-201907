@@ -79,6 +79,16 @@ describe('logic - add meeting', () => {
             expect(error.message).to.equal(`architect with id 5d74a0957005f2ab0c8d5645 does not exist`)
         }
     })
+    it('should fail on empty userId', () =>
+        expect(() =>
+            addMeeting(date,address, "", architect.id)
+        ).to.throw('user id is empty or blank')
+    )
+    it('should fail on empty architectId', () =>
+        expect(() =>
+            addMeeting(date,address, user.id, "")
+        ).to.throw('architect id is empty or blank')
+    )
 
 
 

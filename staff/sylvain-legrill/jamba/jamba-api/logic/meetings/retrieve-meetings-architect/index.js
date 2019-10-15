@@ -1,14 +1,17 @@
 const {models: { User, Meeting }} = require("jamba-data")
 const { validate } = require("jamba-utils")
   
-  /**
-   * Retrieve meetings .
-   * 
-   * @param {string} architectId
-   * @param {string} userRole
-   *
-   * @returns {Promise}
-   */
+/**
+ * Retrieve a meeting by its id.
+ *
+ * @param {string} architectId architect's ID involved in the meeting.
+ * @param {string} role role of user .
+ * 
+ * @throws {TypeError} - if parameter is not a string.   
+ * @throws {Error} - if parameter is empty or undefined, if user not found or does not exist.
+ *
+ * @returns {Object}
+ */
   
    
   module.exports = function(architectId) { 
@@ -34,8 +37,6 @@ const { validate } = require("jamba-utils")
           delete meeting._id
           delete meeting.__v
         })
-
-
         return meetings
 
       })()

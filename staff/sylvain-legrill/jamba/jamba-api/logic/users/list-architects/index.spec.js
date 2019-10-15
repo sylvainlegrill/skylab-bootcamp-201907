@@ -62,12 +62,24 @@ describe('logic - list architects', () => {
 
         expect(() => listArchitects(city,'residential')).to.throw(Error, `city is empty or blank`)
     })
+    it('should fail on wrong city data type', () => {
+        const city = 123
+
+        expect(() => listArchitects(city,'residential')).to.throw(Error, `city with value 123 is not a string`)
+    })
 
     it('should fail on missing specialty', () => {
         const specialty = ''
 
         expect(() => listArchitects('Barcelona', specialty )).to.throw(Error, `specialty is empty or blank`)
     })
+    it('should fail on wrong specialty data type', () => {
+        const specialty = 123
+
+        expect(() => listArchitects('Barcelona', specialty )).to.throw(Error, `specialty with value 123 is not a string`)
+    })
+
+    
 
     after(() => database.disconnect())
 })

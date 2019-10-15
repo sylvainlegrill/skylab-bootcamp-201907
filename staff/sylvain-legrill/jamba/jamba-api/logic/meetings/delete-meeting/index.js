@@ -5,13 +5,15 @@ const { validate }= require('jamba-utils')
     /**
      * Deletes a meeting.
      * 
-     * @param {string} meetingId 
+     * @param {string} meetingId meeting's id.
      * 
-     * @throws {TypeError} - if any of the parameters is not a string.
+     * @throws {TypeError} - if parameter is not a string.   
+     * @throws {Error} - if parameter is empty or undefined, if meeting not found or does not exist.
      * @returns {Promise}
      */
     
     module.exports = function(meetingId) {
+
         // validate.string(userId, 'user id')
         validate.string(meetingId, 'meeting id')
         

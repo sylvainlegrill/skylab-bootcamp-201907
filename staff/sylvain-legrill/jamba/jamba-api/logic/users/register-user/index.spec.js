@@ -57,6 +57,8 @@ describe('logic - register user', () => {
         }
         
     })
+
+
     it('should succeed on correct customer data', async () =>{
         const result = await registerUser(name, surname, email, phone, password, "customer")
 
@@ -82,14 +84,56 @@ describe('logic - register user', () => {
                 }
     })
 
+// Parameters for customers and architects
 
     it('should fail on empty email', () =>
-        expect(() => registerUser(name, surname, "123@mailcom", phone, password, city, license, specialty, portfolioUrl, projectImg, description)).to.throw('e-mail with value 123@mailcom is not a valid e-mail')
+        expect(() => registerUser(name, surname, "", phone, password, "customer")).to.throw('e-mail is empty or blank')
     )
 
     it('should fail on wrong email format', () =>
-        expect(() => registerUser(name, surname, "123@mailcom", phone, password, city, license, specialty, portfolioUrl, projectImg, description)).to.throw('e-mail with value 123@mailcom is not a valid e-mail')
+        expect(() => registerUser(name, surname, 123, phone, password, "customer")).to.throw('e-mail with value 123 is not a string')
     )
 
-    after(() => database.disconnect())
+    it('should fail on empty name', () =>
+        expect(() => registerUser("", surname, email, phone, password, "customer")).to.throw('name is empty or blank')
+    )
+
+    it('should fail on wrong name format', () =>
+        expect(() => registerUser(123, surname, email, phone, password, "customer")).to.throw('name with value 123 is not a string')
+    )
+    it('should fail on empty surname', () =>
+        expect(() => registerUser(name, "", email, phone, password, "customer")).to.throw('surname is empty or blank')
+    )
+
+    it('should fail on wrong surname format', () =>
+        expect(() => registerUser(name, 123, email, phone, password, "customer")).to.throw('surname with value 123 is not a string')
+    )
+    it('should fail on empty phone', () =>
+        expect(() => registerUser(name, surname, email, "", password, "customer")).to.throw('phone is empty or blank')
+    )
+
+    it('should fail on wrong phone format', () =>
+        expect(() => registerUser(name, surname, email, true, password, "customer")).to.throw('phone with value true is not a string')
+    )
+    it('should fail on empty password', () =>
+        expect(() => registerUser(name, surname, email, phone, "", "customer")).to.throw('password is empty or blank')
+    )
+
+    it('should fail on wrong password format', () =>
+        expect(() => registerUser(surname, surname, email, phone, 123, "customer")).to.throw('password with value 123 is not a string')
+
+        )
+    it('should fail on empty role', () =>
+        expect(() => registerUser(name, surname, email, phone, password, "")).to.throw('role is empty or blank')
+    )
+
+    it('should fail on wrong role format', () =>
+        expect(() => registerUser(surname, surname, email, phone, password, 123)).to.throw('role with value 123 is not a string')
+
+        )
+
+
+
+  
+        after(() => database.disconnect())
 })
