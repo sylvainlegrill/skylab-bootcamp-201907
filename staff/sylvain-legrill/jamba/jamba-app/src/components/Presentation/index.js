@@ -5,8 +5,8 @@ export default function (){
     
     return <>
     <section className="presentation">
-    <h3 className="presentation__title">How it works</h3>
-    <i class="fas fa-angle-down"></i>
+    <h3 className="presentation__maintitle">How it works</h3>
+    <i className="fas fa-angle-down"></i>
 
     <article className="presentation__steps"> 
       <h2 className="presentation__number">1</h2>

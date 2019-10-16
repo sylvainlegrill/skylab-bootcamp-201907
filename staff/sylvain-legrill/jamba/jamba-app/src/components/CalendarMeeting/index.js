@@ -63,13 +63,22 @@ function Month({ history, match }) {
           
         setCurrentDate(moment(currentDate).subtract(1, 'months')) 
     }
+    function goBack(event) { 
+        event.preventDefault()
+
+        history.push(`/architects/${architectId}`)
+    }
 
     function handleDayMeetings(dataDate){
         return monthMeetings.map(meeting => {
             let meetingDay = moment(meeting.date).format('YYYY MMMM D')
             let currentDay = moment(dataDate).format('YYYY MMMM D')
             if (meetingDay === currentDay) {
-                return <i className="fas fa-circle">Busy from{startMeeting(meeting.date)} to {endMeeting(meeting.date)} </i>   //for personnal dashboard meeting.address  ?
+                return  <div className="calendar__busy">
+                <i className="fas fa-ban"> </i>
+                <p className="calendar__busy-hour"> 
+                {startMeeting(meeting.date)}-{endMeeting(meeting.date)} </p>
+                </div>
             }
         })
     }
@@ -79,8 +88,10 @@ function Month({ history, match }) {
         return (
         <>
             <div className="month__header">
-                <i className="fas fa-caret-left" onClick={handleGoToPreviousMonth}></i><h1 className="month__title"> {moment(currentDate).format("MMMM")} </h1><i className="fas fa-caret-right" onClick={handleGoToNextMonth}></i>
-         </div>
+                <i className="fas fa-caret-left" onClick={handleGoToPreviousMonth}></i>
+                <h1 className="month__title">{moment(currentDate).format("MMMM") } </h1>
+                <i className="fas fa-caret-right" onClick={handleGoToNextMonth}></i>
+            </div>
             <p className="month__year">{moment(currentDate).format("YYYY")}</p> 
         </>
         )
@@ -93,7 +104,7 @@ function Month({ history, match }) {
         
         for (let i = 0; i < 7; i++) {
             days.push(
-                <div>
+                <div className="calendar__weekdays">
                     {startDate.add(1, 'days').format('ddd')}
                 </div>      
             )       
@@ -194,6 +205,7 @@ function Month({ history, match }) {
             </div>
 
         </div> 
+        <button href="#" className="calendar__back-button" onClick={goBack}><i className="fas fa-arrow-left"></i> Go back</button>
 
     </>
 }

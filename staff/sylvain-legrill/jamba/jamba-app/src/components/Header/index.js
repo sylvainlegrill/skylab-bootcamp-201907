@@ -29,7 +29,8 @@ import { withRouter } from 'react-router-dom'
             
             <div className="mobile-menu__logo-container">
             <img src={require('../../images/logo.svg')} alt="jamba project logo" className="mobile-menu__logo" onClick={handleGoToHome}/>
-            </div>   
+            </div>  
+            <div className="mobile-menu__button-container">
             <ul className="mobile-menu__list">
                 <li className="mobile-menu__item">
                     <button className="mobile-menu__dashboard-button" title="dashboard" onClick={handleGoToDashboard}>Dashboard</button>
@@ -38,6 +39,7 @@ import { withRouter } from 'react-router-dom'
                     <button className="mobile-menu__logout-button" title="sign out" onClick={handleLogout}>Sign out</button>
                 </li>
             </ul>
+            </div> 
         </nav>          
         }
 

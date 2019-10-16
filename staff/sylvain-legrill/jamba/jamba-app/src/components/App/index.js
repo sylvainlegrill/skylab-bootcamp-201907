@@ -3,6 +3,7 @@ import './index.sass'
 import moment from "moment"
 import Header from '../Header'
 import Context from '../Context'
+// import Feedback from '../Feedback'
 import Register from '../Register'
 import RegisterArchitect from '../RegisterArchitect'
 import Architects from '../Architects'
@@ -13,7 +14,7 @@ import AddMeeting from '../AddMeeting'
 import ConfirmMeeting from '../AddMeetingConfirmation'
 import Login from '../Login'
 import logic from '../../logic'
-import { Route, Link, withRouter } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import Home from '../Home'
 import homeMainPicture from './../../images/homemainpicture.png'
 // import ListAllArchitects from '../ListAllArchitects'
@@ -23,6 +24,11 @@ import homeMainPicture from './../../images/homemainpicture.png'
 
 export default withRouter(function ({ history }) { 
   const [view, setView] = useState(logic.isUserLoggedIn() ? 'home' : undefined)
+  const [error, setError] = useState()
+  
+  useEffect(() => {
+    setError()
+  }, [history.location])
 
   const handleBack = () => {
     setView(undefined)
@@ -37,7 +43,7 @@ export default withRouter(function ({ history }) {
 
       history.push('/login')
     } catch ({ message }) {
-      console.error('fail register', message)
+      setError(message)
     }
   }
 
@@ -48,7 +54,7 @@ export default withRouter(function ({ history }) {
 
       history.push('/login')
     } catch ({ message }) {
-      console.error('fail register', message)
+      setError(message)
     }
   }
 
@@ -60,7 +66,7 @@ export default withRouter(function ({ history }) {
       setView('home')
       history.push('/home')
     } catch ({ message }) {
-      console.log('fail login', message)
+      setError(message)
     }
   }
 
@@ -108,14 +114,6 @@ export default withRouter(function ({ history }) {
       thisDay, setThisDay, 
       thisHour, setThisHour, 
     }}>
-    {/* <header>
-        <nav>
-          <ul>
-            <li><Link to="/register">Register</Link></li>
-            <li><Link to="/login">Login</Link></li>
-          </ul>
-        </nav>
-      </header> */}
 
     <Header/>
     
@@ -124,24 +122,24 @@ export default withRouter(function ({ history }) {
     <div className="logo">
         <img src={require('../../images/logo.svg')} alt="jamba project logo" className="logo__image" />
     </div>
-    <img className="home__picture"src={homeMainPicture} alt="MainPicture" />
+    <img className="home__picture"src={homeMainPicture} alt="MainPicture" />  
         <ul>  
-          {view !== 'register' && <li><a className="register__button"href="" onClick={handleGoToRegister}>Sign up</a></li>}
-          {view !== 'login' && <li><a className="login__button" href="" onClick={handleGoToLogin}>Sign in</a></li>}
+          {view !== 'register' && <li><button className="register__button"href="" onClick={handleGoToRegister}>Sign up</button></li>}
+          {view !== 'login' && <li><button className="login__button" href="" onClick={handleGoToLogin}>Sign in</button></li>}
         </ul>
       </nav>}
-    <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
-    <Route path="/register-architect" render={() => <RegisterArchitect onBack={handleBack} onRegister={handleRegisterArchitect} />} />
-    <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
-    <Route path="/dashboard" render={() =>  <Dashboard/> } />
-    <Route exact path="/architects/:id/calendar" render={() =>  <CalendarMeeting/> } />
-    <Route exact path="/architects/:id/calendar/submit" render={() =>  <AddMeeting/> } />
-    <Route exact path="/architects/:id/calendar/submit/confirmation" render={() =>  <ConfirmMeeting/> } />
+    <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} error={error} />} />
+    <Route path="/register-architect" render={() => <RegisterArchitect onBack={handleBack} onRegister={handleRegisterArchitect} error={error} />} />
+    <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} error={error} />} />
+    
+    <Route path="/dashboard" render={() => !logic.isUserLoggedIn() ? history.push('/') : <Dashboard/> } />
+    <Route exact path="/architects/:id/calendar" render={() => !logic.isUserLoggedIn() ? history.push('/') : <CalendarMeeting/> } />
+    <Route exact path="/architects/:id/calendar/submit" render={() => !logic.isUserLoggedIn() ? history.push('/') : <AddMeeting error={error} /> } />
+    <Route exact path="/architects/:id/calendar/submit/confirmation" render={() => !logic.isUserLoggedIn() ? history.push('/') : <ConfirmMeeting error={error} /> } />
     
     {logic.isUserLoggedIn() && <Route path="/home" render={() => <Home onLogout={handleLogout}/>} />}
-    <Route exact path="/architects" render={() => <Architects />} />
-
-    <Route exact path="/architects/:id" render={() => <ArchitectDetail /> }/>
+    <Route exact path="/architects" render={() => !logic.isUserLoggedIn() ? history.push('/') : <Architects />} />
+    <Route exact path="/architects/:id" render={() => !logic.isUserLoggedIn() ? history.push('/') : <ArchitectDetail /> }/>
     </main>
 
     </Context.Provider>

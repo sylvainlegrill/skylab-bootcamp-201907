@@ -10,7 +10,7 @@
         width: 90%
     
     &__container--image
-        background-image: url("https://images.unsplash.com/photo-1474351622873-3a37a2545060?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=100")
+        background-image: url("https://images.unsplash.com/photo-1474351622873-3a37a2545060?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80")
       
     &__container--text
         background-color: $color-transparent
@@ -26,6 +26,7 @@
 
     &__portfolioUrl
         width: 100%
+        border-bottom: 3px solid $color-green
     
     &__description
         @extend %text-little 
@@ -56,13 +57,21 @@
         color: $color-green
     
     &__back
-        @extend %button-green
-        display: block
+        @extend %button-back
       
 
     &__meeting
-        @extend %button-white
+        width: 80%
+        height: 40%
+        margin: 1rem auto
+        padding: 0.6rem
+        background-color: $color-green
+        border: 0px solid transparent
+        text-align: center
+        text-decoration: none
+        color: $color-pink
         display: block
+        font-size: 18px
      
 
         

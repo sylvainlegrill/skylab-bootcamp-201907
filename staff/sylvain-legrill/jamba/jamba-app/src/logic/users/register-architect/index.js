@@ -4,24 +4,23 @@ const {validate} = require('jamba-utils')
 
 
 /**
- * Registers a user.
+ * Registers an architect   .
  * 
- * @param {string} name
- * @param {string} surname
- * @param {string} email
- * @param {string} phone
- * @param {string} password
- * @param {string} city
- * @param {string} license
- * @param {string} profileImg
- * @param {string} portfolioUrl
- * @param {string} projectImg
- * @param {string} description
- * @param {string} role
+ * @param {string} name user's name
+ * @param {string} surname user's surname
+ * @param {string} email user's email
+ * @param {string} phone user's phone
+ * @param {string} password  user's password
+ * @param {string} city user's city. Only for architects
+ * @param {string} license user's architect license .Only for architects
+ * @param {string} specialty user's architect specialty ( residential , technical, interior design, landscaper). Only for architects
+ * @param {string} portfolioUrl link to user's portfolio. Only for architects
+ * @param {string} projectImg user's project image. Only for architects
+ * @param {string} description user's description. Only for architects
  *
  * 
- * @returns {Promise}
- *
+ * @throws {TypeError} - if any parameter is not a string
+ * @throws {Error} - if any parameter is empty/undefined. if there is already a user registered under the same email or username.
  * 
  */
 

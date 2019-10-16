@@ -80,7 +80,7 @@ export default withRouter(function ({ history }) {
             event.preventDefault()
 
             handleBack()
-        }}>Go back</a> }
+        }}><i className="fas fa-arrow-left"></i> Go back</a> }
 
           
       

@@ -1,9 +1,14 @@
-import React, { useState} from 'react'
+import React, { useEffect, useState} from 'react'
+import Feedback from '../Feedback'
 import logic from '../../logic'
 import { withRouter, history } from 'react-router-dom'
 
 export default withRouter (function ({ onBack, history }) {
-
+ 
+    const [error, setError] = useState()
+    useEffect(() => {
+        setError()
+      }, [history.location])
 
     async function onRegister(name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description){
         try{    
@@ -16,7 +21,7 @@ export default withRouter (function ({ onBack, history }) {
         
         }catch({message}){
             
-            console.log(message)
+            setError(message)
         }
     }
 
@@ -75,7 +80,7 @@ export default withRouter (function ({ onBack, history }) {
             </li>
             <li className="register__form-item">
                 <label className="register__file-uploader" htmlformm="profileImg"><h3 className="register__file-uploader-title">upload your profile picture:</h3></label>
-                <input type="file" name="profileImg" placeholder="upload your profile picture" />
+                <input className="register__file-uploader-input" type="file" name="profileImg" placeholder="upload your profile picture" />
             </li>
             <li className="register__form-item">
                 <label htmlformm="portfolioUrl"></label>
@@ -102,7 +107,7 @@ export default withRouter (function ({ onBack, history }) {
             {/* <input type="text" name="projectImg" placeholder="image of one of your project" /> */}
             {/* <textarea type="text" name="description" rows="10" cols="10" placeholder="finally describe youself in few lines" /> */}
             
-        
+            {error && <Feedback message={error} />}
             <li className="register__form-item">
                 <button className="register__form-button" type="submit">Confirm sign up</button>
             </li>

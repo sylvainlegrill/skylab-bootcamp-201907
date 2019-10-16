@@ -1,6 +1,7 @@
 
 @import ../../style/base-settings
 @import ../Header
+@import ../Feedback
 @import ../Login
 @import ../Register
 @import ../RegisterArchitect
@@ -14,6 +15,7 @@
 @import ../CalendarMeeting
 @import ../AddMeeting
 @import ../AddMeetingConfirmation
+@import ../Dashboard
 
 .logo
     background-color: $color-white
@@ -24,15 +26,7 @@
 
 .register
     &__button
-        width: 50%
-        height: 6vh
-        margin: 1rem auto
-        padding: 0.6rem
-        background-color: $color-green
-        border: 0px solid transparent
-        text-align: center
-        text-decoration: none
-        color: $color-pink
+        @extend %button-green
         font-family: $font-poppins
 .login
     &__button

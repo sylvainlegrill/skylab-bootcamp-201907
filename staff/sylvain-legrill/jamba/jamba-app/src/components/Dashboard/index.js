@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom'
 export default withRouter (function ({match,history}) {
     const [meetings, setMeetings] = useState([])
     const [ meeting, setMeeting ] = useState(false)
-    const [user, setUser] = useState([])
+    //const [user, setUser] = useState([])
     
 
     function convertDate(date){
@@ -17,7 +17,7 @@ export default withRouter (function ({match,history}) {
         const day = _date.getDate()
         const month = _date.getMonth()
         const year = _date.getFullYear()
-        return `${day}/${month}/${year}`
+        return `${day}.${month}.${year}`
     }
     
     function convertHour(date){
@@ -28,27 +28,17 @@ export default withRouter (function ({match,history}) {
         return `${hour}:${minutes}`
     }
 
-    
-
-  
-
     useEffect(() => { 
         (async () => {
         const searchMeetings = await logic.retrieveMeetings()
-        
         setMeetings(searchMeetings)
-        
         })()
-    }, [meetings , setMeetings])
-    
+    }, [meeting])
 
-  
-
-    async function handleDeleteMeeting(meetingId) { debugger
+    async function handleDeleteMeeting( meetingId) {
         try {
             await logic.deleteMeeting(meetingId)
-
-            setMeeting(true)
+            setMeeting(!meeting)
         } catch(error) {
             console.log(error.message)
         }
@@ -58,32 +48,33 @@ export default withRouter (function ({match,history}) {
   
 
     return <> 
-        <h2> Dashboard</h2>
-            <h3> Meetings</h3>
-            <section className="meetings">
-                <ul className="architect__ul"></ul>
+        <h2 className="dashboard__title"> Dashboard</h2>
+            <h3 className="meeting__title"> Meetings</h3>
+            <section className="meeting__container">
                     {meetings.length ? (
                     meetings.map(meeting =>  
-                        <ul className="meetings__ul">
-                        <li key={meeting.id} className="meetings__container--text">
+                        <ul className="meeting__list">
+                            <li className="meeting__item">
+                        <div key={meeting.id} className="meeting__item--left"> 
+                        <p className="meeting__address">{meeting.address}</p>
+                        <p className="meeting__contact">{meeting.architect.name}{meeting.user.name}'contacts: {meeting.architect.email}{meeting.user.email} </p>
+                        <p className="meeting__contact-phone"> phone number: {meeting.architect.phone}{meeting.user.phone}</p>
+            
+                        </div> 
+                        <span className="meeting__tag">{convertDate(meeting.date)}</span>
+                        <span className="meeting__tag">{convertHour(meeting.date)}</span>
 
-                            
-                            {/* onClick={() => {handleCancelMeeting(meeting._id)}} */}
                         </li>
-                        <li className="meetings__date">{convertDate(meeting.date)}</li>
-                        <li className="meetings__date">{convertHour(meeting.date)}</li>
-                        <li className="meetings__address">{meeting.address}</li>
-                        
-                        <button className="meetings__button" title="" href="#" onClick={() => handleDeleteMeeting(meeting.id)} > Cancel meeting</button> 
+                        <button className="meeting__cancel-button" title="" href="#" onClick={() => handleDeleteMeeting(meeting._id)} > Cancel meeting</button> 
                         </ul>
                 )   
                     ) : (
-                    <p className="meetings__none">No meetings found </p>
+                    <p className="meeting__none">No meetings found </p>
                     )}
                     
                 
             </section>
-            <button className="architect__back" href="#" onClick={event => {
+            <button className="meeting__back-button" href="#" onClick={event => {
                         event.preventDefault()
             
                         history.push("/home") 

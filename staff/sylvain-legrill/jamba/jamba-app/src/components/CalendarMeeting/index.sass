@@ -1,23 +1,30 @@
+@import ../../style/base-settings
 @media (max-width: 840px) 
     .month
         margin: 0
         text-align: center
-        font-size: Poppins, Arial, Helvetica, sans-serif
+        font-family: Poppins, Arial, Helvetica, sans-serif
         &__header
             display: flex
             justify-content: center
-            font-size: Poppins, Arial, Helvetica, sans-serif
+            font-family: Poppins, Arial, Helvetica, sans-serif
         &__title
             display: initial
-            font-size: Poppins, Arial, Helvetica, sans-serif
-            font-size: 1.2rem
+            color: $color-green
+            font-family: Poppins, Arial, Helvetica, sans-serif
+            margin-left: 1em
+            margin-right: 1em
+            font-weight: normal
+            font-size: 1rem
         &__month-year
             font-size: 1rem
             font-weight: normal
-            margin-top: 1em
-        &__act
-            display: flex
-            flex-direction: column
+            
+            
+        // &__act
+        //     height: 120%
+        //     display: flex
+        //     flex-direction: column
         &__activity
             display: flex
             flex-direction: column
@@ -26,7 +33,7 @@
             justify-content: center
             flex-direction: column
             align-items: stretch
-            margin: 24px 0
+           
         &__toggle
             display: grid
             grid-template-columns: 1fr 1fr 1fr
@@ -48,15 +55,15 @@
             display: none
 
     .calendar
-        margin: 1em 0 5em 0
+      
         border: 1px solid lightgrey
-        width: 100%
+        height: 100%
         font-size: Poppins, Arial, Helvetica, sans-serif
 
         &__week, &__header 
             display: grid
             grid-template-columns: repeat(7, 1fr)
-            font-size: Poppins, Arial, Helvetica, sans-serif
+            font-family: Poppins, Arial, Helvetica, sans-serif
         &__week
             grid-auto-rows: 100px
             text-align: right
@@ -68,7 +75,8 @@
         &__day, &__selected, &__disabled
             font-size: .5rem
             color: grey
-            padding: 5px
+            text-align: center
+            padding: 1px
             border-right: 1px solid lightgrey
             border-top: 1px solid lightgrey
         &__day:last-child 
@@ -88,26 +96,48 @@
             background-color: #fff3f6
         &__disabled
             background-color: #f1f1f1
+        &__busy
+            display: flex
+            justify-content: space-around
+            padding-top: 0.3em
+            padding-bottom: 0.1em
+            margin-top: 0.15em
+            font-family: Poppins, Arial, Helvetica, sans-serif
+            font-size: 10px
+            font-weight: 100
+            letter-spacing: 0.4px
+            color: $color-white
+            background-color: $color-green
 
-    .fa-circle
-        padding: .35em
-        font-size: 5px
-        color: deeppink
+        &__back-button
+            width: 20%
+            height: 10%
+            margin: 1rem auto
+            padding: 0.6rem
+            border: 0px solid transparent
+            background-color: $color-transparent
+            text-align: center
+            text-decoration: none
+            color: $color-green
+            display: block
+
+        
 
             
 @media (min-width: 840px) 
     .month
         margin: 0
         font-size: Poppins, Arial, Helvetica, sans-serif
-        &__header
-            margin: auto
-            display: flex
-            justify-content: space-between
-            width: 30%
+        // &__header
+        //     margin: auto
+        //     display: flex
+        //     justify-content: space-around
+        //     width: 50%
         &__title
             display: initial
             font-family: Helvetica, Roboto, sans-serif
-            font-size: 2rem
+            color: $color-green
+            font-size: 1rem
         &__year
             font-size: 1.2rem
             font-weight: normal
@@ -152,14 +182,13 @@
             padding: .75em
 
     .fa-caret-right, .fa-caret-left
-        font-size: 1.5rem
-        margin: 0 1em
+       
 
-    .fa-caret-right:hover, .fa-caret-left:hover
-        color: deeppink
+    // .fa-caret-right:hover, .fa-caret-left:hover
+    //     color: deeppink
 
-    .fa-plus-square:hover, .fa-search:hover
-        color: deeppink
+    // .fa-plus-square:hover, .fa-search:hover
+    //     color: deeppink
 
     .calendar
         margin: 1em 0 5em 0
@@ -177,12 +206,15 @@
             grid-auto-rows: 50px
             align-items: center
             text-align: center
-        &__day, &__selected, &__disabled
-            font-size: .75rem
-            color: grey
-            padding: 16px
-            border-right: 1px solid lightgrey
-            border-top: 1px solid lightgrey
+            font-family: $color-green
+        &__weekdays
+            font: $color-green
+        // &__day, &__selected, &__disabled
+        //     font-size: .75rem
+        //     color: $color-green
+        //     padding: 16px
+        //     border-right: 1px solid lightgrey
+        //     border-top: 1px solid lightgrey
         &__day:last-child 
             border-right: 0
         &__day:hover
@@ -197,10 +229,16 @@
             background-color: #fff3f6
         &__disabled
             background-color: #f1f1f1
+        &__back-button
+            width: 20%
+            height: 10%
+            margin: 1rem auto
+            padding: 0.6rem
+            border: 0px solid transparent
+            background-color: $color-transparent
+            text-align: center
+            text-decoration: none
+            color: $color-green
+            display: block
 
-    .fa-circle
-        padding: 2px
-        font-size: 13px
-        color: deeppink
-	
 	

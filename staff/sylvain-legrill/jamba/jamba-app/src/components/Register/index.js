@@ -1,23 +1,10 @@
 import React, {useState} from 'react'
+import Feedback from '../Feedback'
 import {withRouter} from 'react-router-dom'
-import logic from '../../logic'
 
 
-export default withRouter (function ({ onBack, onRegister, history }) { 
+export default withRouter (function ({ onBack, onRegister, history, error }) { 
     
-    
-    const [view, setView] = useState(logic.isUserLoggedIn() ? 'home' : undefined)
-
-    // const handleRegisterArchitect = async (name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role) => {
-    //     try {
-          
-    //       await logic.registerArchitect(name, surname, email, phone, password, city, license, specialty, profileImg, portfolioUrl, projectImg, description, role)
-    
-    //       history.push('/login')
-    //     } catch ({ message }) {
-    //       console.error('fail register', message)
-    //     }
-    //   }
 
     const handleGoToRegisterArchitect = () => {
        
@@ -61,11 +48,17 @@ export default withRouter (function ({ onBack, onRegister, history }) {
                 <li className="register__form-item">
                     <input className="register__form-input" type="text" hidden name="role" defaultValue="customer"/>
                 </li>
+                {/* {error &&
+                    <li className="register__form-item">
+                        <Feedback message={error}/>
+                    </li> } */}
+                {error && <Feedback message={error} />}
                 <li className="register__form-item">
                 <button className="register__form-button" type="submit">Confirm sign up</button>
                 </li>
             </ul>
         </form>
+        
         <button href="#" className="register__back-button" onClick={event => {
             event.preventDefault()
 

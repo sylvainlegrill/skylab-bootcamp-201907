@@ -16,7 +16,7 @@ export default function(meetingId) {
     validate.string(meetingId, 'meeting id')
    
 
-    return (async() => { debugger
+    return (async() => { 
 
         const response = await fetch(`${REACT_APP_API_URL}/users/meetings/${meetingId}`, {
             method: 'DELETE',

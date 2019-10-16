@@ -1,0 +1,64 @@
+@import ../../style/base-settings
+
+.dashboard
+    &__title
+        @extend %text-title
+        margin-top: 4% 
+
+
+
+    
+.meeting 
+    
+    &__title
+        margin: 4% 5% 4% 5%
+        color: $color-green
+        font-family: $font-poppins
+        font-weight: 500
+        text-decoration: none
+        font-size: 1rem
+    &__tag
+        @extend %button-green
+        -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1)
+        -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1)
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1)
+        color: $color-white
+        font-size: 0.7rem
+        width: 60px
+        margin-left: 1%
+        padding: 5px 2px
+        text-align: center
+
+    //include m(highlighted) 
+    //   background: $yellow
+
+    &__item
+        @extend %text-little
+        background: $color-white
+        border-left: 8px solid $color-green
+        border-radius: 2px
+        -moz-box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.05)
+        -webkit-box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.05)
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.05)
+        padding: 15px 16px
+        display: flex
+        justify-content: flex-start
+
+    &__item--left
+        width: calc(100% - 76px)
+
+    &__address
+        color: $color-dark-gray
+
+        margin-bottom: 6px
+
+    &__cancel-button
+        @extend %button-green
+        margin-left: 10%
+
+
+    &__back-button
+        @extend %button-back
+   
+
+

@@ -1,19 +1,19 @@
 const {validate} = require('jamba-utils')
 
 
-
 /**
- * Registers a user.
+ * Registers a user (customer).
  * 
- * @param {string} name
- * @param {string} surname
- * @param {string} email
- * @param {string} phone
- * @param {string} password
- * @param {string} role
+ * @param {string} name user's name
+ * @param {string} surname user's surname
+ * @param {string} email user's email
+ * @param {string} phone user's phone
+ * @param {string} password  user's password
+ * @param {string} role user's role: architect or customer ( customer by default)
  *
  * 
- * @returns {Promise}
+ * @throws {TypeError} - if any parameter is not a string
+ * @throws {Error} - if any parameter is empty/undefined. if there is already a user registered under the same email or username.
  *
  * 
  */

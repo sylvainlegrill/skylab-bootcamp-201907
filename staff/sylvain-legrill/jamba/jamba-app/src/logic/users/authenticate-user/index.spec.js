@@ -11,7 +11,7 @@ const REACT_APP_JWT_SECRET_TEST = process.env.REACT_APP_JWT_SECRET_TEST
 
 const { random } = Math
 
-describe('logic - authenticate user', () => {
+describe('logic - authenticate user', () => { 
     beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
 
     let name, surname, email, phone, password, role, id

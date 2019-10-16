@@ -54,7 +54,7 @@ export default withRouter (function ({match,  history, onBack }) {
         </li>
         
         }
-        <button className="architect__meeting"  title="meeting" href="#" onClick={() => {handleGoToCalendar(architect.id)}}>arrange meeting</button>
+        <button className="architect__meeting"  title="meeting" href="#" onClick={() => {handleGoToCalendar(architect.id)}} >arrange meeting      <i className="fas fa-calendar-check"></i></button>
         </ul>
         </section>
          {architect && 
@@ -62,7 +62,7 @@ export default withRouter (function ({match,  history, onBack }) {
             event.preventDefault()
 
             history.push("/home") 
-        }}>Go back</button> }
+        }}><i className="fas fa-arrow-left"></i>Go back</button> }
         
     </>
   )

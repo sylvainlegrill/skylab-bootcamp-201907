@@ -1,5 +1,18 @@
 // import logic from '..'
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+
+/**
+ * Upload an image
+ *
+ * @param {string} id user's id
+ * @param {string} profileImg user's profile Image to upload.
+ * 
+ * @throws {TypeError} - if any param is not a string.
+ * @throws {Error} - if any param is empty.
+ * 
+ * 
+ */
+
 export default function (id, profileImg) {
     // validate fields
     const image = profileImg
@@ -21,9 +34,10 @@ export default function (id, profileImg) {
             const { error } = await response.json()
 
             throw Error(error)
-}else{
-    console.log('200')
-}
+        }
+// }else{
+//     console.log('200')
+// }
     })()
 }
 

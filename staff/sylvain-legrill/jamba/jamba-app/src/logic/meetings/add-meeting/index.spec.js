@@ -1,56 +1,186 @@
-// import addMeeting from '.'
+import addMeeting from '.'
+import logic from '../../'
+
 // import jwt from 'jsonwebtoken'
 
-// const { random } = Math
+const { random } = Math
+const { database, models: { User, Meeting } } = require('jamba-data')
+const bcrypt = require('bcryptjs')
+
+
+// const { env: { DB_URL_TEST }} = process // WARN this destructuring doesn't work in react-app :(
+const REACT_APP_DB_URL_TEST = process.env.REACT_APP_DB_URL_TEST
+
+describe('logic - add meeting', () => {
+
+    beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
+
+    let user, architect, date, address
+
+    beforeEach(async () => {
+        await Promise.all([User.deleteMany(), Meeting.deleteMany()])
+
+        user = await User.create({
+            name: `name-${random()}`,
+            surname: `surname-${random()}`,
+            email: `email-${random()}@mail.com`,
+            password: `password-${random()}`,
+            phone: `123-${random()}`
+        })
+
+        architect = await User.create({
+            name: `name-${random()}`,
+            surname: `surname-${random()}`,
+            email: `email-${random()}@mail.com`,
+            phone: `123-${random()}`,
+            password: `password-${random()}`,
+            role: 'architect',
+            city: `city-${random()}`,
+            license: `license-${random()}`,
+            specialty: `specialty-${random()}`,
+            profileImg: `profileImg-${random()}`,
+            portfolioUrl: `portfolioUrl-${random()}`,
+            projectImg: `projectImg-${random()}`,
+            description: `description-${random()}`
+            
+        })
+
+        date = new Date
+        address = `address-${random()}`
+    })
+
+    
+
+    it('should succeed on correct data', async () => {
+        const id = await addMeeting(date, address, user.id, architect.id)
+
+        expect(id).toBedefined()
+
+        const meeting = await Meeting.findById({ id })
+        
+       
+        expect(meeting.date).to.Be(date) //to.deep.equal
+        expect(meeting.address).to.Be(address)
+        // expect(user.password).toBe(password)
+
+        
+    })
+
+    afterAll(() => database.disconnect())
+
+})
+
+// require('dotenv').config()
+
+// const { expect } = require('chai')
+// import registerArchitect from '.'
+
 // const { database, models: { User, Meeting } } = require('jamba-data')
-// const bcrypt = require('bcryptjs')
+// const { random } = Math
 
-
-// // const { env: { DB_URL_TEST }} = process // WARN this destructuring doesn't work in react-app :(
-// const REACT_APP_DB_URL_TEST = process.env.REACT_APP_DB_URL_TEST
+// const { env: { DB_URL_TEST }} = process
 
 // describe('logic - add meeting', () => {
-//     let date, address, userId, architectId
 
-//     beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
+//     before(() => database.connect(DB_URL_TEST))
+
+//     let user, architect, date, address
 
 //     beforeEach(async () => {
-//         date = new Date
-//         address = `address-${random()}`
-//         userId = `userId-${random()}@mail.com`
-//         architectId = `architectId-${random()}`
-      
-//         await Meeting.deleteMany()
-//     })
+    //     await Promise.all([User.deleteMany(), Meeting.deleteMany()])
+
+    //     user = await User.create({
+    //         name: `name-${random()}`,
+    //         surname: `surname-${random()}`,
+    //         email: `email-${random()}@mail.com`,
+    //         password: `password-${random()}`,
+    //         phone: `123-${random()}`
+    //     })
+
+    //     architect = await User.create({
+    //         name: `name-${random()}`,
+    //         surname: `surname-${random()}`,
+    //         email: `email-${random()}@mail.com`,
+    //         phone: `123-${random()}`,
+    //         password: `password-${random()}`,
+    //         role: 'architect',
+    //         city: `city-${random()}`,
+    //         license: `license-${random()}`,
+    //         specialty: `specialty-${random()}`,
+    //         profileImg: `profileImg-${random()}`,
+    //         portfolioUrl: `portfolioUrl-${random()}`,
+    //         projectImg: `projectImg-${random()}`,
+    //         description: `description-${random()}`
+            
+    //     })
+
+    //     date = new Date
+    //     address = `address-${random()}`
+    // })
 
 //     it('should succeed on correct data', async () => {
-//         const response = await addMeeting(date, address, userId, architectId)
+//         const id = await addMeeting(date, address, user.id, architect.id)
 
-//         expect(response).toBeUndefined()
+//         expect(id).to.be.a('string')
+//         expect(id).to.have.lengthOf(24)
 
-//         const meeting = await Meeting.findById({ meetingId })
-        
-//         expect(meeting).toBeDefined()
-//         expect(meeting.date).toBe(date)
-//         expect(meeting.userId).toBe(userId)
-//         expect(meeting.architectId).toBe(architectId)
+//         const meeting = await Meeting.findById(id)
 
-//         const match = await bcrypt.compare(password, user.password)
-//         expect(match).toBeTruthy()
-        
-//         expect(user.role).toBe(role)
-//         expect(user.city).toBe(city)
-//         expect(user.license).toBe(license)
-//         expect(user.specialty).toBe(specialty)
-//         expect(user.profileImg).toBe(profileImg)
-//         expect(user.portfolioUrl).toBe(portfolioUrl)
-//         expect(user.projectImg).toBe(projectImg)
-//         expect(user.description).toBe(description)
-
-//         // expect(user.password).toBe(password)
-
-        
+//         expect(meeting.date).to.deep.equal(date)
+//         expect(meeting.address).to.equal(address)
 //     })
 
-//     afterAll(() => database.disconnect())
+   
+//     it('should fail on incorrect user id', async () =>{
+//         let wrongUserId = "5d74a0957005f2ab0c8d5645"
+//         try{
+//             await addMeeting(date, address, wrongUserId, architect.id)
+//             throw new Error('should not reach this point')
+//         } catch(error) {
+//             expect(error).to.exist
+//             expect(error.message).to.equal(`user with id 5d74a0957005f2ab0c8d5645 does not exist`)
+//         }
+//     })
+
+//     it('should fail on incorrect architect id', async () =>{
+//         let wrongArchitectId = "5d74a0957005f2ab0c8d5645"
+//         try{
+//             await addMeeting(date, address, user.id, wrongArchitectId)
+//             throw new Error('should not reach this point')
+//         } catch(error) {
+//             expect(error).to.exist
+//             expect(error.message).to.equal(`architect with id 5d74a0957005f2ab0c8d5645 does not exist`)
+//         }
+//     })
+
+
+
+//     it('should fail on empty date', () =>
+//         expect(() =>
+//             addMeeting('',address, user.id, architect.id)
+//         ).to.throw('date with value  is not a date')
+//     )
+
+//     it('should fail on undefined date', () =>
+//         expect(() =>
+//             addMeeting(undefined, address, user.id, architect.id)
+//         ).to.throw(`date with value undefined is not a date`)
+//     )
+
+//     it('should fail on empty address', () =>
+//         expect(() =>
+//             addMeeting(date,'', user.id, architect.id)
+//         ).to.throw('address is empty or blank')
+//     )
+
+//     it('should fail on undefined address', () =>
+//         expect(() =>
+//             addMeeting(date, undefined, user.id, architect.id)
+//         ).to.throw(`address with value undefined is not a string`)
+//     )
+
+
+//     after(() => database.disconnect())
+
+
 // })

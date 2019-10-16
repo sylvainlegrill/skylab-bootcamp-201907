@@ -31,7 +31,7 @@ export default function (date, address, userId, architectId) {
 
 
 
-    return (async () => { 
+    return (async () => {  
         const response = await fetch(`${REACT_APP_API_URL}/users/meetings`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' ,

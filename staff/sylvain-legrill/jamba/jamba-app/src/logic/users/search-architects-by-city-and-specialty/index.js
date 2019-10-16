@@ -3,9 +3,17 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 
 /**
- * Return all architects by specialty, city.
+ * Returns all architects by city and specialty
+ *
+ * @param {string} role user's role: architect or customer ( customer by default)
+ * @param {string} city user's city. Parameter only for architects
+ * @param {string} specialty user's architect specialty ( residential , technical, interior design, landscaper). Only for architects
  * 
+ * @throws {TypeError} - if role is not a string.
+ * @throws {Error} - if users with specified role/city/specialty is empty or undefined or users not found.
  * 
+ * @returns {Object}  objects architects' data.
+ *
  */
 
 
