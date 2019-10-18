@@ -10,7 +10,7 @@ const { params:{role} } = req
 
         const user = await retrieveAll(role)
 
-        res.json({ message: 'user retrieved correctly', user })
+        res.json({ message: 'user retrieved correctly', user , role })
 
     } catch ({ message }) {
 
