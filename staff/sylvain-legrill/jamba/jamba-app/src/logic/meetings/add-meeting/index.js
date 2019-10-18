@@ -1,4 +1,5 @@
-// const { env: { REACT_APP_API_URL } } = process
+import logic from '../../index'
+
 const {validate} = require('jamba-utils')
 
 
@@ -19,30 +20,36 @@ const {validate} = require('jamba-utils')
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
-export default function (date, address, userId, architectId) {
-    //validate fields
+export default function (date, address, userId, architectId) { 
+ 
 
-    validate.date(date)
-    validate.string(address)
-    validate.string(userId)
-    validate.string(architectId)
+    // validate.date(date, 'date')
+    // validate.string(address, 'address')
+    // validate.string(userId, 'userId')
+    // validate.string(architectId, 'architectId')
+    
+
     
 
 
-
-
-    return (async () => {  
+    return (async () => { 
+         
+        const token = this.__token__
         const response = await fetch(`${REACT_APP_API_URL}/users/meetings`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' ,
-                        authorization: `bearer ${this.__token__}`},
+                        'authorization': `bearer ${token}`},
             body: JSON.stringify({date, address, userId, architectId})
         })
-
+        
         if (response.status !== 201) {
             const { error } = await response.json()
 
             throw Error(error)
+        } else{
+            const { id } = await response.json()
+            return id
+            
         }
     })()
 }

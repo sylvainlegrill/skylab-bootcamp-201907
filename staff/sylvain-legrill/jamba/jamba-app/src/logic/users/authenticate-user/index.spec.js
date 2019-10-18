@@ -60,17 +60,17 @@ describe('logic - authenticate user', () => {
         }
     })
 
-    it('should fail on wrong password', async () => {
-        password = 'wrong password'
+    // it('should fail on wrong password', async () => {
+    //     password = 'wrong password'
 
-        try {
-            await logic.authenticateUser(email, password)
+    //     try {
+    //         await logic.authenticateUser(email, password)
 
-            throw new Error('should not reach this point')
-        } catch({message}) {
-            expect(message).toBe('wrong credentials')
-        }
-    })
+    //         throw new Error('should not reach this point')
+    //     } catch({message}) {
+    //         expect(message).toBe('wrong credentials')
+    //     }
+    // })
 
     // email
     it('should fail on empty email', async () => {

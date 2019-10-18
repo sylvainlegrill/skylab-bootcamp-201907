@@ -19,7 +19,7 @@ describe('logic - retrieve Users By Role', () => {
         email = `email-${Math.random()}@domain.com`
         phone = `phone-${Math.random()}`
         password = `password-${Math.random()}`
-        role = `architect`
+        role = "architect"
         city = `city-${Math.random()}`
         license = `license-${Math.random()}`
         specialty = `specialty-${Math.random()}`
@@ -35,7 +35,7 @@ describe('logic - retrieve Users By Role', () => {
         logic.__token__ = token
     })
 
-    it('should succeed on correct data', async () =>
+    it('should succeed on correct data', async () => 
         await logic.retrieveUsersByRole()
             .then(user => {
                 expect(user).toBeDefined()

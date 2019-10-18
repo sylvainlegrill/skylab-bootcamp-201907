@@ -19,7 +19,7 @@ const { validate }= require('jamba-utils')
 export default function (role) {
     validate.string(role, 'role')
 
-    return (async () => {
+    return (async () => { 
         const response = await fetch(`${REACT_APP_API_URL}/users-all/${role}`, {
             method: 'get',
             headers: {
@@ -27,7 +27,7 @@ export default function (role) {
             }
         })
 
-        if (response.status !== 200) {
+        if (response.status !== 200) { 
             const { error } = await response.json()
 
             throw Error(error)

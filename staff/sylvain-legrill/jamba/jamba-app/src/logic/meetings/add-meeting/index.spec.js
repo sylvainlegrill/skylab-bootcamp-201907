@@ -1,186 +1,193 @@
 import addMeeting from '.'
-import logic from '../../'
+import logic from '../../index'
+import jwt from 'jsonwebtoken'
+import {database, models} from 'jamba-data'
 
-// import jwt from 'jsonwebtoken'
 
-const { random } = Math
-const { database, models: { User, Meeting } } = require('jamba-data')
+// const { random } = Math
+const { User, Meeting } = models
 const bcrypt = require('bcryptjs')
 
 
 // const { env: { DB_URL_TEST }} = process // WARN this destructuring doesn't work in react-app :(
 const REACT_APP_DB_URL_TEST = process.env.REACT_APP_DB_URL_TEST
+const REACT_APP_JWT_SECRET_TEST = process.env.REACT_APP_JWT_SECRET_TEST
 
 describe('logic - add meeting', () => {
-
     beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
 
-    let user, architect, date, address
-
-    beforeEach(async () => {
-        await Promise.all([User.deleteMany(), Meeting.deleteMany()])
-
-        user = await User.create({
-            name: `name-${random()}`,
-            surname: `surname-${random()}`,
-            email: `email-${random()}@mail.com`,
-            password: `password-${random()}`,
-            phone: `123-${random()}`
-        })
-
-        architect = await User.create({
-            name: `name-${random()}`,
-            surname: `surname-${random()}`,
-            email: `email-${random()}@mail.com`,
-            phone: `123-${random()}`,
-            password: `password-${random()}`,
-            role: 'architect',
-            city: `city-${random()}`,
-            license: `license-${random()}`,
-            specialty: `specialty-${random()}`,
-            profileImg: `profileImg-${random()}`,
-            portfolioUrl: `portfolioUrl-${random()}`,
-            projectImg: `projectImg-${random()}`,
-            description: `description-${random()}`
-            
-        })
-
-        date = new Date
-        address = `address-${random()}`
-    })
-
+    let name, surname, email, phone, password, city, license, specialty, portfolioUrl, projectImg, description
+    let date
+    let address
+    let userId
+    let architectId
     
 
-    it('should succeed on correct data', async () => {
-        const id = await addMeeting(date, address, user.id, architect.id)
+    beforeEach(async () => { 
+        name = `name-${Math.random()}`
+        surname = `surname-${Math.random()}`
+        email = `email-${Math.random()}@email.com`
+        phone = `phone-${Math.random()}`
+        password = `password-${Math.random()}`
+        //role = `role-${Math.random()}`
+        city = `city-${Math.random()}`
+        license = `license-${Math.random()}`
+        specialty = `specialty-${Math.random()}`
+        portfolioUrl = `portfolioUrl-${Math.random()}`
+        projectImg = `projectImg-${Math.random()}`
+        description = `description-${Math.random()}`
 
-        expect(id).toBedefined()
+        date = new Date()
+        address = `address-${Math.random()}`
 
-        const meeting = await Meeting.findById({ id })
+        await User.deleteMany()
+        await Meeting.deleteMany()
         
-       
-        expect(meeting.date).to.Be(date) //to.deep.equal
-        expect(meeting.address).to.Be(address)
-        // expect(user.password).toBe(password)
+        const user = await User.create({ name, surname, email, password, phone})
+        userId = user.id  
 
+        const architect = await User.create({name, surname, email, phone, password, city, license, specialty, portfolioUrl, projectImg, description})
+        architectId = architect.id
         
+        const token = jwt.sign({ sub: userId }, REACT_APP_JWT_SECRET_TEST)
+        logic.__token__ = token
     })
 
-    afterAll(() => database.disconnect())
+    it('should succeed on correct data', async () =>{
+            
+                
+        const id = await logic.addMeeting(date, address, userId, architectId)
+          expect(id).toBeDefined()
 
+        const meeting = await Meeting.findById(id)
+            expect(meeting).toBeDefined()
+            // expect(meeting.date).toBe(date)
+            // expect(meeting.address).toBe(address)
+            // expect(meeting.team).toBeDefined()
+            // expect(meeting.name).toBe(namemeeting)
+            // expect(meeting.code).toBe(code)
+            // expect(meeting.participants.length).toBe(1)
+            // expect(meeting.participants[0].toString()).toBe(id)
+      
+    })
+
+    // it('should fail on incorrect user id', async () =>{
+    //     let wrongUserId = "5d74a0957005f2ab0c8d5645"
+    //     
+    //     try{
+    //         await logic.addMeeting(date, address, wrongUserId, architectId)
+    //         throw new Error('should not reach this point')
+    //     } catch(error) {
+    //         expect(error).toBeTruthy()
+    //         expect(error.message).toBe(`user with id 5d74a0957005f2ab0c8d5645 does not exist`)
+    //     }
+    // })
+
+  
+    // it('should fail on empty userId', () =>
+    //     expect(() =>
+    //         logic.addMeeting(date,address, "", architectId)
+    //     ).toBe('user id is empty or blank')
+    // )
+    // it('should fail on empty architectId', () =>
+    //     expect(() =>
+    //         addMeeting(date,address, userId, "")
+    //     ).toThrow('architect id is empty or blank')
+    // )
+
+
+
+    // it('should fail on empty date', () =>
+    //     expect(() =>
+    //         logic.addMeeting('',address, userId, architectId)
+    //     ).toThrow('date with value  is not a date')
+    // )
+
+    // it('should fail on undefined date', () =>
+    //     expect(() =>
+    //         logic.addMeeting(undefined, address, userId, architectId)
+    //     ).toThrow(`date with value undefined is not a date`)
+    // )
+
+    // it('should fail on empty address', () =>
+    //     expect(() =>
+    //         logic.addMeeting(date,'', userId, architectId)
+    //     ).toThrow('address is empty or blank')
+    // )
+
+    // it('should fail on undefined address', () =>
+    //     expect(() =>
+    //         logic.addMeeting(date, undefined, userId, architectId)
+    //     ).toThrow(`address with value undefined is not a string`)
+    // )
+
+
+    afterAll(() => database.disconnect())
 })
 
-// require('dotenv').config()
-
-// const { expect } = require('chai')
-// import registerArchitect from '.'
-
-// const { database, models: { User, Meeting } } = require('jamba-data')
-// const { random } = Math
-
-// const { env: { DB_URL_TEST }} = process
 
 // describe('logic - add meeting', () => {
 
-//     before(() => database.connect(DB_URL_TEST))
-
-//     let user, architect, date, address
-
-//     beforeEach(async () => {
-    //     await Promise.all([User.deleteMany(), Meeting.deleteMany()])
-
-    //     user = await User.create({
-    //         name: `name-${random()}`,
-    //         surname: `surname-${random()}`,
-    //         email: `email-${random()}@mail.com`,
-    //         password: `password-${random()}`,
-    //         phone: `123-${random()}`
-    //     })
-
-    //     architect = await User.create({
-    //         name: `name-${random()}`,
-    //         surname: `surname-${random()}`,
-    //         email: `email-${random()}@mail.com`,
-    //         phone: `123-${random()}`,
-    //         password: `password-${random()}`,
-    //         role: 'architect',
-    //         city: `city-${random()}`,
-    //         license: `license-${random()}`,
-    //         specialty: `specialty-${random()}`,
-    //         profileImg: `profileImg-${random()}`,
-    //         portfolioUrl: `portfolioUrl-${random()}`,
-    //         projectImg: `projectImg-${random()}`,
-    //         description: `description-${random()}`
-            
-    //     })
-
-    //     date = new Date
-    //     address = `address-${random()}`
-    // })
-
-//     it('should succeed on correct data', async () => {
-//         const id = await addMeeting(date, address, user.id, architect.id)
-
-//         expect(id).to.be.a('string')
-//         expect(id).to.have.lengthOf(24)
-
-//         const meeting = await Meeting.findById(id)
-
-//         expect(meeting.date).to.deep.equal(date)
-//         expect(meeting.address).to.equal(address)
-//     })
+//     beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
+    
+//     let user, architect, date, address, id
 
    
-//     it('should fail on incorrect user id', async () =>{
-//         let wrongUserId = "5d74a0957005f2ab0c8d5645"
-//         try{
-//             await addMeeting(date, address, wrongUserId, architect.id)
-//             throw new Error('should not reach this point')
-//         } catch(error) {
-//             expect(error).to.exist
-//             expect(error.message).to.equal(`user with id 5d74a0957005f2ab0c8d5645 does not exist`)
-//         }
+//     beforeEach(async () => {
+//         await Promise.all([User.deleteMany(), Meeting.deleteMany()])
+
+//             user = await User.create({
+//             name: `name-${random()}`,
+//             surname: `surname-${random()}`,
+//             email: `email-${random()}@mail.com`,
+//             password: `password-${random()}`,
+//             phone: `123-${random()}`
+//         })
+//             id = user.id
+
+//             architect = await User.create({
+//             name: `name-${random()}`,
+//             surname: `surname-${random()}`,
+//             email: `email-${random()}@mail.com`,
+//             phone: `123-${random()}`,
+//             password: `password-${random()}`,
+//             role: 'architect',
+//             city: `city-${random()}`,
+//             license: `license-${random()}`,
+//             specialty: `specialty-${random()}`,
+//             profileImg: `profileImg-${random()}`,
+//             portfolioUrl: `portfolioUrl-${random()}`,
+//             projectImg: `projectImg-${random()}`,
+//             description: `description-${random()}`
+            
+//         })
+
+//             date = new Date
+//             address = `address-${random()}`
+
+
+//             const token = await jwt.sign({ sub: id }, REACT_APP_JWT_SECRET_TEST)
+
+//             logic.__token__ = token
 //     })
 
-//     it('should fail on incorrect architect id', async () =>{
-//         let wrongArchitectId = "5d74a0957005f2ab0c8d5645"
-//         try{
-//             await addMeeting(date, address, user.id, wrongArchitectId)
-//             throw new Error('should not reach this point')
-//         } catch(error) {
-//             expect(error).to.exist
-//             expect(error.message).to.equal(`architect with id 5d74a0957005f2ab0c8d5645 does not exist`)
-//         }
+    
+
+//     it('should succeed on correct data', async () => {
+//         const meetingId = await addMeeting(date, address, user.id, architect.id)
+
+//         expect(meetingId).toBedefined()
+
+//         const meeting = await Meeting.findById({ meetingId })
+        
+       
+//         expect(meeting.date).to.Be(date) //to.deep.equal
+//         expect(meeting.address).to.Be(address)
+//         // expect(user.password).toBe(password)
+
+        
 //     })
 
-
-
-//     it('should fail on empty date', () =>
-//         expect(() =>
-//             addMeeting('',address, user.id, architect.id)
-//         ).to.throw('date with value  is not a date')
-//     )
-
-//     it('should fail on undefined date', () =>
-//         expect(() =>
-//             addMeeting(undefined, address, user.id, architect.id)
-//         ).to.throw(`date with value undefined is not a date`)
-//     )
-
-//     it('should fail on empty address', () =>
-//         expect(() =>
-//             addMeeting(date,'', user.id, architect.id)
-//         ).to.throw('address is empty or blank')
-//     )
-
-//     it('should fail on undefined address', () =>
-//         expect(() =>
-//             addMeeting(date, undefined, user.id, architect.id)
-//         ).to.throw(`address with value undefined is not a string`)
-//     )
-
-
-//     after(() => database.disconnect())
-
+//     afterAll(() => database.disconnect())
 
 // })

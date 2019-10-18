@@ -29,18 +29,18 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 export default function (name, surname, email, phone, password, city, license, specialty, portfolioUrl, projectImg, description) {  
     // validate fields
 // if (role==='architect'){
-    validate.string(name)
-    validate.string(surname)
-    validate.string(email)
+    validate.string(name, 'name')
+    validate.string(surname, 'surname')
+    validate.string(email, 'e-mail')
     validate.email(email, 'e-mail')
-    validate.string(phone)
-    validate.string(password)
-    validate.string(city)
-    validate.string(license)
-    validate.string(specialty)
-    validate.string(portfolioUrl)
-    validate.string(projectImg)
-    validate.string(description)
+    validate.string(phone, 'phone')
+    validate.string(password, 'password')
+    validate.string(city, 'city')
+    validate.string(license, 'license')
+    validate.string(specialty, 'specialty')
+    validate.string(portfolioUrl, 'portfolioUrl')
+    validate.string(projectImg, 'projectImg')
+    validate.string(description, 'description')
 
 
 

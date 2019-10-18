@@ -1,4 +1,5 @@
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+
 //const { validate }= require('jamba-utils')
 
 
@@ -12,6 +13,7 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 export default function () {
     // validate.string(id, 'id')
+
     
     return (async () => {
         const response = await fetch(`${REACT_APP_API_URL}/users/meetings`, {

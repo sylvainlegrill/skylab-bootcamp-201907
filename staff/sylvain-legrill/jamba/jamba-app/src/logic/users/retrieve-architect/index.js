@@ -5,13 +5,15 @@ const { validate }= require('jamba-utils')
 /**
  * Return all architects by specialty, city.
  * 
+ * @param {*} id 
+ * 
  * @throws {TypeError} - if any parameter is not a string.
  * @throws {Error} - if any parameter is empty/undefined.
  */
 
 
 export default function (id) { 
-    //validate.string(id, 'id')
+    validate.string(id, 'id')
 
     return (async () => {  
         const response = await fetch(`${REACT_APP_API_URL}/architects/${id}`, {

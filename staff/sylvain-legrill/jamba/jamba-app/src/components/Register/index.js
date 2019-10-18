@@ -48,10 +48,7 @@ export default withRouter (function ({ onBack, onRegister, history, error }) {
                 <li className="register__form-item">
                     <input className="register__form-input" type="text" hidden name="role" defaultValue="customer"/>
                 </li>
-                {/* {error &&
-                    <li className="register__form-item">
-                        <Feedback message={error}/>
-                    </li> } */}
+               
                 {error && <Feedback message={error} />}
                 <li className="register__form-item">
                 <button className="register__form-button" type="submit">Confirm sign up</button>

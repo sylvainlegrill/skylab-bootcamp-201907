@@ -3,7 +3,6 @@ import './index.sass'
 import moment from "moment"
 import Header from '../Header'
 import Context from '../Context'
-// import Feedback from '../Feedback'
 import Register from '../Register'
 import RegisterArchitect from '../RegisterArchitect'
 import Architects from '../Architects'

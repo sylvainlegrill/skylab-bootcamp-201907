@@ -11,20 +11,20 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
  * 
 */
 
-export default function(meetingId) {
+export default function(meetingId) { 
 
     validate.string(meetingId, 'meeting id')
+   const token = this.__token__
    
-
     return (async() => { 
-
+        
         const response = await fetch(`${REACT_APP_API_URL}/users/meetings/${meetingId}`, {
             method: 'DELETE',
             headers: {
-                'authorization' : `bearer ${this.__token__}`
+                'authorization' : `bearer ${token}`
             }
-        })
-
+        }) 
+        
         if (response.status !== 200) {
             const { error } = await response.json()
             throw Error(error)

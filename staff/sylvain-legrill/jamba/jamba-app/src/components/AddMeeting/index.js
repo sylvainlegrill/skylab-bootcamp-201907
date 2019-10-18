@@ -15,7 +15,7 @@ function AddMeeting({ history, match }) {
     const userId = logic.getUserId()
     const architectId = id
 
-    
+
 
     function handleSubmit(event) { 
             event.preventDefault()
@@ -87,13 +87,10 @@ function AddMeeting({ history, match }) {
                                 <input className="meeting-register__form-input" id="cityInput" name="city" placeholder="add city here"
                                 /></label>
                         </li>
-                        {/* {error &&
-                        <li className="meeting-register__form-item">
-                            <Feedback message={error}/>
-                        </li> } */}
+                        
                         {error && <Feedback message={error} />}
                         <li className="meeting-register__form-item">
-                            <button className="meeting-register__form-button">confirm meeting</button>
+                            <button className="meeting-register__form-button" type="submit">Confirm meeting</button>
                         </li>
                     </ul>
                 </form>

@@ -1,12 +1,11 @@
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 /**
- * Retrieves a user by its id
+ * Retrieves a user 
  * 
- * @param {string} id user id
  * 
  * @throws {TypeError} - if any parameter is not a string.
- * @throws {Error} - if any parameter is empty/undefined, if email is not found or password does not match.
+ * @throws {Error} - if any parameter is empty/undefined.
  * 
  * @returns {Promise}
  * 
@@ -15,7 +14,7 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 export default function () {
 
-    return (async () => {
+    return (async () => { 
         const response = await fetch(`${REACT_APP_API_URL}/users`, {
             method: 'GET',
             headers: {'authorization' : `bearer ${this.__token__}`}
