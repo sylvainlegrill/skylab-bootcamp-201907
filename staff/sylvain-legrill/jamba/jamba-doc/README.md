@@ -63,9 +63,11 @@ Architects, on their side, can:
 
 ### Code coverage
 
-![image](./img/api-coverage-96-green.png) 
+![image](./img/api-coverage-96-green.png) \
 ![image](./img/api-test-count-102-3.png) 
-![image](./img/app-coverage-86-yellowgreen.png)
+
+
+![image](./img/app-coverage-86-yellowgreen.png)\
 ![image](./img/app-test-count-94-1.png)
 
 
