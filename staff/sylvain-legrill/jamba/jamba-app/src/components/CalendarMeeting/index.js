@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import Context from '../Context'
+import Feedback from '../Feedback'
 import './index.sass'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
@@ -8,49 +9,49 @@ import logic from '../../logic/'
 
 function Month({ history, match }) {
 
-   const [view, setView] = useState(false)
     const { params: { id } } = match //architectId
     const { setThisDay, currentDate, setCurrentDate }  = useContext(Context)
-
+    const  [error, setError]  = useState()
     const [ monthMeetings, setMonthMeetings ] = useState([])
+    const architectId = id
 
-    useEffect(() => {
+    function convertHour(date){
+        
+        const _date = new Date(date)
+        const hour = _date.getHours()
+        return `${hour}H`
+    }
+
+    function startMeeting(date){
+        const endTime = moment(date).subtract(1,'hours').format('HH')
+        return `${endTime}H`
+    }
+
+    function endMeeting(date){
+        const endTime = moment(date).add(1,'hours').format('HH')
+        return `${endTime}H`
+    }
+
+    useEffect(() => {  
         (async () =>{
           try {
-            const meetings = await logic.retrieveAllMeeting(id)
+            const meetings = await logic.retrieveMeetingsArchitect(architectId)
             
             const monthMeetings = meetings.filter(meeting => moment(currentDate).isSame(meeting.date, 'month'))
             setMonthMeetings(monthMeetings)
 
           } catch(error) {
-            console.log(error.message)
+            setError(error.message)
           }
         })()
-    },[id, currentDate])
-
-   //  function handleGoToCalendar(id) {
-   //    setView(true)
-      
-   //  }
-
-    function handleMonth(event) {
-        event.preventDefault()
-
-        setCurrentDate(moment())
-    }
+    },[architectId,currentDate])
 
 
-   //  function handleGoToAddMeeting(day) { //Delete
-        
-   //      setThisDay(moment(day))
-   //      history.push(`/${spaceId}/day`)
-   //  }
-
-    function handleGoToAddMeeting(day) { //Delete
+    function handleGoToAddMeeting(day) {
         
       setThisDay(moment(day))
-      history.push(`/architects/${id}/calendar/submit`)
-  }
+      history.push(`/architects/${architectId}/calendar/submit`)
+    }
 
     function handleGoToNextMonth(event) {
         event.preventDefault()
@@ -63,13 +64,22 @@ function Month({ history, match }) {
           
         setCurrentDate(moment(currentDate).subtract(1, 'months')) 
     }
+    function goBack(event) { 
+        event.preventDefault()
+
+        history.push(`/architects/${architectId}`)
+    }
 
     function handleDayMeetings(dataDate){
-        return monthMeetings.map(meeting => {
+        return monthMeetings.map((meeting, index) => {
             let meetingDay = moment(meeting.date).format('YYYY MMMM D')
             let currentDay = moment(dataDate).format('YYYY MMMM D')
             if (meetingDay === currentDay) {
-                return <i className="fas fa-circle">Not Available</i>   //task.name          
+                return  <div key={index} className="calendar__busy">
+                <i className="fas fa-ban"> </i>
+                <p className="calendar__busy-hour"> 
+                {startMeeting(meeting.date)}-{endMeeting(meeting.date)} </p>
+                </div>
             }
         })
     }
@@ -78,9 +88,11 @@ function Month({ history, match }) {
 
         return (
         <>
-            <div className="month__header">
-                <i className="fas fa-caret-left" onClick={handleGoToPreviousMonth}></i><h1 className="month__title"> {moment(currentDate).format("MMMM")} </h1><i className="fas fa-caret-right" onClick={handleGoToNextMonth}></i>
-         </div>
+            <div key={Math.random()} className="month__header">
+                <i className="fas fa-caret-left" onClick={handleGoToPreviousMonth}></i>
+                <h1 className="month__title">{moment(currentDate).format("MMMM") } </h1>
+                <i className="fas fa-caret-right" onClick={handleGoToNextMonth}></i>
+            </div>
             <p className="month__year">{moment(currentDate).format("YYYY")}</p> 
         </>
         )
@@ -93,7 +105,7 @@ function Month({ history, match }) {
         
         for (let i = 0; i < 7; i++) {
             days.push(
-                <div>
+                <div key={Math.random()} className="calendar__weekdays">
                     {startDate.add(1, 'days').format('ddd')}
                 </div>      
             )       
@@ -160,7 +172,7 @@ function Month({ history, match }) {
                 const formattedDate = first.format('D')
                 const dataDate = first.format()
                 days.push(
-                    <div onClick={() => {handleGoToAddMeeting(dataDate)}} className={`${!moment(currentDate).isSame(dataDate, 'month')
+                    <div key={Math.random()} onClick={() => {handleGoToAddMeeting(dataDate)}} className={`${!moment(currentDate).isSame(dataDate, 'month')
                             ? "calendar__disabled"
                             : moment().isSame(dataDate, 'day')
                             ? "calendar__selected"
@@ -171,7 +183,7 @@ function Month({ history, match }) {
                 )
                 first = first.add(1, 'days')
             }
-            rows.push( <div className="calendar__week"> {days} </div>)
+            rows.push( <div key={Math.random()} className="calendar__week"> {days} </div>)
             days = []
         }
 
@@ -184,17 +196,6 @@ function Month({ history, match }) {
 
             <div>{header()}</div>
 
-            {/* <div className="month__toolbar">
-                <div className="month__toggle">
-                  <div className="month__toggle-option" onClick={handleDay}>today</div>
-                  <div className="month__toggle-option" onClick={handleWeek}>week</div>
-                  <div className="month__toggle-option month__toggle-option--selected" onClick={handleMonth}>month</div>
-                </div>
-                <form>
-                  <input className="month__search-input" type="text" placeholder="Search"/> <i className="fa fa-search"></i>
-                </form>
-            </div> */}
-
             <div className="month__act">
                 
                 <div className="calendar">
@@ -205,144 +206,10 @@ function Month({ history, match }) {
             </div>
 
         </div> 
+        {error && <Feedback message={error} />}
+        <button href="#" className="calendar__back-button" onClick={goBack}><i className="fas fa-arrow-left"></i> Go back</button>
 
     </>
 }
 
 export default withRouter(Month)
-
-
-
-
-
-
-
-
-
-// import React, { useState, useEffect } from 'react'
-// import * as dateFns from 'date-fns'
-// import './index.sass'
-// import logic from '../../logic'
-// import { withRouter, Link } from 'react-router-dom'
-
-
-// export default withRouter(function Calendar ({ onEvent, history }) {
-//     // STATES
-
-//     const [user, setUser] = useState(null)
-//     // const  [calendar, setCalendar] = useState([])
-
-//     const [currentDate, setCurrentDate] = useState(new Date())
-//     const [selectedDate, setSelectedDate] = useState(new Date())
-
-//     useEffect(() => {
-//         (async () => {
-//         const user = await logic.retrieveUser()
-//         setUser(user)
-//         })()
-//     }, [history.location])
-
-//     const handleGoToAddMeetings = () => {
-//       history.push('/meeting/register')
-//   }
-
-
-//     const header = () => {
-//         const dateFormat = "MMMM yyyy";
-//         return (
-//            <div className="header row flex-middle">
-//               <div className="column col-start">
-//                  <div className="icon" onClick={prevMonth}>
-//                     chevron_left
-//                  </div>
-//               </div>
-//               <div className="column col-center">
-//                  <span>{dateFns.format(currentDate, dateFormat)}</span>
-//               </div>
-//               <div className="column col-end">
-//                  <div className="icon" onClick={nextMonth}>
-//                     chevron_right
-//                  </div>
-//               </div>
-//            </div>
-//         );
-//     };
-
-//     const nextMonth = () => {
-//         setCurrentDate(dateFns.addMonths(currentDate, 1))
-//      }
-//      const prevMonth = () => {
-//         setCurrentDate(dateFns.subMonths(currentDate, 1))
-//      }
-
-//      const daysOfWeek = () => {
-//         const dateFormat = 'EEEEEE'
-//         const days = [];
-//         let startDate = dateFns.startOfWeek(currentDate);
-//         for (let i = 0; i < 7; i++) {
-//               days.push(
-//                  <div className="column col-center" key={i}>
-//                  {dateFns.format(dateFns.addDays(startDate, i), dateFormat)}
-//                  </div>
-//               );
-//            }
-//            return <div className="days row">{days}</div>;
-//         };
-//         const cells = () => {
-//             const monthStart = dateFns.startOfMonth(currentDate);
-//             const monthEnd = dateFns.endOfMonth(monthStart);
-//             const startDate = dateFns.startOfWeek(monthStart);
-//             const endDate = dateFns.endOfWeek(monthEnd);
-//             const dateFormat = "d";
-//             const rows = [];
-//             let days = [];
-//             let day = startDate;
-//             let formattedDate = "";
-//             while (day <= endDate) {
-//                for (let i = 0; i < 7; i++) {
-//                formattedDate = dateFns.format(day, dateFormat);
-//                const cloneDay = day;
-//             days.push(
-//                   <div 
-//                    className={`column cell ${!dateFns.isSameMonth(day, monthStart)
-//                    ? "disabled" : dateFns.isSameDay(day, selectedDate) 
-//                    ? "selected" : "" }`} 
-//                    key={day} 
-//                    onClick={() => onDateClick(dateFns.toDate(cloneDay))}
-//                    > 
-//                    <span className="number">{formattedDate}</span>
-//                    <span className="bg">{formattedDate}</span>
-//                  </div>
-//                  );
-//                day = dateFns.addDays(day, 1);
-//               }
-//             rows.push(
-//                   <div className="row" key={day}> {days} </div>
-//                 );
-//                days = [];
-//              }
-//              return <div className="body">{rows}</div>;
-//             }
-
-//             const onDateClick = day => { 
-               
-//             setSelectedDate(day);
-
-
-//             }
-
-
-//     return (<> 
-//          <h2>calendar</h2>
-//          <div className="calendar">
-//             <div>{header()}</div>        
-//             <div>{daysOfWeek()}</div>        
-//             <div>{cells()}</div>
-//         </div>
-//         {
-//            onDateClick  &&
-//            <div>Holaaaa</div>
-//         }
-//     </> 
-//     );
-// })

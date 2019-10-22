@@ -1,6 +1,7 @@
 import React from 'react'
+import Feedback from '../Feedback'
 
-export default function ({ onBack, onLogin }) {
+export default function ({ onBack, onLogin, error }) {
     return <>
     <section>
        
@@ -20,6 +21,7 @@ export default function ({ onBack, onLogin }) {
                 <label htmlFor="password"></label>
                 <input className="login__form-input" type="password" name="password" id="password" placeholder="password"/>
             </li >
+            {error && <Feedback message={error} />}
             <li className="login__form-item">
                 <button className="login__form-button" type="submit">Sign in</button>
             </li>
@@ -29,7 +31,7 @@ export default function ({ onBack, onLogin }) {
             event.preventDefault()
 
             onBack()
-        }}>Go back</button>
+        }}>Go home</button>
         </section>
     </>
 }

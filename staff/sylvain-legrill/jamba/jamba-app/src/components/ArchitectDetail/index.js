@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-
+import Feedback from '../Feedback'
 import { withRouter } from "react-router-dom"
 import logic from "../../logic"
 import portfolioUrl from '../../images/portfolio.png'
@@ -12,10 +12,10 @@ export default withRouter (function ({match,  history, onBack }) {
   
   const [view, setView] = useState(false)
   const [architect, setArchitect] = useState([])
-    
+  const [error, setError] = useState() 
   useEffect(() => {
     
-    (async () => {
+    (async () => { 
         try {
           
         const { params: { id }} = match
@@ -25,7 +25,7 @@ export default withRouter (function ({match,  history, onBack }) {
         setArchitect(architect)
         
     } catch({message}) {
-        console.error('failed retrieving architect detail', message)
+        setError('failed retrieving architect detail', message)
       }
     })()
   }, [])
@@ -54,14 +54,16 @@ export default withRouter (function ({match,  history, onBack }) {
         </li>
         
         }
-        <button className="architect__meeting"  title="meeting" href="#" onClick={() => {handleGoToCalendar(architect.id)}}>arrange meeting</button>
+        <button className="architect__meeting"  title="meeting" href="#" onClick={() => {handleGoToCalendar(architect.id)}} >arrange meeting      <i className="fas fa-calendar-check"></i></button>
         </ul>
+        {error && <Feedback message={error} />}
         </section>
-         {architect && <button className="architect__back" href="#" onClick={event => {
+         {architect && 
+         <button className="architect__back" href="#" onClick={event => {
             event.preventDefault()
 
             history.push("/home") 
-        }}>Go back</button> }
+        }}><i className="fas fa-arrow-left"></i>Go back</button> }
         
     </>
   )

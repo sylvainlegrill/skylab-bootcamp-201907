@@ -10,6 +10,9 @@ import searchArchitectsByCityAndSpecialty from './users/search-architects-by-cit
 import uploadImage from './users/upload-image'
 import getUserId from './users/get-user-id'
 import addMeeting from './meetings/add-meeting'
+import retrieveMeetings from './meetings/retrieve-meetings'
+import retrieveMeetingsArchitect from './meetings/retrieve-meetings-architect'
+import deleteMeeting from './meetings/delete-meeting'
 
 
 export default {
@@ -45,27 +48,9 @@ export default {
     searchArchitectsByCityAndSpecialty,
     uploadImage,
     getUserId,
-    addMeeting
-
-
-
-
-   
+    addMeeting,
+    retrieveMeetings,
+    retrieveMeetingsArchitect,
+    deleteMeeting
     
-
-    // async searchArchitects(query) {
-    //     const response = await fetch(`https://duckling-api.herokuapp.com/api/search?q=${query}`)
-
-    //     const architects = await response.json()
-
-    //     return architects
-    // },
-
-    // async retrieveArchitects(id) {
-    //     const response = await fetch(`https://duckling-api.herokuapp.com/api/ducks/${id}`)
-
-    //     const architects = await response.json()
-
-    //     return architects
-    // }
 }

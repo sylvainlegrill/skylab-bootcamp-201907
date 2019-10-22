@@ -1,46 +1,78 @@
 import logic from '../..'
+import retrieveArchitect from '.'
+
 import { database, models } from 'jamba-data'
 import jwt from 'jsonwebtoken'
-
 const { User } = models
+const { random } = Math
+
 
 // const { env: { DB_URL_TEST }} = process // WARN this destructuring doesn't work in react-app :(
 const REACT_APP_DB_URL_TEST = process.env.REACT_APP_DB_URL_TEST
 const REACT_APP_JWT_SECRET_TEST = process.env.REACT_APP_JWT_SECRET_TEST
 
-describe('logic - retrieve user', () => {
+describe('logic - retrieve architect', () => {
     beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
 
-    let name, surname, email, password, id
+    let name, surname, email, phone, password, city, license, specialty, portfolioUrl, projectImg, description, role, id
 
     beforeEach(async () => {
-        name = `name-${Math.random()}`
-        surname = `surname-${Math.random()}`
-        email = `email-${Math.random()}@domain.com`
-        password = `password-${Math.random()}`
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        phone = `phone-${random()}`
+        password = `password-${random()}`
+        role = `architect`
+        city= `city-${random()}`
+        license= `license-${random()}`
+        specialty = `specialty-${random()}`
+        portfolioUrl = `portfolioUrl-${random()}`
+        projectImg = `projectImg-${random()}`
+        description = `description-${random()}`
 
-        await User.deleteMany()
+        await User.deleteMany() 
+        
+        const architect = await User.create({ name, surname, email, phone, password, city, license, specialty, portfolioUrl, projectImg, description, role})
+        
+        id = architect.id
 
-        const user = await User.create({ name, surname, email, password })
-
-        id = user.id
-
-        const token = jwt.sign({ sub: id }, REACT_APP_JWT_SECRET_TEST)
+        const token = await jwt.sign({ sub: id }, REACT_APP_JWT_SECRET_TEST)
 
         logic.__token__ = token
     })
 
-    it('should succeed on correct data', async () =>
-        await logic.retrieveUser()
-            .then(user => {
-                expect(user).toBeDefined()
-                expect(user.id).toBe(id)
-                expect(user._id).toBeUndefined()
-                expect(user.name).toBe(name)
-                expect(user.surname).toBe(surname)
-                expect(user.email).toBe(email)
-                expect(user.password).toBeUndefined()
-            })
+    it('should succeed on correct data', async () =>{  
+       const architect =  await logic.retrieveArchitect(id)
+         
+        expect(architect).toBeDefined()
+        expect(architect.id).toBe(id)
+        expect(architect._id).toBeUndefined()
+        expect(architect.name).toBe(name)
+        expect(architect.surname).toBe(surname)
+        expect(architect.email).toBe(email)
+        expect(architect.phone).toBe(phone)
+        expect(architect.password).toBeUndefined()
+        expect(architect.role).toBe('architect')
+        expect(architect.city).toBe(city)
+        expect(architect.license).toBe(license)
+        expect(architect.specialty).toBe(specialty)
+        expect(architect.portfolioUrl).toBe(portfolioUrl)
+        expect(architect.projectImg).toBe(projectImg)
+        expect(architect.description).toBe(description)
+       
+        
+    })
+
+    it('should fail on empty id', () => 
+        expect(() => retrieveArchitect("")).toThrow(Error, 'user id is empty or blank')
+    )
+
+    it('should fail on undefined id', () => 
+        expect(() => retrieveArchitect(undefined)).toThrow('id with value undefined is not a string')
+    )
+
+    it('should fail on user id with wrong data type', () => 
+        expect(() => retrieveArchitect(123)).toThrow('id with value 123 is not a string')
     )
 
     afterAll(() => database.disconnect())

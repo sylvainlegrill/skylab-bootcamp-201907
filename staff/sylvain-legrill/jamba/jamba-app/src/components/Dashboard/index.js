@@ -1,41 +1,101 @@
 import React, { useState, useEffect } from "react"
 import logic from "../../logic"
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import componentPicture1 from './../../images/result-background.png'
+import Feedback from '../Feedback'
 
 
 
-export default withRouter (function ({history, onBack }) {
+// 
 
-    const [user, setUser] = useState(null)
-  
-    useEffect(() => {
-        (async () => {
-        const user = await logic.retrieveUser()
-        setUser(user)
-        })()
-    }, [history.location])
-    // 1) use State to implement
-    //2) History push 
+export default withRouter (function ({match,history}) {
+    const [meetings, setMeetings] = useState([])
+    const [ meeting, setMeeting ] = useState(false)
+    const  [error, setError]  = useState()
+
+    //const [user, setUser] = useState([])
     
 
+    function convertDate(date){
+        
+        const _date = new Date(date)
+        const day = _date.getDate()
+        const month = _date.getMonth()
+        const year = _date.getFullYear()
+        return `${day}.${month}.${year}`
+    }
+    
+    function convertHour(date){
+        
+        const _date = new Date(date)
+        const hour = _date.getHours()
+        const minutes = _date.getMinutes()
+        return `${hour}:${minutes}`
+    }
+
+    useEffect(() => { 
+        (async () => {
+        const searchMeetings = await logic.retrieveMeetings()
+        setMeetings(searchMeetings)
+        })()
+    }, [meeting])
+
+    async function handleDeleteMeeting( meetingId) {
+        try {
+            await logic.deleteMeeting(meetingId)
+            setMeeting(!meeting)
+        } catch(error) {
+            setError(error.message)
+        }
+    }
+
+
+  
+
     return <> 
-        <h2> Welcome</h2>
-                {/* ,{user && user.name}! */}
-            <section>
-            <li className="dashboard__meeting" > Upcoming meeting:
-                <ul>date:</ul>
-                <ul>address:</ul>
-                <ul>you will meet:</ul>
-                <button className="dashboard__button"> cancel meeting </button>
-            </li>
+        <img className="home__picture"src={componentPicture1} alt="componentPicture1" />
+        <h2 className="dashboard__title"> Dashboard</h2>
+            <h3 className="meeting__title"> Meetings</h3>
+            <section className="meeting__container">
+                    {meetings.length ? (
+                    meetings.map((meeting, index) =>  
+                        <ul key={index} className="meeting__list">
+                            <li className="meeting__item">
+                                <div className="meeting__item--left"> 
+                                <p className="meeting__address">{meeting.address}</p>
+                                <p className="meeting__contact">contact: {meeting.architect.name}{meeting.user.name}</p>
+                                <p className="meeting__contact-phone">email: {meeting.architect.email}{meeting.user.email} </p>
+                                <p className="meeting__contact-phone"> phone number: {meeting.architect.phone}{meeting.user.phone}</p>
+                                </div> 
+                                <span className="meeting__tag">{convertDate(meeting.date)}</span>
+                                <span className="meeting__tag">{convertHour(meeting.date)}</span>
+
+                            </li>
+                            <button className="meeting__cancel-button" title="" href="#" onClick={() => handleDeleteMeeting(meeting._id)} > Cancel meeting</button> 
+                        </ul>
+                )   
+                    ) : (
+                    <p className="meeting__none">No meetings found </p>
+                    )}
+                     {error && <Feedback message={error} />}
+                    
+                
+            </section>
+            <button className="meeting__back-button" href="#" onClick={event => {
+                        event.preventDefault()
+            
+                        history.push("/home") 
+                    }}>Go home</button>
+            <section className="profile">
+
             </section>
 
-            <section className="dashboard__specialty" > Specialty:
+            {/* <section className="dashboard__specialty" > Specialty:
                 <select required className ="dashboard__selector" name="specialty">
                     <option defaultValue="" >Select type of professional</option>
-                    <option value="residential architect">residential architect</option>
-                    <option value="technical architect">technical architect</option>
-                    <option value="interior architect">interior architect</option>
+                    <option value="residential meeting">residential meeting</option>
+                    <option value="technical meeting">technical meeting</option>
+                    <option value="interior meeting">interior meeting</option>
                     <option value="landscaper">landscaper</option>
                 </select>
                 <button className="dashboard__button">Edit</button>
@@ -51,7 +111,7 @@ export default withRouter (function ({history, onBack }) {
             <section className="dashboard__url" > Add the url of your portfolio:
             <input type="email" name="email" placeholder ="email" />
                 <button className="dashboard__button">Edit</button>
-                <button className="dashboard__button">Save</button>>
+                <button className="dashboard__button">Save</button>
             </section>
 
             <section className="dashboard__url" > Upload image of a project of yours:
@@ -61,9 +121,7 @@ export default withRouter (function ({history, onBack }) {
             <section className="dashboard__url" > Upload profile picture:
         
                 <button className="dashboard__button">Upload</button>
-            </section>
-
-            }   
+            </section> */}
     </>
 
 

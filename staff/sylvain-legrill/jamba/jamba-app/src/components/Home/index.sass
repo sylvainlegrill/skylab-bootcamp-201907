@@ -1,3 +1,5 @@
+@import ../../style/base-settings
+
 .home
     font-family: 'Poppins', sans-serif
 
@@ -8,15 +10,17 @@
         width: 96%
 
     &__back
-        display: block
-        width: 30vw
-        height: 6vh
+        @extend %button-back
+    
+    &__intro
+        width: 96%
+        height: 2%
         margin: 1rem auto
         padding: 0.6rem
-        background-color: #517C91
         border: 0px solid transparent
+        background-color: #ffffff8e
         text-align: center
         text-decoration: none
-        color: #FCE7E2 
-        
+        color: #517C91
+        display: block
         

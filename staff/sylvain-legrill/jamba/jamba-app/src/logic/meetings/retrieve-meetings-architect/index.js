@@ -1,25 +1,23 @@
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
-
-//const { validate }= require('jamba-utils')
+const { validate }= require('jamba-utils')
 
 
 /**
  * Return all meeting from a user.
  * 
- * @returns {object} meetings object.
+ * @returns {object} meetings array.
  * 
- * @throws {TypeError} - if any of the parameters not stringa.  
- * @throws {Error} - if any parameter is empty or undefined.
+ * @throws {TypeError} - if architect id is not a string.
+ * @throws {Error} - if architect id is empty or undefined.
  * 
  */
 
 
-export default function () {
-    // validate.string(id, 'id')
-
+export default function (architectId) {
+    //  validate.string(architectId, 'architect id')
     
-    return (async () => {
-        const response = await fetch(`${REACT_APP_API_URL}/users/meetings`, {
+    return (async () => { 
+        const response = await fetch(`${REACT_APP_API_URL}/users/${architectId}/meetings`, {
             method: 'GET',
             headers: {
                 'authorization' : `bearer ${this.__token__}`

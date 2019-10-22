@@ -8,26 +8,20 @@
 
     &__title
         @extend %text-title
+        margin-top: 4%
 
     &__form-item
         list-style: none
         margin: 1em auto
+        color: $color-green
     &__form-input
-        padding: .5em
-        width: 98%
+        padding: 2em
+        width: 15em
         display: block
 
+
     &__back-button
-        width: 20vw
-        height: 6vh
-        margin: 1rem auto
-        padding: 0.6rem
-        border: 0px solid transparent
-        background-color: $color-transparent
-        text-align: center
-        text-decoration: none
-        color: $color-green
-        display: block
+        @extend %button-back
 
     &__form-button
         @extend %button-green
