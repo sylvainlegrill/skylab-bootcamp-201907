@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react"
 import logic from "../../logic"
 import { withRouter } from 'react-router-dom'
+import componentPicture1 from './../../images/result-background.png'
+import Feedback from '../Feedback'
+
 
 
 // 
@@ -8,6 +11,8 @@ import { withRouter } from 'react-router-dom'
 export default withRouter (function ({match,history}) {
     const [meetings, setMeetings] = useState([])
     const [ meeting, setMeeting ] = useState(false)
+    const  [error, setError]  = useState()
+
     //const [user, setUser] = useState([])
     
 
@@ -40,7 +45,7 @@ export default withRouter (function ({match,history}) {
             await logic.deleteMeeting(meetingId)
             setMeeting(!meeting)
         } catch(error) {
-            console.log(error.message)
+            setError(error.message)
         }
     }
 
@@ -48,29 +53,31 @@ export default withRouter (function ({match,history}) {
   
 
     return <> 
+        <img className="home__picture"src={componentPicture1} alt="componentPicture1" />
         <h2 className="dashboard__title"> Dashboard</h2>
             <h3 className="meeting__title"> Meetings</h3>
             <section className="meeting__container">
                     {meetings.length ? (
-                    meetings.map(meeting =>  
-                        <ul className="meeting__list">
+                    meetings.map((meeting, index) =>  
+                        <ul key={index} className="meeting__list">
                             <li className="meeting__item">
-                        <div key={meeting.id} className="meeting__item--left"> 
-                        <p className="meeting__address">{meeting.address}</p>
-                        <p className="meeting__contact">{meeting.architect.name}{meeting.user.name}'contacts: {meeting.architect.email}{meeting.user.email} </p>
-                        <p className="meeting__contact-phone"> phone number: {meeting.architect.phone}{meeting.user.phone}</p>
-            
-                        </div> 
-                        <span className="meeting__tag">{convertDate(meeting.date)}</span>
-                        <span className="meeting__tag">{convertHour(meeting.date)}</span>
+                                <div className="meeting__item--left"> 
+                                <p className="meeting__address">{meeting.address}</p>
+                                <p className="meeting__contact">contact: {meeting.architect.name}{meeting.user.name}</p>
+                                <p className="meeting__contact-phone">email: {meeting.architect.email}{meeting.user.email} </p>
+                                <p className="meeting__contact-phone"> phone number: {meeting.architect.phone}{meeting.user.phone}</p>
+                                </div> 
+                                <span className="meeting__tag">{convertDate(meeting.date)}</span>
+                                <span className="meeting__tag">{convertHour(meeting.date)}</span>
 
-                        </li>
-                        <button className="meeting__cancel-button" title="" href="#" onClick={() => handleDeleteMeeting(meeting._id)} > Cancel meeting</button> 
+                            </li>
+                            <button className="meeting__cancel-button" title="" href="#" onClick={() => handleDeleteMeeting(meeting._id)} > Cancel meeting</button> 
                         </ul>
                 )   
                     ) : (
                     <p className="meeting__none">No meetings found </p>
                     )}
+                     {error && <Feedback message={error} />}
                     
                 
             </section>

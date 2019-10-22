@@ -50,7 +50,7 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/components/**/*.js",
-      "!src/components/logic/index.js",
+      "!src/logic/index.js",
       "!src/index.js",
       "!src/serviceWorker.js",
       "!<rootDir>/node_modules/",

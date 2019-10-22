@@ -21,6 +21,7 @@ describe('logic - retrieve meetings', () => {
     let address
     let userId
     let architectId
+    let meeting , meetingId
     
 
     beforeEach(async () => { 
@@ -40,25 +41,23 @@ describe('logic - retrieve meetings', () => {
         date = new Date()
         address = `address-${Math.random()}`
 
-        await User.deleteMany()
-        await Meeting.deleteMany()
         
         const user = await User.create({ name, surname, email, password, phone})
         userId = user.id  
 
         const architect = await User.create({name, surname, email, phone, password, city, license, specialty, portfolioUrl, projectImg, description})
         architectId = architect.id
-        
+
         const token = jwt.sign({ sub: userId }, REACT_APP_JWT_SECRET_TEST)
         logic.__token__ = token
     })
 
-    it('should succeed on correct data', async () => {
+    it('should succeed on correct data', async () => { 
 
         const meetings = await logic.retrieveMeetings(userId)
 
-        expect(meetings).toBeDefined()         
-
+        expect(meetings).toBeDefined()
+        expect(meetings).toBeInstanceOf(Object) 
     })
 
     it('should fail on empty id', async () => {

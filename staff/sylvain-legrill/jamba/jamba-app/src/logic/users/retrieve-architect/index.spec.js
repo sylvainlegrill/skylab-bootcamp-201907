@@ -11,7 +11,7 @@ const { random } = Math
 const REACT_APP_DB_URL_TEST = process.env.REACT_APP_DB_URL_TEST
 const REACT_APP_JWT_SECRET_TEST = process.env.REACT_APP_JWT_SECRET_TEST
 
-describe.only('logic - retrieve architect', () => {
+describe('logic - retrieve architect', () => {
     beforeAll(() => database.connect(REACT_APP_DB_URL_TEST))
 
     let name, surname, email, phone, password, city, license, specialty, portfolioUrl, projectImg, description, role, id
@@ -26,7 +26,6 @@ describe.only('logic - retrieve architect', () => {
         city= `city-${random()}`
         license= `license-${random()}`
         specialty = `specialty-${random()}`
-        // profileImg = `profileImg-${random()}`
         portfolioUrl = `portfolioUrl-${random()}`
         projectImg = `projectImg-${random()}`
         description = `description-${random()}`
@@ -36,23 +35,45 @@ describe.only('logic - retrieve architect', () => {
         const architect = await User.create({ name, surname, email, phone, password, city, license, specialty, portfolioUrl, projectImg, description, role})
         
         id = architect.id
-debugger
+
         const token = await jwt.sign({ sub: id }, REACT_APP_JWT_SECRET_TEST)
 
         logic.__token__ = token
     })
 
-    it('should succeed on correct data', async () =>{  debugger
-       const architect =  await logic.retrieveArchitect()
+    it('should succeed on correct data', async () =>{  
+       const architect =  await logic.retrieveArchitect(id)
          
         expect(architect).toBeDefined()
-        // expect(architect.id).toBe(id)
-        // expect(architect._id).toBeUndefined()
-        // expect(architect.name).toBe(name)
-        // expect(architect.surname).toBe(surname)
-        // expect(architect.email).toBe(email)
-        // expect(architect.password).toBeUndefined()
+        expect(architect.id).toBe(id)
+        expect(architect._id).toBeUndefined()
+        expect(architect.name).toBe(name)
+        expect(architect.surname).toBe(surname)
+        expect(architect.email).toBe(email)
+        expect(architect.phone).toBe(phone)
+        expect(architect.password).toBeUndefined()
+        expect(architect.role).toBe('architect')
+        expect(architect.city).toBe(city)
+        expect(architect.license).toBe(license)
+        expect(architect.specialty).toBe(specialty)
+        expect(architect.portfolioUrl).toBe(portfolioUrl)
+        expect(architect.projectImg).toBe(projectImg)
+        expect(architect.description).toBe(description)
+       
+        
     })
+
+    it('should fail on empty id', () => 
+        expect(() => retrieveArchitect("")).toThrow(Error, 'user id is empty or blank')
+    )
+
+    it('should fail on undefined id', () => 
+        expect(() => retrieveArchitect(undefined)).toThrow('id with value undefined is not a string')
+    )
+
+    it('should fail on user id with wrong data type', () => 
+        expect(() => retrieveArchitect(123)).toThrow('id with value 123 is not a string')
+    )
 
     afterAll(() => database.disconnect())
 })

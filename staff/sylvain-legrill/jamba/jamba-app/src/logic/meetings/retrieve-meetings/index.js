@@ -6,7 +6,10 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 /**
  * Return all meeting from a user.
  * 
- * @returns {Array} meetings array.
+ * @returns {object} meetings object.
+ * 
+ * @throws {TypeError} - if any of the parameters not stringa.  
+ * @throws {Error} - if any parameter is empty or undefined.
  * 
  */
 

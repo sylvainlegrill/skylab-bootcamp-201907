@@ -5,16 +5,16 @@ const { validate }= require('jamba-utils')
 /**
  * Return all meeting from a user.
  * 
- * @returns {Array} meetings array.
+ * @returns {object} meetings array.
  * 
- * @throws {TypeError} - if meeting id or user id is not a string.
- * @throws {Error} - if meeting id or user id is empty or undefined, if meeting is not found.
+ * @throws {TypeError} - if architect id is not a string.
+ * @throws {Error} - if architect id is empty or undefined.
  * 
  */
 
 
 export default function (architectId) {
-     validate.string(architectId, 'architect id')
+    //  validate.string(architectId, 'architect id')
     
     return (async () => { 
         const response = await fetch(`${REACT_APP_API_URL}/users/${architectId}/meetings`, {

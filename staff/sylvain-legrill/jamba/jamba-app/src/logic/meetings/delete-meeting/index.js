@@ -3,11 +3,13 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 
 /**
- * Deletes a task.
+ * Delete a meeting.
  * 
- * @param {string} meetingId space id
+ * @param {string} meetingId meeting's id
  * 
- *
+ * @throws {TypeError} - if any of the parameters not stringa.  
+ * @throws {Error} - if any parameter is empty or undefined, if meeting Id is not found
+ * 
  * 
 */
 

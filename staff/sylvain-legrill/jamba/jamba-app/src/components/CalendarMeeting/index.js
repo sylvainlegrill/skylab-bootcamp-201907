@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import Context from '../Context'
+import Feedback from '../Feedback'
 import './index.sass'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
@@ -10,7 +11,7 @@ function Month({ history, match }) {
 
     const { params: { id } } = match //architectId
     const { setThisDay, currentDate, setCurrentDate }  = useContext(Context)
-
+    const  [error, setError]  = useState()
     const [ monthMeetings, setMonthMeetings ] = useState([])
     const architectId = id
 
@@ -40,7 +41,7 @@ function Month({ history, match }) {
             setMonthMeetings(monthMeetings)
 
           } catch(error) {
-            console.log(error.message)
+            setError(error.message)
           }
         })()
     },[architectId,currentDate])
@@ -70,11 +71,11 @@ function Month({ history, match }) {
     }
 
     function handleDayMeetings(dataDate){
-        return monthMeetings.map(meeting => {
+        return monthMeetings.map((meeting, index) => {
             let meetingDay = moment(meeting.date).format('YYYY MMMM D')
             let currentDay = moment(dataDate).format('YYYY MMMM D')
             if (meetingDay === currentDay) {
-                return  <div className="calendar__busy">
+                return  <div key={index} className="calendar__busy">
                 <i className="fas fa-ban"> </i>
                 <p className="calendar__busy-hour"> 
                 {startMeeting(meeting.date)}-{endMeeting(meeting.date)} </p>
@@ -87,7 +88,7 @@ function Month({ history, match }) {
 
         return (
         <>
-            <div className="month__header">
+            <div key={Math.random()} className="month__header">
                 <i className="fas fa-caret-left" onClick={handleGoToPreviousMonth}></i>
                 <h1 className="month__title">{moment(currentDate).format("MMMM") } </h1>
                 <i className="fas fa-caret-right" onClick={handleGoToNextMonth}></i>
@@ -104,7 +105,7 @@ function Month({ history, match }) {
         
         for (let i = 0; i < 7; i++) {
             days.push(
-                <div className="calendar__weekdays">
+                <div key={Math.random()} className="calendar__weekdays">
                     {startDate.add(1, 'days').format('ddd')}
                 </div>      
             )       
@@ -171,7 +172,7 @@ function Month({ history, match }) {
                 const formattedDate = first.format('D')
                 const dataDate = first.format()
                 days.push(
-                    <div onClick={() => {handleGoToAddMeeting(dataDate)}} className={`${!moment(currentDate).isSame(dataDate, 'month')
+                    <div key={Math.random()} onClick={() => {handleGoToAddMeeting(dataDate)}} className={`${!moment(currentDate).isSame(dataDate, 'month')
                             ? "calendar__disabled"
                             : moment().isSame(dataDate, 'day')
                             ? "calendar__selected"
@@ -182,7 +183,7 @@ function Month({ history, match }) {
                 )
                 first = first.add(1, 'days')
             }
-            rows.push( <div className="calendar__week"> {days} </div>)
+            rows.push( <div key={Math.random()} className="calendar__week"> {days} </div>)
             days = []
         }
 
@@ -205,6 +206,7 @@ function Month({ history, match }) {
             </div>
 
         </div> 
+        {error && <Feedback message={error} />}
         <button href="#" className="calendar__back-button" onClick={goBack}><i className="fas fa-arrow-left"></i> Go back</button>
 
     </>

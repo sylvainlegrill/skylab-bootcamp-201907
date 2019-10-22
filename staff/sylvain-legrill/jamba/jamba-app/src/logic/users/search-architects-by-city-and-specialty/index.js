@@ -1,5 +1,5 @@
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
-//const { validate }= require('jamba-utils')
+const { validate }= require('jamba-utils')
 
 
 /**
@@ -18,7 +18,8 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 
 export default function (city, specialty) {
-    // validate.string(id, 'id')
+    validate.string(city, 'city searched')
+    validate.string(specialty, 'specialty searched')
 
     return (async () => {
         const response = await fetch(`${REACT_APP_API_URL}/architects/${city}/${specialty}`, {

@@ -20,24 +20,24 @@ export default function (id, profileImg) {
     var formData = new FormData();
     formData.append('image', image);
     //headers: { 'content-type': 'multipart/form-data', authorization: `bearer ${token}` },
-    return (async () => {
-        // if(image !== undefined)
-        const response = await fetch(`${REACT_APP_API_URL}/users/${id}/uploads`, {
+    return (async () => { 
+        // if(image !== undefined) 
+        const response = await fetch(`${REACT_APP_API_URL}/users/${id}/uploads`, { 
             method: 'post',
             headers: {
                 headers: { 'content-type': 'application/json' },
+                // authorization: `bearer ${this.__token__}`
             },
             body: formData
         })
         
         if (response.status !== 200) {
             const { error } = await response.json()
-
+            
             throw Error(error)
         }
-// }else{
-//     console.log('200')
-// }
+        const { message } = await response.json()
+        return message
     })()
 }
 

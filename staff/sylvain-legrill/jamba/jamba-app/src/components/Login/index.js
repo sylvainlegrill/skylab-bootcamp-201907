@@ -31,7 +31,7 @@ export default function ({ onBack, onLogin, error }) {
             event.preventDefault()
 
             onBack()
-        }}>Go back</button>
+        }}>Go home</button>
         </section>
     </>
 }
