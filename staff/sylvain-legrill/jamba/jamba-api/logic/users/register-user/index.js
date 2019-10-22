@@ -5,30 +5,33 @@ const bcrypt = require('bcryptjs')
 /**
  * Registers a user.
  * 
- * @param {string} name 
- * @param {string} surname 
- * @param {string} email
- * @param {string} phone
- * @param {string} password  
- * @param {string} city
- * @param {string} license
- * @param {string} specialty
- * @param {string} role
- * @param {string} profileImg
- * @param {string} portfolioImg
- * @param {string} description
+ * @param {string} name user's name
+ * @param {string} surname user's surname
+ * @param {string} email user's email
+ * @param {string} phone user's phone
+ * @param {string} password  user's password
+ * @param {string} city user's city. Only for architects
+ * @param {string} license user's architect license .Only for architects
+ * @param {string} specialty user's architect specialty ( residential , technical, interior design, landscaper). Only for architects
+ * @param {string} role user's role: architect or customer ( customer by default)
  * 
+ * @throws {TypeError} - if any parameter is not a string
+ * @throws {Error} - if name, surname, email, phone, password, role  parameters are empty/undefined. if city, license, specialty, portfolioUrl, projectImg, description parameters are empty/undefined for architect's role.  if there is already a user registered under the same email or username.
  * @returns {Promise}
  */
 module.exports = function (name, surname, email, phone, password, role, city, license, specialty, portfolioUrl, projectImg, description) {
 
-    validate.string(name)
-    validate.string(surname)
-    validate.string(email)
+    validate.string(name, 'name')
+    validate.string(surname, 'surname')
+    validate.string(email, 'e-mail')
     validate.email(email, 'e-mail')
-    validate.string(phone)
-    validate.string(password)
-    validate.string(role)
+    validate.string(phone, 'phone')
+    validate.string(password, 'password')
+    validate.string(role, 'role')
+ 
+
+
+
     return ( async () => {
         let user = await User.findOne({ email })
         if (user) throw Error(`user with e-mail ${email} already exists.`)

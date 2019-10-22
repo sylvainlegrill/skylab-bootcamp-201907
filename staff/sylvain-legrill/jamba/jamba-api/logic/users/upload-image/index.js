@@ -10,14 +10,13 @@ const { env: { CLOUDINARY_API_KEY, CLOUDINARY_NAME, CLOUDINARY_SECRET_KEY } } = 
 * @param {Stream} image
 * 
 * @throws {TypeError} - if userId is not a string or buffer is not a buffer.
-* @throws {Error} - if any param is empty, user is not found or image could not be uploaded.
+* @throws {Error} - if user is not found or image could not be uploaded.
 *
 * @returns {Object} - user.  
 */
 module.exports = function (id, image) {
-    // validate.string(id, 'id')
-    // validate.object(image, 'stream');
-    debugger
+  
+    
     return (async () => {
         const user = await User.findById(id)
         if (!user) throw new Error(`user with id ${id} not found`)

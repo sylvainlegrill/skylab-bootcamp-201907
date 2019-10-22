@@ -57,5 +57,29 @@ describe('logic - retrieve all users', () => {
 
     })
 
+    it('should failed if role is customer ', async () => {
+        
+        const _role = 'customer'
+        
+        const architects = await retrieveAll( _role)
+
+    
+        expect(architects.length).to.equal(0)
+        expect(architects[0]).not.to.exist
+        expect(architects[1]).not.to.exist
+
+    })
+
+    it('should fail on empty role', () =>
+        expect(() => retrieveAll("").to.throw('role is empty or blank')
+    ))
+    it('should fail on undefined role', () =>
+        expect(() => retrieveAll(undefined).to.throw('role iwith value undefined is not a string')
+    ))
+    it('should fail on wrong data type for role', () =>
+        expect(() => retrieveAll(123).to.throw('role iwith value 123 is not a string')
+    ))
+    
+
     after(() => database.disconnect())
 })

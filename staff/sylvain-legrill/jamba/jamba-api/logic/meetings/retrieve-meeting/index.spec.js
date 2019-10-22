@@ -69,13 +69,15 @@ describe('logic - retrieve meeting', () => {
                 expect(error.message).to.equal(`meeting with id 5d7204963b3ea6a2f0c7a6a2 does not exist`)
             }
     })
-
+    it('should fail on empty or blank meeting id ', () => 
+    expect(() => retrieveMeeting("")).to.throw(`meeting id is empty or blank`)
+    )
     it('should fail on wrong meeting id type', () => 
     expect(() => retrieveMeeting(123)).to.throw(`meeting id with value 123 is not a string`)
     )
     it('should fail on wrong meeting id type', () => 
     expect(() => retrieveMeeting(undefined)).to.throw(`meeting id with value undefined is not a string`)
-)
+    )
 
     
 

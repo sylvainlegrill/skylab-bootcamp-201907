@@ -6,8 +6,11 @@ const bcrypt = require('bcryptjs')
 /**
  * Unregisters a user.
  * 
- * @param {string} id
- * @param {string} password
+ * @param {string} id user id
+ * @param {string} password user's password
+ * 
+ * @throws {TypeError} - if user id or password is not a string.
+ * @throws {Error} - if user not found / if password  not matching with user's password.
  * 
  * @returns {Promise}
  */

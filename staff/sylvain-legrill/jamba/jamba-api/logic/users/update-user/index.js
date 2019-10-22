@@ -3,11 +3,14 @@ const { validate }= require('jamba-utils')
 const bcrypt = require('bcryptjs')
 
 /**
- * 
- * @param {*} id
- * @param {*} fieldsToUpdate 
- * 
-* @returns {Promise}
+* 
+* @param {*} id user id
+* @param {*} fieldsToUpdate  fields to update
+* 
+* @throws {TypeError} - if user id is not a string, if data to update is not an object.
+* @throws {Error} - if any parameter is empty, undefined or user is not found.
+* 
+* @returns {Promise} user object.
 */
 module.exports = function(id, fieldsToUpdate) {
     validate.string(id, 'id')

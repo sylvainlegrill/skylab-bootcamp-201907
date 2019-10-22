@@ -1,12 +1,12 @@
-const { listMeetings } = require("../../logic")
+const { retrieveMeetings } = require("../../logic")
 
 module.exports = async (req, res) => {
-    
-  const { userId } = req;
+
+  const { userId } = req
 
   try {
     
-    const meetings = await listMeetings(userId)
+    const meetings = await retrieveMeetings(userId)
 
     res.status(201).json({ message: `meeting correctly listed`, meetings })
   } catch ({ message }) {

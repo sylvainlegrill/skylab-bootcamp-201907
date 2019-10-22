@@ -39,10 +39,12 @@ describe('logic - delete meeting', () => {
         meeting = await Meeting.create({
             date, address, user: user.id, architect: architect.id
         })
+
+        
     })
 
     it('should succeed on correct data', async () => {
-        const result = await deleteMeeting(meeting.id, user.id)
+        const result = await deleteMeeting(meeting.id)
 
         expect(result).not.to.exist
 
@@ -50,6 +52,26 @@ describe('logic - delete meeting', () => {
 
         expect(_meeting).not.to.exist
     })
+    it('should fail if on incorrect meeting id', async () =>{ 
+        try{
+            await deleteMeeting('5d7204963b3ea6a2f0c7a6a2')
+        }catch(error) {
+                expect(error).to.exist
+                expect(error.message).to.equal(`meeting with id 5d7204963b3ea6a2f0c7a6a2 does not exist`)
+            }
+    })
+
+    it('should fail on empty or blank meeting id ', () => 
+    expect(() => deleteMeeting("")).to.throw(`meeting id is empty or blank`)
+    )
+    it('should fail on wrong meeting id type', () => 
+    expect(() => deleteMeeting(123)).to.throw(`meeting id with value 123 is not a string`)
+    )
+    it('should fail on undefined meeting id type', () => 
+    expect(() => deleteMeeting(undefined)).to.throw(`meeting id with value undefined is not a string`)
+    )
+
+
 
     after(() => database.disconnect())
 })

@@ -3,17 +3,21 @@ const { validate }= require('jamba-utils')
    
     
     /**
-     * Adds a meeting.
+     * Add a meeting.
      * 
-     * @param {date} date 
-     * @param {string} address 
-     * @param {string} userId 
-     * @param {string} architectId 
+     * @param {date} date  meeting's date
+     * @param {string} address meeting's address
+     * @param {string} userId customer's ID involved in the meeting
+     * @param {string} architectId architect's ID involved in the meeting
      * 
-     * @returns {Promise}
+     * @throws {TypeError} - if any of the parameters address userId or architectId are not stringa , Or if date is not a date.   
+     * @throws {Error} - if any parameter is empty or undefined, if userId or architectId is not found.
+     * 
+     * @returns {Object}
      */
     
     module.exports = function(date, address, userId, architectId) {
+        
         validate.date(date, 'date')
         validate.string(address, 'address')
         validate.string(userId, 'user id')

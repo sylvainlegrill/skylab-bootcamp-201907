@@ -13,7 +13,7 @@ describe('logic - update user', () => {
     beforeEach(async() => {
         await User.deleteMany()
         })
-        describe('update user', () => {debugger
+        describe('update user', () => {
             let id, name, surname, email, phone, city, license, specialty, profileImg, portfolioUrl, projectImg, description, password
             beforeEach(async () => {
                 
@@ -32,7 +32,7 @@ describe('logic - update user', () => {
                 const user = await User.create({name, surname, email, phone, city, license, specialty, profileImg, portfolioUrl, projectImg, description, password: await bcrypt.hash(password,10)})
                 id = user.id
             })
-        it('should succeed on correct architect data', async () => {debugger
+        it('should succeed on correct architect data', async () => {
             
             const user =  await updateUser(id, { name: 'newName', surname: 'newSurname', phone: 'newPhone', city: 'newCity', license: 'newLicense', specialty: 'newSpecialty', profileImg: 'newProfile', portfolioUrl: 'newPortfolio', projectImg: 'newProject', description: 'newDescription', password: 'newPassword' })
                 expect(user).not.to.exist
@@ -68,6 +68,40 @@ describe('logic - update user', () => {
                 expect(userUpdate.password).to.exist              
         })
            
+        })
+
+        it('should fail on non-existing user', async () => {
+            id = '5d5d5530531d455f75da9fF9'
+            try{
+                await updateUser(id, { name: 'newName', surname: 'newSurname', phone: 'newPhone',  password: 'newPassword' } )
+            }catch({ message }){
+                expect(message).to.equal(`User with id ${id} does not exist.`)
+            }
+        })
+    
+        it('should fail on empty id', async () => {
+            try{
+              await updateUser('', { name: 'newName', surname: 'newSurname', phone: 'newPhone',  password: 'newPassword' } )
+            }catch({ message }) {
+              expect(message).to.equal("id is empty or blank")
+            }
+         })
+        
+        it('should fail on undefined id', async () => {
+            try{
+                await updateUser(undefined, { name: 'newName', surname: 'newSurname', phone: 'newPhone',  password: 'newPassword' } )
+            }catch({ message }) {
+                expect(message).to.equal("id with value undefined is not a string")
+            }
+        })
+     
+        it('should fail on wrong id data type', async() => {
+            try{
+                await updateUser(123, { name: 'newName', surname: 'newSurname', phone: 'newPhone',  password: 'newPassword' } )
+            }catch({ message }) {
+                expect(message).to.equal("id with value 123 is not a string")
+            }
+       
         })
    
     after(() => database.disconnect())
