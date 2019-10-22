@@ -52,5 +52,25 @@ describe('logic - unregister user', () => {
             .catch(({ message }) => expect(message).to.equal('wrong credentials'))
     )
 
+    it('should fail on empty id', () =>
+        expect(() => unregisterUser("", password)).to.throw('id is empty or blank')
+    )
+    it('should fail on undefined id', () =>
+        expect(() => unregisterUser(undefined, password)).to.throw('id with value undefined is not a string')
+    )
+    it('should fail on wrong id type', () =>
+        expect(() => unregisterUser(true, password)).to.throw('id with value true is not a string')
+    )
+
+    it('should fail on empty password', () =>
+        expect(() => unregisterUser(id, "")).to.throw('password is empty or blank')
+    )
+    it('should fail on undefined password', () =>
+        expect(() => unregisterUser(id, undefined)).to.throw('password with value undefined is not a string')
+    )
+    it('should fail on wrong password type', () =>
+        expect(() => unregisterUser(id, true)).to.throw('password with value true is not a string')
+    )
+
     after(() => database.disconnect())
 })

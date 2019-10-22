@@ -6,6 +6,8 @@ const { validate } = require("jamba-utils")
  *
  * @param {string} architectId architect's ID involved in the meeting.
  * @param {string} role role of user .
+ * @param {object} meetings role of user .
+ * @param {object} meeting role of user .
  * 
  * @throws {TypeError} - if parameter is not a string.   
  * @throws {Error} - if parameter is empty or undefined, if user not found or does not exist.

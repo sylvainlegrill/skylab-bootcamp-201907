@@ -61,10 +61,13 @@ describe('logic - delete meeting', () => {
             }
     })
 
+    it('should fail on empty or blank meeting id ', () => 
+    expect(() => deleteMeeting("")).to.throw(`meeting id is empty or blank`)
+    )
     it('should fail on wrong meeting id type', () => 
     expect(() => deleteMeeting(123)).to.throw(`meeting id with value 123 is not a string`)
     )
-    it('should fail on wrong meeting id type', () => 
+    it('should fail on undefined meeting id type', () => 
     expect(() => deleteMeeting(undefined)).to.throw(`meeting id with value undefined is not a string`)
     )
 

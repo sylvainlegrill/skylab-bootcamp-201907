@@ -89,6 +89,9 @@ describe('logic - register user', () => {
     it('should fail on empty email', () =>
         expect(() => registerUser(name, surname, "", phone, password, "customer")).to.throw('e-mail is empty or blank')
     )
+    it('should fail on undefined email', () =>
+        expect(() => registerUser(name, surname, undefined, phone, password, "customer")).to.throw('e-mail with value undefined is not a string')
+    )
 
     it('should fail on wrong email format', () =>
         expect(() => registerUser(name, surname, 123, phone, password, "customer")).to.throw('e-mail with value 123 is not a string')
@@ -98,11 +101,19 @@ describe('logic - register user', () => {
         expect(() => registerUser("", surname, email, phone, password, "customer")).to.throw('name is empty or blank')
     )
 
+    it('should fail on undefined name', () =>
+        expect(() => registerUser(undefined, surname, email, phone, password, "customer")).to.throw('name with value undefined is not a string')
+    )
+
     it('should fail on wrong name format', () =>
         expect(() => registerUser(123, surname, email, phone, password, "customer")).to.throw('name with value 123 is not a string')
     )
     it('should fail on empty surname', () =>
         expect(() => registerUser(name, "", email, phone, password, "customer")).to.throw('surname is empty or blank')
+    )
+
+    it('should fail on undefined surname', () =>
+        expect(() => registerUser(name, undefined, email, phone, password, "customer")).to.throw('surname with value undefined is not a string')
     )
 
     it('should fail on wrong surname format', () =>
@@ -112,11 +123,19 @@ describe('logic - register user', () => {
         expect(() => registerUser(name, surname, email, "", password, "customer")).to.throw('phone is empty or blank')
     )
 
+    it('should fail on undefined phone', () =>
+        expect(() => registerUser(name, surname, email, undefined, password, "customer")).to.throw('phone with value undefined is not a string')
+    )
+
     it('should fail on wrong phone format', () =>
         expect(() => registerUser(name, surname, email, true, password, "customer")).to.throw('phone with value true is not a string')
     )
     it('should fail on empty password', () =>
         expect(() => registerUser(name, surname, email, phone, "", "customer")).to.throw('password is empty or blank')
+    )
+
+    it('should fail on undefined password', () =>
+    expect(() => registerUser(name, surname, email, password, undefined, "customer")).to.throw('password with value undefined is not a string')
     )
 
     it('should fail on wrong password format', () =>
@@ -125,6 +144,10 @@ describe('logic - register user', () => {
         )
     it('should fail on empty role', () =>
         expect(() => registerUser(name, surname, email, phone, password, "")).to.throw('role is empty or blank')
+    )
+
+    it('should fail on undefined role', () =>
+    expect(() => registerUser(name, surname, email, password, password, undefined)).to.throw('role with value undefined is not a string')
     )
 
     it('should fail on wrong role format', () =>

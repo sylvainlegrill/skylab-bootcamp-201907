@@ -62,6 +62,13 @@ describe('logic - list architects', () => {
 
         expect(() => listArchitects(city,'residential')).to.throw(Error, `city is empty or blank`)
     })
+
+    it('should fail on undefined city', () => {
+        const city = undefined
+
+        expect(() => listArchitects(city,'residential')).to.throw(Error, `city with value undefined is not a string`)
+    })
+
     it('should fail on wrong city data type', () => {
         const city = 123
 
@@ -73,6 +80,12 @@ describe('logic - list architects', () => {
 
         expect(() => listArchitects('Barcelona', specialty )).to.throw(Error, `specialty is empty or blank`)
     })
+    it('should fail on undefined specialty', () => {
+        const specialty = undefined
+
+        expect(() => listArchitects('Barcelona', specialty )).to.throw(Error, `specialty with value undefined is not a string`)
+    })
+
     it('should fail on wrong specialty data type', () => {
         const specialty = 123
 

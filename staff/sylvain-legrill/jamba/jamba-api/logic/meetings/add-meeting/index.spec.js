@@ -84,17 +84,38 @@ describe('logic - add meeting', () => {
             addMeeting(date,address, "", architect.id)
         ).to.throw('user id is empty or blank')
     )
+    it('should fail on undefined userId', () =>
+        expect(() =>
+            addMeeting(date,address, undefined, architect.id)
+        ).to.throw('user id with value undefined is not a string')
+    )
+    it('should fail on wrong data type for userId', () =>
+        expect(() =>
+            addMeeting(date,address, 123, architect.id)
+        ).to.throw('user id with value 123 is not a string')
+    )
+
     it('should fail on empty architectId', () =>
         expect(() =>
             addMeeting(date,address, user.id, "")
         ).to.throw('architect id is empty or blank')
     )
 
+    it('should fail on undefined architectId', () =>
+    expect(() =>
+        addMeeting(date,address, user.id, undefined)
+    ).to.throw('architect id with value undefined is not a string')
+    )
+    it('should fail on wrong data type for architectId', () =>
+        expect(() =>
+            addMeeting(date,address, user.id, 123)
+        ).to.throw('architect id with value 123 is not a string')
+    )
 
 
     it('should fail on empty date', () =>
         expect(() =>
-            addMeeting('',address, user.id, architect.id)
+            addMeeting("",address, user.id, architect.id)
         ).to.throw('date with value  is not a date')
     )
 
@@ -103,10 +124,15 @@ describe('logic - add meeting', () => {
             addMeeting(undefined, address, user.id, architect.id)
         ).to.throw(`date with value undefined is not a date`)
     )
+    it('should fail on wrong data type for date', () =>
+        expect(() =>
+            addMeeting(123, address, user.id, architect.id)
+        ).to.throw(`date with value 123 is not a date`)
+    )
 
     it('should fail on empty address', () =>
         expect(() =>
-            addMeeting(date,'', user.id, architect.id)
+            addMeeting(date,"", user.id, architect.id)
         ).to.throw('address is empty or blank')
     )
 
@@ -114,6 +140,12 @@ describe('logic - add meeting', () => {
         expect(() =>
             addMeeting(date, undefined, user.id, architect.id)
         ).to.throw(`address with value undefined is not a string`)
+    )
+
+    it('should fail on wrong data type for address', () =>
+        expect(() =>
+            addMeeting(date, 123, user.id, architect.id)
+        ).to.throw(`address with value 123 is not a string`)
     )
 
 

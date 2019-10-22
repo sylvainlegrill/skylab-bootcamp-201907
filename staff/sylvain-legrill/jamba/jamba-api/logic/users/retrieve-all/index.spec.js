@@ -70,5 +70,16 @@ describe('logic - retrieve all users', () => {
 
     })
 
+    it('should fail on empty role', () =>
+        expect(() => retrieveAll("").to.throw('role is empty or blank')
+    ))
+    it('should fail on undefined role', () =>
+        expect(() => retrieveAll(undefined).to.throw('role iwith value undefined is not a string')
+    ))
+    it('should fail on wrong data type for role', () =>
+        expect(() => retrieveAll(123).to.throw('role iwith value 123 is not a string')
+    ))
+    
+
     after(() => database.disconnect())
 })

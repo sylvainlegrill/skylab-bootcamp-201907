@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
     
     const meetings = await retrieveMeetingsArchitect(architectId)
 
-    res.status(201).json({ message: `architect meeting(s) correctly listed`, meetings })
+    res.status(201).json({ message: `architect meeting(s) correctly listed`, meetings, architectId })
   } catch ({ message }) {
     res.status(400).json({ error: message })
   }

@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const { expect } = require('chai')
+const logic = require('../..')
 const uploadImage = require('.')
 const { database, models: { User } } = require('jamba-data')
 const fs = require('fs')
@@ -52,6 +53,8 @@ describe('logic - upload image', () => {
 
            
         })
+
+
     
     after(() => database.disconnect())
 })

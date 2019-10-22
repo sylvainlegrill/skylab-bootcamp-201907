@@ -42,6 +42,10 @@ describe('logic - authenticate user', () => {
     it('should fail on wrong email type' , () =>
         expect(() => authenticateUser(123 , password)).to.throw('e-mail with value 123 is not a string')
     )
+
+    it('should fail on undefined email' , () =>
+        expect(() => authenticateUser(undefined , password)).to.throw('e-mail with value undefined is not a string')
+    )
     
     it('should fail on wrong email format' , () =>
         expect(() => authenticateUser("123@mailcom" , password)).to.throw('e-mail with value 123@mailcom is not a valid e-mail')
@@ -64,6 +68,10 @@ describe('logic - authenticate user', () => {
 
         expect(() => authenticateUser(email, password)).to.throw(Error, `password is empty or blank`)
     })
+
+    it('should fail on undefined password' , () =>
+        expect(() => authenticateUser(email , undefined)).to.throw('password with value undefined is not a string')
+    )
 
     it('should fail on wrong password', async () => {
         password = 'wrong password'

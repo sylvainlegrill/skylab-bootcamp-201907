@@ -91,18 +91,6 @@ describe('logic - retrieve meetings architect', () => {
     })
 
 
-    // it('should succeed on correct data', async () => {
-    //     const id = await retrieveMeetings(date, address, user.id, architect.id)
-
-    //     expect(id).to.be.a('string')
-    //     expect(id).to.have.lengthOf(24)
-
-    //     const meeting = await Meeting.findById(id)
-
-    //     expect(meeting.date).to.deep.equal(date)
-    //     expect(meeting.address).to.equal(address)
-    // })
-
 
     after(() => database.disconnect())
 })
