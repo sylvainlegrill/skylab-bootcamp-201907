@@ -17,24 +17,25 @@ Jamba (jamb in Spanish,  from French *jambe* = "leg") in architecture is the sid
 a door cannot stands on its own , jambs provides support, so do Jamba.
 
 
-Jamba is a webservice and online marketplace offering to connect directly landlords and tenants to freelance architects for their construction or renovation projects. Don't fear the architecture world anymore.
+Jamba is a webservice and online marketplace offering to connect directly landlords and tenants to freelance architects for their construction or renovation projects.
+ 
+ Don't fear the architecture world anymore.
 
 
 ## Functional documentation
 
 ### Description
 
-Users not registered or logged are able to:
-- Search for architects living in their city and corresponding to their needs. 
-- See architect profiles.
-
-Additionaly, once logged users can: 
-- Contact architects
+Once  registed and logged, customers can: 
+- Search for architects
+- See architects' profile and portfolio
 - Arrange a meeting.
+- Retrieve/delete meetings' info and architect's contacts
+- Delete  meetings.
 
-Architects, on their side, have the possibility to: 
-- Manage their profile by adding a description, images of their last projects, and a pdf of their portfolio.
-- They should also be able to see when and where are their next appointments.
+Architects, on their side, can: 
+- On registration, architects must create a profile including a link to their portfolio and a profile picture.
+- Retrieve meetings' info and customer's contacts
 
 ### Use cases
 
@@ -63,9 +64,9 @@ Architects, on their side, have the possibility to:
 ### Code coverage
 
 ![image](./img/api-coverage-96-green.png) 
-![image](./img/api-test-count-102.png) 
+![image](./img/api-test-count-102-3.png) 
 ![image](./img/app-coverage-86-yellowgreen.png)
-![image](./img/test-app-count.png)
+![image](./img/app-test-count-94-1.png)
 
 
 ## Future Versions
