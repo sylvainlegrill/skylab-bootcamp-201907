@@ -17,10 +17,10 @@ export default function (id, profileImg) {
     // validate fields
     const image = profileImg
 
-    var formData = new FormData();
+    var formData = new FormData(); debugger
     formData.append('image', image);
     //headers: { 'content-type': 'multipart/form-data', authorization: `bearer ${token}` },
-    return (async () => { 
+    return (async () => { debugger
         // if(image !== undefined) 
         const response = await fetch(`${REACT_APP_API_URL}/users/${id}/uploads`, { 
             method: 'post',
