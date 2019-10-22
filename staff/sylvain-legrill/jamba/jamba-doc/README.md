@@ -38,19 +38,42 @@ Architects, on their side, have the possibility to:
 
 ### Use cases
 
-![image](./img/use-cases.png)
+![image](./img/use-cases-2.png)
 
 ### Flows
 
 
-![image](./img/flows.png)
+![image](./img/flows-jamba-1.png)
 
 
 ## Technical documentation
 
+### Blocks
+
+![image](./img/blocks-jamba.png)
+
+### Components
+
+![image](./img/components-jamba.png)
+
 ### Data models
 
 ![image](./img/data-model-jamba.png)
+
+### Code coverage
+
+![image](./img/api-coverage-96-green.png) 
+![image](./img/api-test-count-102.png) 
+![image](./img/app-coverage-86-yellowgreen.png)
+![image](./img/test-app-count.png)
+
+
+## Future Versions
+
+- Architects: Edit and delete Profile informations, Upload pictures projects. 
+- Customers: Edit and delete Profile informations.
+- Improve management task and busy time in Calendar.
+- Integrate Google suggestion and maps for meeting address.
 
 
 ## Trello 
