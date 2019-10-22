@@ -49,6 +49,10 @@ Architects, on their side, can:
 
 ## Technical documentation
 
+### Technologies
+
+Javascript, ReactJS, Node.js, Express, MongoDB, Mongoose, SASS , Cloudinary. Testing: Jest & Mocha/Chai
+
 ### Blocks
 
 ![image](./img/blocks-jamba.png)
